@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { FinanceProvider } from './context/FinanceContext';
 import BottomNav from './components/BottomNav';
+import ChatPanel from './components/ChatPanel';
 import Home from './pages/Home';
 import Stats from './pages/Stats';
 import Wallet from './pages/Wallet';
 import Profile from './pages/Profile';
+import { MessageCircle, Bell } from 'lucide-react';
 
 function AppContent() {
   const [activeTab, setActiveTab] = useState('home');
+  const [showChat, setShowChat] = useState(false);
 
   const handleQuickAdd = (type) => {
     setActiveTab('wallet');
@@ -20,6 +23,22 @@ function AppContent() {
           <h1 className="text-xl font-bold">
             <span className="text-brand">TF</span> Finance
           </h1>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowChat(true)}
+              className="p-2 hover:bg-slate-800 rounded-lg transition text-brand hover:text-brand-light"
+              aria-label="Abrir Boti"
+              title="Boti - Asesor Financiero"
+            >
+              <MessageCircle size={20} />
+            </button>
+            <button
+              className="p-2 hover:bg-slate-800 rounded-lg transition text-slate-400 hover:text-slate-300"
+              aria-label="Notificaciones"
+            >
+              <Bell size={20} />
+            </button>
+          </div>
         </header>
 
         {activeTab === 'home' && <Home onNavigate={setActiveTab} onQuickAdd={handleQuickAdd} />}
@@ -33,6 +52,8 @@ function AppContent() {
         onNavigate={setActiveTab}
         onQuickAdd={() => handleQuickAdd('expense')}
       />
+
+      {showChat && <ChatPanel onClose={() => setShowChat(false)} />}
     </div>
   );
 }
