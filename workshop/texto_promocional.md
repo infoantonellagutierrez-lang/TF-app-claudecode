@@ -41,7 +41,7 @@ BIOMECÁNICA Y ANATOMÍA
 APLICADA AL PILATES
 
 Lic. Antonella Gutiérrez
-Instructor Training en Pilates
+Centro Zen Authorized Trainer en Pilates
 Especialista en Biomecánica y Anatomía Funcional
 
 30 DE OCTUBRE
@@ -58,7 +58,7 @@ AntoBioMove
 
 Lic. Jeimy Antonella Gutiérrez Policano
 
-Instructor Training en el Método Pilates, especialista en Biomecánica y Anatomía Funcional. Gerente Deportiva y Administradora de Empresas con amplia trayectoria en la dirección de estudios del Método Pilates.
+Centro Zen Authorized Trainer en el Método Pilates, especialista en Biomecánica y Anatomía Funcional. Gerente Deportiva y Administradora de Empresas con amplia trayectoria en la dirección de estudios del Método Pilates.
 
 Formación y Certificaciones:
 - Conferencia Internacional Pilates Clásico - Classical Rio, Madrid (2026)
