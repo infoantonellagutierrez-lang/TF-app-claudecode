@@ -505,13 +505,174 @@
   @media (prefers-reduced-motion: no-preference) {
     .reveal {
       opacity: 0;
-      transform: translateY(16px);
-      transition: opacity .5s ease, transform .5s ease;
+      transform: translateY(32px);
+      transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
     }
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .stagger-1 { transition-delay: .1s; }
+    .stagger-2 { transition-delay: .2s; }
+    .stagger-3 { transition-delay: .3s; }
+    .stagger-4 { transition-delay: .4s; }
+  }
+
+  /* ─── FLOATING WHATSAPP ─── */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+    z-index: 200;
+    text-decoration: none;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+  }
+  .whatsapp-float svg { width: 28px; height: 28px; fill: #fff; }
+  .whatsapp-float::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #25D366;
+    z-index: -1;
+    animation: wa-pulse 2s ease-out infinite;
+  }
+  @keyframes wa-pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  /* ─── NAV SCROLL EFFECT ─── */
+  .nav.scrolled {
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+  }
+
+  /* ─── PARALLAX HERO ─── */
+  .hero-photo-wrap {
+    position: relative;
+    perspective: 800px;
+  }
+
+  /* ─── GALLERY LIGHTBOX ─── */
+  .gallery-grid img { cursor: pointer; }
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+    cursor: pointer;
+  }
+  .lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 12px;
+    object-fit: contain;
+    transform: scale(0.9);
+    transition: transform .4s cubic-bezier(.22,1,.36,1);
+  }
+  .lightbox.active img {
+    transform: scale(1);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* ─── SERVICE CARD HOVER ─── */
+  .service-card {
+    transition: border-color .3s, transform .3s, box-shadow .3s;
+  }
+  .service-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  /* ─── TIMELINE ANIMATION ─── */
+  .timeline-marker {
+    transition: transform .3s, box-shadow .3s;
+  }
+  .timeline-item:hover .timeline-marker {
+    transform: scale(1.4);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+
+  /* ─── TAG HOVER ─── */
+  .about-tags span {
+    transition: background .3s, transform .3s;
+    cursor: default;
+  }
+  .about-tags span:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
   }
 </style>
 </head>
@@ -537,7 +698,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="reveal">
+    <div class="reveal-left">
       <p class="hero-eyebrow">Biomecánica &amp; Anatomía en Movimiento</p>
       <h1>Antonella Gutiérrez</h1>
       <p class="hero-desc">Instructora de Pilates y estudiosa de la Biomecánica y Anatomía Funcional. Apasionada por el movimiento consciente y la formación continua.</p>
@@ -546,7 +707,7 @@
         Escribime por WhatsApp
       </a>
     </div>
-    <div class="reveal">
+    <div class="reveal-right">
       <img src="img/foto_biomecanica.jpg" alt="Antonella Gutiérrez dando clase de biomecánica" class="hero-photo">
     </div>
   </div>
@@ -558,8 +719,8 @@
     <h2 class="section-heading reveal">Sobre mí</h2>
     <div class="section-rule"></div>
     <div class="about-grid">
-      <img src="img/foto_ensenando.jpg" alt="Antonella enseñando Pilates en reformer" class="about-photo reveal">
-      <div class="reveal">
+      <img src="img/foto_ensenando.jpg" alt="Antonella enseñando Pilates en reformer" class="about-photo reveal-left">
+      <div class="reveal-right">
         <div class="about-text">
           <p>Soy Antonella Gutiérrez, instructora de Pilates con formación en Biomecánica y Anatomía Funcional.</p>
           <p>Desde que descubrí el Pilates, me dediqué a estudiarlo a fondo: la ciencia detrás del movimiento, la anatomía que lo explica y la biomecánica que lo hace seguro. Cada clase que doy refleja esa dedicación.</p>
@@ -584,22 +745,22 @@
     <h2 class="section-heading reveal">Servicios</h2>
     <div class="section-rule"></div>
     <div class="services-grid">
-      <div class="service-card reveal">
+      <div class="service-card reveal-scale stagger-1">
         <div class="service-stripe"></div>
         <h3>Clases de Pilates</h3>
         <p>Sesiones personalizadas y grupales de Pilates Mat, Reformer y Suspensión, adaptadas a tu nivel y objetivos.</p>
       </div>
-      <div class="service-card reveal">
+      <div class="service-card reveal-scale stagger-2">
         <div class="service-stripe"></div>
         <h3>Formación de Instructores</h3>
         <p>Acompañamiento en tu camino como instructor, compartiendo las bases de biomecánica y anatomía que todo profesional necesita.</p>
       </div>
-      <div class="service-card reveal">
+      <div class="service-card reveal-scale stagger-3">
         <div class="service-stripe"></div>
         <h3>Workshops Internacionales</h3>
         <p>Talleres intensivos presenciales sobre biomecánica, anatomía y método Pilates para profesionales del movimiento.</p>
       </div>
-      <div class="service-card reveal">
+      <div class="service-card reveal-scale stagger-4">
         <div class="service-stripe"></div>
         <h3>Asesoría en Biomecánica</h3>
         <p>Evaluación biomecánica y diseño de programas de ejercicio fundamentados en evidencia científica.</p>
@@ -614,35 +775,35 @@
     <h2 class="section-heading reveal">Formación y Certificaciones</h2>
     <div class="section-rule"></div>
     <div class="timeline">
-      <div class="timeline-item reveal">
+      <div class="timeline-item reveal-left stagger-1">
         <div class="timeline-marker"></div>
         <div>
           <h4>Instructora Certificada de Pilates</h4>
           <p>Formación integral en el método Pilates</p>
         </div>
       </div>
-      <div class="timeline-item reveal">
+      <div class="timeline-item reveal-left stagger-2">
         <div class="timeline-marker"></div>
         <div>
           <h4>Pilates Mat y Reformer</h4>
           <p>Certificaciones en las modalidades principales del método</p>
         </div>
       </div>
-      <div class="timeline-item reveal">
+      <div class="timeline-item reveal-left stagger-3">
         <div class="timeline-marker"></div>
         <div>
           <h4>Biomecánica y Anatomía Funcional</h4>
           <p>Formación continua en la ciencia del movimiento aplicada al Pilates</p>
         </div>
       </div>
-      <div class="timeline-item reveal">
+      <div class="timeline-item reveal-left stagger-4">
         <div class="timeline-marker"></div>
         <div>
           <h4>Pilates en Suspensión</h4>
           <p>Certificación en trabajo con cintas de suspensión</p>
         </div>
       </div>
-      <div class="timeline-item reveal">
+      <div class="timeline-item reveal-left">
         <div class="timeline-marker"></div>
         <div>
           <h4>Formación continua</h4>
@@ -659,10 +820,10 @@
     <h2 class="section-heading reveal">Galería</h2>
     <div class="section-rule"></div>
     <div class="gallery-grid">
-      <img src="img/foto_ensenando.jpg" alt="Corrigiendo técnica en reformer" class="reveal">
-      <img src="img/foto_clase.jpg" alt="Clase de Pilates mat grupal" class="reveal">
-      <img src="img/foto_reformer.jpg" alt="Clase de Pilates reformer" class="reveal">
-      <img src="img/foto_biomecanica.jpg" alt="Workshop de biomecánica" class="reveal">
+      <img src="img/foto_ensenando.jpg" alt="Corrigiendo técnica en reformer" class="reveal-scale stagger-1">
+      <img src="img/foto_clase.jpg" alt="Clase de Pilates mat grupal" class="reveal-scale stagger-2">
+      <img src="img/foto_reformer.jpg" alt="Clase de Pilates reformer" class="reveal-scale stagger-3">
+      <img src="img/foto_biomecanica.jpg" alt="Workshop de biomecánica" class="reveal-scale stagger-4">
     </div>
   </div>
 </section>
@@ -672,7 +833,7 @@
   <div class="section-inner">
     <h2 class="section-heading reveal">Próximo Evento</h2>
     <div class="section-rule"></div>
-    <div class="event-card reveal">
+    <div class="event-card reveal-scale">
       <div>
         <p class="event-eyebrow">Workshop Internacional</p>
         <h3>Biomecánica y Anatomía Aplicada al Pilates</h3>
@@ -718,6 +879,18 @@
 <div class="footer">
   <p>© 2026 AntoBioMove — Antonella Gutiérrez · Biomecánica &amp; Anatomía en Movimiento</p>
 </div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="Cerrar">×</button>
+  <img src="" alt="">
+</div>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/584125587131?text=Hola%20Antonella%2C%20quiero%20informaci%C3%B3n" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
 <script>
   // Mobile menu
   document.getElementById('navToggle').addEventListener('click', function() {
@@ -729,13 +902,38 @@
     });
   });
 
-  // Reveal on scroll
+  // Nav scroll effect
+  var nav = document.querySelector('.nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Reveal on scroll (all animation classes)
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var obs = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(function(el) { obs.observe(el); });
   }
+
+  // Lightbox
+  var lightbox = document.getElementById('lightbox');
+  var lbImg = lightbox.querySelector('img');
+  document.querySelectorAll('.gallery-grid img').forEach(function(img) {
+    img.addEventListener('click', function() {
+      lbImg.src = this.src;
+      lbImg.alt = this.alt;
+      lightbox.classList.add('active');
+    });
+  });
+  lightbox.addEventListener('click', function(e) {
+    if (e.target !== lbImg) {
+      lightbox.classList.remove('active');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') lightbox.classList.remove('active');
+  });
 </script>
 </body>
 </html>
