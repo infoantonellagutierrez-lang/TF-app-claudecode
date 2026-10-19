@@ -1,35 +1,15 @@
 <title>Workshop Biomecánica</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap">
 <style>
-  /* AntoBioMove brand: teal-to-green gradient, warm brown, organic feel */
   :root {
-    --bg: #faf8f5;
-    --fg: #2c2420;
-    --brand-teal: #00bcd4;
-    --brand-green: #66bb6a;
-    --brand-brown: #5d4037;
-    --brand-brown-light: #8d6e63;
-    --accent-red: #c62828;
-    --surface: #f0ece6;
-    --muted: #7a6f66;
+    --bg: #f5f2ee;
+    --fg: #1a1a1a;
+    --brown: #5d4037;
+    --teal: #00bcd4;
+    --green: #4caf50;
+    --red: #c62828;
     color-scheme: light;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #1a1512;
-      --fg: #ede8e3;
-      --surface: #2a2420;
-      --muted: #a89a8f;
-      color-scheme: dark;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #1a1512;
-    --fg: #ede8e3;
-    --surface: #2a2420;
-    --muted: #a89a8f;
-    color-scheme: dark;
   }
   body {
     background: var(--bg);
@@ -39,432 +19,273 @@
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     min-height: 100vh;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
     padding-block: 16px;
   }
-  .flyer {
+
+  .poster {
     width: 100%;
     max-width: 540px;
+    aspect-ratio: 1 / 1;
     background: var(--bg);
+    position: relative;
     overflow: hidden;
-  }
-  .inner {
-    padding-left: max(20px, env(safe-area-inset-left, 0px));
-    padding-right: max(20px, env(safe-area-inset-right, 0px));
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
   }
 
-  /* Top bar */
-  .top-bar {
-    height: 4px;
-    background: linear-gradient(90deg, var(--brand-green), var(--brand-teal));
-  }
-
-  /* Header */
-  .header {
+  /* === TOP: Logo + Title === */
+  .top {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding-block: 20px 16px;
+    gap: 12px;
+    padding: 14px 18px 10px;
+    position: relative;
+    z-index: 2;
   }
-  .logo-img {
-    width: 90px;
-    height: 90px;
+  .logo {
+    width: 72px;
+    height: 72px;
     object-fit: contain;
     flex-shrink: 0;
   }
-  .header-text {
+  .title-block {
     flex: 1;
     min-width: 0;
   }
-  .badge {
-    display: inline-block;
-    background: var(--accent-red);
-    color: #fff;
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 2px;
-    margin-bottom: 8px;
-  }
-  .workshop-label {
+  .title-block .line1 {
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--brand-teal);
-    margin-bottom: 2px;
+    color: var(--teal);
+    line-height: 1.3;
   }
-  .title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 24px;
+  .title-block h1 {
+    font-size: 22px;
     font-weight: 900;
-    line-height: 1.08;
-    color: var(--brand-brown);
+    line-height: 1.05;
+    margin: 2px 0 3px;
     text-transform: uppercase;
+    color: var(--brown);
     text-wrap: balance;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .title { color: var(--fg); }
+  .title-block .trainer {
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    letter-spacing: 0.5px;
   }
-  :root[data-theme="dark"] .title { color: var(--fg); }
-  .title span {
-    color: var(--brand-teal);
+  .title-block .trainer strong {
+    color: var(--brown);
+    font-weight: 700;
   }
 
-  /* Photo */
-  .photo-wrap {
+  /* === CENTER: Photo === */
+  .photo {
     position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 5;
     overflow: hidden;
-    background: var(--surface);
+    min-height: 0;
   }
-  .photo-wrap img {
+  .photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center 15%;
     display: block;
   }
-  .photo-gradient {
+  .photo-fade-top {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 45%;
-    background: linear-gradient(to top, rgba(26,21,18,0.92), rgba(26,21,18,0.3) 60%, transparent);
+    top: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--bg), transparent);
     pointer-events: none;
   }
-  .photo-name {
+  .photo-fade-bottom {
     position: absolute;
-    bottom: 14px;
-    left: 20px;
-    right: 20px;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+    pointer-events: none;
   }
-  .photo-name h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
+  .photo-creds {
+    position: absolute;
+    bottom: 10px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .cred-pill {
+    font-size: 8px;
     font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 2px;
+    background: rgba(0,188,212,0.85);
     color: #fff;
-    margin: 0 0 2px;
-    line-height: 1.1;
+    backdrop-filter: blur(4px);
   }
-  .photo-name p {
-    font-size: 11px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.7);
-    margin: 0;
-    letter-spacing: 1px;
+  .cred-pill.alt {
+    background: rgba(76,175,80,0.85);
   }
 
-  /* Trainer accent line */
-  .trainer-line {
-    height: 3px;
-    background: linear-gradient(90deg, var(--brand-brown), var(--brand-teal), var(--brand-green));
-  }
-
-  /* Profile section */
-  .profile {
-    padding-block: 18px 14px;
+  /* === RED BAND === */
+  .band {
+    background: var(--red);
+    padding: 10px 18px;
     display: flex;
-    flex-direction: column;
-    gap: 14px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
   }
-  .profile-title {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--brand-teal);
-  }
-  .credentials {
+  .band-left {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .cred {
-    font-size: 10px;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 2px;
-    background: var(--surface);
-    color: var(--brand-brown);
-    border-left: 2px solid var(--brand-teal);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .cred { color: var(--fg); border-color: var(--brand-green); }
-  }
-  :root[data-theme="dark"] .cred { color: var(--fg); border-color: var(--brand-green); }
-
-  .desc {
-    font-size: 13px;
-    line-height: 1.65;
-    color: var(--muted);
-  }
-  .desc strong {
-    color: var(--fg);
-    font-weight: 600;
-  }
-
-  /* Topics */
-  .topics-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--brand-brown-light);
-    margin-bottom: 6px;
-  }
-  .topics {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  .tag {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    padding: 4px 10px;
-    border-radius: 2px;
-    background: linear-gradient(135deg, rgba(0,188,212,0.08), rgba(102,187,106,0.08));
-    color: var(--brand-teal);
-    border: 1px solid rgba(0,188,212,0.15);
-  }
-
-  /* Details */
-  .details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    align-items: center;
     gap: 12px;
-    padding-block: 6px;
   }
-  .d-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--brand-teal);
-    margin-bottom: 2px;
+  .band .date {
+    font-size: 17px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
   }
-  .d-value {
+  .band .sep {
+    width: 2px;
+    height: 18px;
+    background: rgba(255,255,255,0.4);
+    flex-shrink: 0;
+  }
+  .band .loc {
     font-size: 14px;
     font-weight: 600;
-    color: var(--fg);
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.3px;
+    white-space: nowrap;
   }
-  .d-value.name {
-    font-family: 'Playfair Display', serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--brand-brown);
+  .band .flag {
+    font-size: 28px;
+    flex-shrink: 0;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .d-value.name { color: var(--brand-green); }
-  }
-  :root[data-theme="dark"] .d-value.name { color: var(--brand-green); }
-  .presencial {
-    display: inline-flex;
+
+  /* === BOTTOM: brand footer === */
+  .bottom {
+    background: #1a1512;
+    padding: 8px 18px;
+    display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 11px;
+    justify-content: space-between;
+  }
+  .bottom-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .bottom-brand svg { flex-shrink: 0; }
+  .brand-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .brand-name .c1 { color: var(--green); }
+  .brand-name .c2 { color: var(--teal); }
+  .bottom-tag {
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .bottom-modality {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--brand-teal);
+    color: var(--teal);
   }
-  .dot {
-    width: 6px;
-    height: 6px;
+  .dot-live {
+    width: 6px; height: 6px;
     border-radius: 50%;
-    background: var(--brand-green);
-    animation: blink 2s ease-in-out infinite;
+    background: var(--green);
+    animation: pulse 1.8s ease-in-out infinite;
   }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.2; }
-  }
-
-  /* Dirigido */
-  .dirigido {
-    padding-block: 12px 0;
-    border-top: 1px solid var(--surface);
-  }
-  .dirigido p {
-    font-size: 12px;
-    line-height: 1.6;
-    color: var(--muted);
-    margin: 6px 0 0;
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.25; }
   }
 
-  /* Red band */
-  .band {
-    background: var(--accent-red);
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-  .band-date {
-    font-size: 18px;
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: 1px;
-  }
-  .band-sep {
-    width: 2px;
-    height: 20px;
-    background: rgba(255,255,255,0.45);
-  }
-  .band-loc {
-    font-size: 16px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.92);
-    letter-spacing: 0.5px;
-  }
-  .band-flag {
-    font-size: 26px;
-  }
-
-  /* Footer */
-  .footer {
-    padding: 14px 24px;
-    background: var(--surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .footer-brand {
-    font-family: 'Outfit', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--brand-brown);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .footer-brand { color: var(--fg); }
-  }
-  :root[data-theme="dark"] .footer-brand { color: var(--fg); }
-  .footer-brand span.t { color: var(--brand-teal); }
-  .footer-brand span.g { color: var(--brand-green); }
-  .footer-sub {
-    font-size: 9px;
-    color: var(--muted);
-    letter-spacing: 1px;
-  }
-
-  @media (max-width: 400px) {
-    .title { font-size: 20px; }
-    .band { padding: 12px 16px; gap: 8px; }
-    .band-date { font-size: 15px; }
-    .band-loc { font-size: 13px; }
-    .logo-img { width: 70px; height: 70px; }
+  @media (max-width: 420px) {
+    .poster { aspect-ratio: auto; min-height: 480px; }
+    .top { padding: 10px 12px 8px; gap: 10px; }
+    .logo { width: 56px; height: 56px; }
+    .title-block h1 { font-size: 18px; }
+    .title-block .line1 { font-size: 9px; }
+    .band .date { font-size: 14px; }
+    .band .loc { font-size: 12px; }
+    .band { padding: 8px 12px; }
   }
 </style>
 
-<div class="flyer">
-  <div class="top-bar"></div>
-
-  <!-- Header with logo -->
-  <div class="inner">
-    <div class="header">
-      <img class="logo-img" src="logo_antobiomove.jpg" alt="AntoBioMove">
-      <div class="header-text">
-        <div class="badge">Nuevamente - No te lo pierdas</div>
-        <div class="workshop-label">Workshop Internacional</div>
-        <div class="title"><span>Biomecánica</span> y Anatomía <span>Aplicada</span> al Pilates</div>
-      </div>
+<div class="poster">
+  <!-- TOP -->
+  <div class="top">
+    <img class="logo" src="logo_antobiomove.jpg" alt="AntoBioMove">
+    <div class="title-block">
+      <div class="line1">Workshop Internacional</div>
+      <h1>Biomecánica y Anatomía Aplicada al Pilates</h1>
+      <div class="trainer">por <strong>Lic. Antonella Gutiérrez</strong></div>
     </div>
   </div>
 
-  <!-- Photo -->
-  <div class="photo-wrap">
-    <img src="foto_biomecanica.jpg" alt="Lic. Antonella Gutiérrez - Workshop de Biomecánica y Anatomía">
-    <div class="photo-gradient"></div>
-    <div class="photo-name">
-      <h2>Lic. Antonella Gutiérrez</h2>
-      <p>Master Trainer en Pilates | Especialista en Biomecánica y Anatomía Funcional</p>
+  <!-- PHOTO -->
+  <div class="photo">
+    <img src="foto_biomecanica.jpg" alt="Lic. Antonella Gutiérrez impartiendo taller de Biomecánica">
+    <div class="photo-fade-top"></div>
+    <div class="photo-fade-bottom"></div>
+    <div class="photo-creds">
+      <span class="cred-pill">Master Trainer Pilates</span>
+      <span class="cred-pill alt">Biomecánica Deportiva</span>
+      <span class="cred-pill">Fisiología del Ejercicio</span>
+      <span class="cred-pill alt">Entrenamiento Deportivo</span>
+      <span class="cred-pill">Pilates Mat, Reformer & Suspensión</span>
     </div>
   </div>
 
-  <div class="trainer-line"></div>
-
-  <!-- Profile & Content -->
-  <div class="inner">
-    <div class="profile">
-      <div class="profile-title">Perfil del Trainer</div>
-      <div class="credentials">
-        <span class="cred">Master Trainer Pilates</span>
-        <span class="cred">Diplomado Biomecánica Deportiva</span>
-        <span class="cred">Diplomado Fisiología del Ejercicio</span>
-        <span class="cred">Diplomado Entrenamiento Deportivo</span>
-        <span class="cred">Cert. Pilates Matwork & Reformer</span>
-        <span class="cred">Cert. Pilates Suspensión & Mat Sequence</span>
-        <span class="cred">Gerencia Deportiva</span>
-        <span class="cred">Conferencia Int. Classical Rio, Madrid</span>
-      </div>
-
-      <p class="desc">
-        <strong>Comprende la ciencia detrás del movimiento.</strong> Este workshop te brinda las bases anatómicas y biomecánicas esenciales para entender cómo se mueve el cuerpo humano durante la práctica de Pilates, permitiéndote diseñar sesiones más seguras, efectivas y fundamentadas en evidencia científica.
-      </p>
-
-      <!-- Topics -->
-      <div>
-        <div class="topics-label">Contenido del Workshop</div>
-        <div class="topics">
-          <span class="tag">Sistema Esquelético</span>
-          <span class="tag">Columna Vertebral</span>
-          <span class="tag">Articulaciones</span>
-          <span class="tag">Power House</span>
-          <span class="tag">Sistema Muscular</span>
-          <span class="tag">Hombro, Cadera y Rodilla</span>
-          <span class="tag">Principios Biomecánicos</span>
-          <span class="tag">Ejercicios Clásicos</span>
-        </div>
-      </div>
-
-      <!-- Details -->
-      <div class="details">
-        <div>
-          <div class="d-label">Trainer</div>
-          <div class="d-value name">Lic. Antonella Gutiérrez</div>
-        </div>
-        <div>
-          <div class="d-label">Modalidad</div>
-          <div class="presencial"><span class="dot"></span> Presencial</div>
-        </div>
-      </div>
-
-      <!-- Dirigido a -->
-      <div class="dirigido">
-        <div class="profile-title">Dirigido a</div>
-        <p>Profesores de Pilates, fisioterapeutas, entrenadores personales y profesionales del movimiento que desean profundizar en los fundamentos anatómicos y biomecánicos para elevar la calidad de sus clases y proteger la integridad física de sus alumnos.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Red band -->
+  <!-- RED BAND -->
   <div class="band">
-    <span class="band-date">30 DE OCTUBRE</span>
-    <span class="band-sep"></span>
-    <span class="band-loc">VALENCIA, VENEZUELA</span>
-    <span class="band-flag" role="img" aria-label="Venezuela">&#127483;&#127466;</span>
+    <div class="band-left">
+      <span class="date">30 DE OCTUBRE</span>
+      <span class="sep"></span>
+      <span class="loc">VALENCIA, VENEZUELA.</span>
+    </div>
+    <span class="flag" role="img" aria-label="Venezuela">&#127483;&#127466;</span>
   </div>
 
-  <!-- Footer -->
-  <div class="footer">
-    <svg width="28" height="28" viewBox="0 0 60 60" fill="none">
-      <path d="M30 5 L55 48 L5 48 Z" stroke="url(#lg)" stroke-width="3" fill="none"/>
-      <defs><linearGradient id="lg" x1="5" y1="48" x2="55" y2="5"><stop stop-color="#66bb6a"/><stop offset="1" stop-color="#00bcd4"/></linearGradient></defs>
-      <circle cx="30" cy="20" r="2" fill="#8d6e63"/><circle cx="30" cy="25" r="2.5" fill="#8d6e63"/><circle cx="30" cy="30" r="3" fill="#8d6e63"/><circle cx="30" cy="35" r="3" fill="#8d6e63"/><circle cx="30" cy="40" r="2.5" fill="#8d6e63"/>
-    </svg>
-    <div>
-      <div class="footer-brand"><span class="g">Anto</span><span class="t">Bio</span>M<span class="g">oo</span>ve</div>
-      <div class="footer-sub">Biomecánica & Anatomía en Movimiento</div>
+  <!-- BOTTOM -->
+  <div class="bottom">
+    <div class="bottom-brand">
+      <svg width="22" height="22" viewBox="0 0 60 60" fill="none">
+        <path d="M30 5 L55 48 L5 48 Z" stroke="url(#g)" stroke-width="3" fill="none"/>
+        <defs><linearGradient id="g" x1="5" y1="48" x2="55" y2="5"><stop stop-color="#4caf50"/><stop offset="1" stop-color="#00bcd4"/></linearGradient></defs>
+        <circle cx="30" cy="22" r="2" fill="#8d6e63"/><circle cx="30" cy="27" r="2.5" fill="#8d6e63"/><circle cx="30" cy="32" r="2.8" fill="#8d6e63"/><circle cx="30" cy="37" r="2.5" fill="#8d6e63"/><circle cx="30" cy="42" r="2" fill="#8d6e63"/>
+      </svg>
+      <div>
+        <div class="brand-name"><span class="c1">Anto</span><span class="c2">Bio</span>M<span class="c1">oo</span>ve</div>
+        <div class="bottom-tag">Biomecánica & Anatomía en Movimiento</div>
+      </div>
+    </div>
+    <div class="bottom-modality">
+      <span class="dot-live"></span> Presencial
     </div>
   </div>
 </div>
