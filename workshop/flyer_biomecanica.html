@@ -1,0 +1,452 @@
+<title>Workshop Biomecánica</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap">
+<style>
+  /* Single-theme: deliberate dark medical/anatomical aesthetic */
+  :root {
+    --bg: #0d1117;
+    --fg: #e6e8eb;
+    --accent-teal: #2dd4a8;
+    --accent-gold: #d4a843;
+    --accent-warm: #e8956a;
+    --surface: #161b22;
+    --surface-elevated: #1c2128;
+    --muted: #8b949e;
+    --red-band: #c62828;
+    color-scheme: dark;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .flyer {
+    width: 100%;
+    max-width: 540px;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .flyer-inner {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+
+  /* Header section */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-block: 24px 16px;
+  }
+  .logo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .spine-icon {
+    width: 60px;
+    height: 60px;
+  }
+  .spine-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    text-align: center;
+  }
+
+  .title-area {
+    text-align: right;
+    flex: 1;
+    padding-left: 20px;
+  }
+  .badge-nuevamente {
+    display: inline-block;
+    background: var(--accent-warm);
+    color: var(--bg);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+  .title-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    margin-bottom: 4px;
+  }
+  .title-main {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    color: var(--fg);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    text-wrap: balance;
+  }
+  .title-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+  }
+
+  /* Accent bar */
+  .accent-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
+    margin-block: 0;
+  }
+
+  /* Photo section */
+  .photo-section {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .photo-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+  .photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(13,17,23,0.95) 0%, rgba(13,17,23,0.4) 50%, transparent 100%);
+    pointer-events: none;
+  }
+  .photo-caption {
+    position: absolute;
+    bottom: 16px;
+    left: 20px;
+    right: 20px;
+  }
+  .caption-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    letter-spacing: 0.5px;
+  }
+
+  /* Info section */
+  .info-section {
+    padding-block: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .description {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 480px;
+  }
+  .description strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  /* Details grid */
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .detail-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+  }
+  .detail-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .detail-value.trainer {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent-gold);
+  }
+
+  /* Red band — like reference flyer */
+  .red-band {
+    background: var(--red-band);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .red-band .date-text {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+  .red-band .divider {
+    width: 2px;
+    height: 22px;
+    background: rgba(255,255,255,0.5);
+  }
+  .red-band .location-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.5px;
+  }
+  .flag-emoji {
+    font-size: 28px;
+    margin-left: 8px;
+  }
+
+  /* Dirigido a section */
+  .dirigido {
+    padding-block: 16px;
+    border-top: 1px solid rgba(45,212,168,0.15);
+  }
+  .dirigido-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    margin-bottom: 8px;
+  }
+  .dirigido-text {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* Topics list */
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-block: 4px 16px;
+  }
+  .topic-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    background: var(--surface-elevated);
+    color: var(--accent-teal);
+    border: 1px solid rgba(45,212,168,0.15);
+  }
+
+  /* Footer logos */
+  .footer {
+    padding: 16px 24px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+  .footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .footer-logo-icon {
+    font-size: 18px;
+    color: var(--accent-gold);
+  }
+  .footer-logo-text {
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .modalidad-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(45,212,168,0.1);
+    border: 1px solid rgba(45,212,168,0.25);
+    padding: 6px 14px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+  }
+  .modalidad-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-teal);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  @media (max-width: 400px) {
+    .title-main { font-size: 22px; }
+    .red-band { padding: 12px 16px; gap: 10px; }
+    .red-band .date-text { font-size: 15px; }
+    .red-band .location-text { font-size: 14px; }
+    .details-grid { gap: 10px; }
+  }
+</style>
+
+<div class="flyer">
+  <!-- Header -->
+  <div class="flyer-inner">
+    <div class="header">
+      <div class="logo-area">
+        <div class="spine-icon">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="28" stroke="#2dd4a8" stroke-width="1.5" fill="none" opacity="0.3"/>
+            <!-- Stylized spine -->
+            <path d="M30 8 L30 10" stroke="#2dd4a8" stroke-width="2" stroke-linecap="round"/>
+            <!-- C1-C2 -->
+            <ellipse cx="30" cy="13" rx="5" ry="2.2" fill="none" stroke="#2dd4a8" stroke-width="1.2"/>
+            <ellipse cx="30" cy="17" rx="5.5" ry="2.2" fill="none" stroke="#2dd4a8" stroke-width="1.2"/>
+            <!-- T vertebrae -->
+            <ellipse cx="30" cy="21" rx="6" ry="2" fill="none" stroke="#d4a843" stroke-width="1"/>
+            <ellipse cx="30" cy="24.5" rx="6.2" ry="2" fill="none" stroke="#d4a843" stroke-width="1"/>
+            <ellipse cx="30" cy="28" rx="6.5" ry="2" fill="none" stroke="#d4a843" stroke-width="1"/>
+            <ellipse cx="30" cy="31.5" rx="6.5" ry="2" fill="none" stroke="#d4a843" stroke-width="1"/>
+            <!-- L vertebrae -->
+            <ellipse cx="30" cy="35.5" rx="7" ry="2.3" fill="none" stroke="#2dd4a8" stroke-width="1.2"/>
+            <ellipse cx="30" cy="39.5" rx="7.5" ry="2.5" fill="none" stroke="#2dd4a8" stroke-width="1.2"/>
+            <ellipse cx="30" cy="44" rx="7" ry="2.5" fill="none" stroke="#2dd4a8" stroke-width="1.2"/>
+            <!-- Sacrum -->
+            <path d="M23 48 Q30 55 37 48 Q35 50 30 51 Q25 50 23 48Z" fill="none" stroke="#d4a843" stroke-width="1"/>
+            <!-- Center line -->
+            <line x1="30" y1="10" x2="30" y2="48" stroke="#2dd4a8" stroke-width="0.5" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="logo-text">Anatomía<br>& Pilates</div>
+      </div>
+      <div class="title-area">
+        <div class="badge-nuevamente">Nuevamente</div>
+        <div class="title-label">Workshop Internacional</div>
+        <div class="title-main">Biomecánica y Anatomía Aplicada al Pilates</div>
+        <div class="title-sub">por Lic. Antonella Gutiérrez</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accent bar -->
+  <div class="accent-bar"></div>
+
+  <!-- Photo -->
+  <div class="photo-section">
+    <img src="foto_biomecanica.jpg" alt="Lic. Antonella Gutiérrez impartiendo taller de Biomecánica">
+    <div class="photo-overlay"></div>
+    <div class="photo-caption">
+      <div class="caption-line">Formación continua en biomecánica del movimiento</div>
+    </div>
+  </div>
+
+  <!-- Info section -->
+  <div class="flyer-inner">
+    <div class="info-section">
+      <p class="description">
+        <strong>Comprende la ciencia detrás del movimiento.</strong> Este workshop te brinda las bases anatómicas y biomecánicas esenciales para entender cómo se mueve el cuerpo humano durante la práctica de Pilates, permitiéndote diseñar sesiones más seguras, efectivas y fundamentadas en evidencia científica.
+      </p>
+
+      <!-- Topics -->
+      <div class="topics">
+        <span class="topic-tag">Sistema Esquelético</span>
+        <span class="topic-tag">Columna Vertebral</span>
+        <span class="topic-tag">Articulaciones</span>
+        <span class="topic-tag">Power House</span>
+        <span class="topic-tag">Sistema Muscular</span>
+        <span class="topic-tag">Hombro & Cadera</span>
+        <span class="topic-tag">Principios Biomecánicos</span>
+      </div>
+
+      <!-- Details -->
+      <div class="details-grid">
+        <div class="detail-item">
+          <span class="detail-label">Trainer</span>
+          <span class="detail-value trainer">Lic. Antonella Gutiérrez</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Modalidad</span>
+          <span class="modalidad-badge"><span class="modalidad-dot"></span> Presencial</span>
+        </div>
+      </div>
+
+      <!-- Dirigido a -->
+      <div class="dirigido">
+        <div class="dirigido-title">Dirigido a</div>
+        <p class="dirigido-text">
+          Profesores de Pilates, fisioterapeutas, entrenadores personales y profesionales del movimiento que desean profundizar en los fundamentos anatómicos y biomecánicos para elevar la calidad de sus clases y proteger la integridad física de sus alumnos.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Red band (like reference) -->
+  <div class="red-band">
+    <span class="date-text">OCTUBRE 2026</span>
+    <span class="divider"></span>
+    <span class="location-text">VALENCIA, VENEZUELA</span>
+    <span class="flag-emoji" role="img" aria-label="Bandera de Venezuela">&#127483;&#127466;</span>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-logo">
+      <span class="footer-logo-icon">&#9883;</span>
+      <span class="footer-logo-text">Biomecánica</span>
+    </div>
+    <div class="footer-logo">
+      <span class="footer-logo-icon">&#9878;</span>
+      <span class="footer-logo-text">Anatomía</span>
+    </div>
+    <div class="footer-logo">
+      <span class="footer-logo-icon">&#10038;</span>
+      <span class="footer-logo-text">Pilates</span>
+    </div>
+  </div>
+</div>
