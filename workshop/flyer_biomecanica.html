@@ -1,6 +1,6 @@
 <title>Workshop Biomecánica</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap">
 <style>
   :root {
     --bg: #f5f2ee;
@@ -9,6 +9,8 @@
     --teal: #00bcd4;
     --green: #4caf50;
     --red: #c62828;
+    --muted: #6d6359;
+    --surface: #eae5de;
     color-scheme: light;
   }
   body {
@@ -19,245 +21,228 @@
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
     padding-left: max(16px, env(safe-area-inset-left, 0px));
     padding-right: max(16px, env(safe-area-inset-right, 0px));
-    padding-block: 16px;
+    padding-block: 12px;
   }
 
   .poster {
     width: 100%;
     max-width: 540px;
-    aspect-ratio: 1 / 1;
     background: var(--bg);
-    position: relative;
     overflow: hidden;
-    display: grid;
-    grid-template-rows: auto 1fr auto auto;
   }
 
-  /* === TOP: Logo + Title === */
-  .top {
+  /* === GRADIENT TOP BAR === */
+  .bar-top { height: 4px; background: linear-gradient(90deg, var(--green), var(--teal)); }
+
+  /* === HEADER: logo + title === */
+  .header {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 18px 10px;
-    position: relative;
-    z-index: 2;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 18px 12px;
   }
-  .logo {
-    width: 72px;
-    height: 72px;
-    object-fit: contain;
-    flex-shrink: 0;
+  .logo { width: 74px; height: 74px; object-fit: contain; flex-shrink: 0; }
+  .hdr-text { flex: 1; min-width: 0; }
+  .hdr-text .sup {
+    font-size: 9px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--teal); line-height: 1.4;
   }
-  .title-block {
-    flex: 1;
-    min-width: 0;
-  }
-  .title-block .line1 {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--teal);
-    line-height: 1.3;
-  }
-  .title-block h1 {
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 1.05;
-    margin: 2px 0 3px;
-    text-transform: uppercase;
-    color: var(--brown);
+  .hdr-text h1 {
+    font-size: 21px; font-weight: 900; line-height: 1.06;
+    margin: 2px 0 4px; text-transform: uppercase; color: var(--brown);
     text-wrap: balance;
   }
-  .title-block .trainer {
-    font-size: 12px;
-    font-weight: 500;
-    color: #666;
-    letter-spacing: 0.5px;
+  .hdr-text .by {
+    font-size: 11px; font-weight: 500; color: var(--muted);
   }
-  .title-block .trainer strong {
-    color: var(--brown);
-    font-weight: 700;
-  }
+  .hdr-text .by strong { color: var(--brown); font-weight: 700; }
 
-  /* === CENTER: Photo === */
-  .photo {
+  /* === PHOTO — horizontal crop === */
+  .photo-row {
     position: relative;
-    overflow: hidden;
-    min-height: 0;
-  }
-  .photo img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 15%;
+    height: 200px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .photo-row img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 25%;
     display: block;
   }
-  .photo-fade-top {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--bg), transparent);
+  .photo-fade {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 50px;
+    background: linear-gradient(to top, var(--bg), transparent);
     pointer-events: none;
   }
-  .photo-fade-bottom {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 80px;
-    background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
-    pointer-events: none;
-  }
-  .photo-creds {
-    position: absolute;
-    bottom: 10px;
-    left: 16px;
-    right: 16px;
+
+  /* === CONTENT SECTION === */
+  .content {
+    padding: 12px 18px 14px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+    flex-direction: column;
+    gap: 12px;
   }
-  .cred-pill {
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    padding: 3px 7px;
-    border-radius: 2px;
-    background: rgba(0,188,212,0.85);
-    color: #fff;
-    backdrop-filter: blur(4px);
+  .desc {
+    font-size: 12.5px; line-height: 1.6; color: var(--muted);
   }
-  .cred-pill.alt {
-    background: rgba(76,175,80,0.85);
+  .desc strong { color: var(--fg); font-weight: 600; }
+
+  /* Topics grid */
+  .topics-title {
+    font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--teal); margin-bottom: 6px;
   }
+  .topics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .topic {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 500; color: var(--fg);
+  }
+  .topic .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--teal); flex-shrink: 0;
+  }
+  .topic .dot.g { background: var(--green); }
+
+  /* Credentials pills */
+  .creds {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    padding-top: 4px;
+    border-top: 1px solid var(--surface);
+  }
+  .pill {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.3px;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 2px;
+    border-left: 2px solid var(--teal);
+    background: var(--surface); color: var(--brown);
+  }
+  .pill.g { border-left-color: var(--green); }
+
+  /* Dirigido a */
+  .dirigido {
+    font-size: 11px; line-height: 1.55; color: var(--muted);
+    padding-top: 6px; border-top: 1px solid var(--surface);
+  }
+  .dirigido .label {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--green); margin-bottom: 3px;
+  }
+
+  /* Details row */
+  .details {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 6px;
+  }
+  .presencial {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--teal);
+  }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+    animation: blink 1.8s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
 
   /* === RED BAND === */
   .band {
     background: var(--red);
-    padding: 10px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+    padding: 12px 18px;
+    display: flex; align-items: center; justify-content: space-between;
   }
-  .band-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .band .date {
-    font-size: 17px;
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-  }
-  .band .sep {
-    width: 2px;
-    height: 18px;
-    background: rgba(255,255,255,0.4);
-    flex-shrink: 0;
-  }
-  .band .loc {
-    font-size: 14px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.9);
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-  }
-  .band .flag {
-    font-size: 28px;
-    flex-shrink: 0;
-  }
+  .band-left { display: flex; align-items: center; gap: 12px; }
+  .band .date { font-size: 17px; font-weight: 800; color: #fff; letter-spacing: .5px; }
+  .band .sep { width: 2px; height: 18px; background: rgba(255,255,255,.4); }
+  .band .loc { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.9); }
+  .band .flag { font-size: 26px; }
 
-  /* === BOTTOM: brand footer === */
-  .bottom {
-    background: #1a1512;
-    padding: 8px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  /* === FOOTER === */
+  .footer {
+    background: #1a1512; padding: 10px 18px;
+    display: flex; align-items: center; justify-content: space-between;
   }
-  .bottom-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .bottom-brand svg { flex-shrink: 0; }
-  .brand-name {
-    font-size: 14px;
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: 0.5px;
-  }
+  .footer-left { display: flex; align-items: center; gap: 8px; }
+  .brand-name { font-size: 14px; font-weight: 800; color: #fff; }
   .brand-name .c1 { color: var(--green); }
   .brand-name .c2 { color: var(--teal); }
-  .bottom-tag {
-    font-size: 8px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-  }
-  .bottom-modality {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--teal);
-  }
-  .dot-live {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--green);
-    animation: pulse 1.8s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%,100% { opacity: 1; }
-    50% { opacity: 0.25; }
-  }
+  .brand-sub { font-size: 8px; font-weight: 500; letter-spacing: 1px; color: rgba(255,255,255,.4); text-transform: uppercase; }
 
   @media (max-width: 420px) {
-    .poster { aspect-ratio: auto; min-height: 480px; }
-    .top { padding: 10px 12px 8px; gap: 10px; }
-    .logo { width: 56px; height: 56px; }
-    .title-block h1 { font-size: 18px; }
-    .title-block .line1 { font-size: 9px; }
+    .hdr-text h1 { font-size: 18px; }
+    .logo { width: 60px; height: 60px; }
+    .photo-row { height: 160px; }
+    .topics-grid { grid-template-columns: 1fr; }
     .band .date { font-size: 14px; }
     .band .loc { font-size: 12px; }
-    .band { padding: 8px 12px; }
   }
 </style>
 
 <div class="poster">
-  <!-- TOP -->
-  <div class="top">
+  <div class="bar-top"></div>
+
+  <!-- HEADER -->
+  <div class="header">
     <img class="logo" src="logo_antobiomove.jpg" alt="AntoBioMove">
-    <div class="title-block">
-      <div class="line1">Workshop Internacional</div>
+    <div class="hdr-text">
+      <div class="sup">Workshop Internacional</div>
       <h1>Biomecánica y Anatomía Aplicada al Pilates</h1>
-      <div class="trainer">por <strong>Lic. Antonella Gutiérrez</strong></div>
+      <div class="by">por <strong>Lic. Antonella Gutiérrez</strong></div>
     </div>
   </div>
 
   <!-- PHOTO -->
-  <div class="photo">
-    <img src="foto_biomecanica.jpg" alt="Lic. Antonella Gutiérrez impartiendo taller de Biomecánica">
-    <div class="photo-fade-top"></div>
-    <div class="photo-fade-bottom"></div>
-    <div class="photo-creds">
-      <span class="cred-pill">Master Trainer Pilates</span>
-      <span class="cred-pill alt">Biomecánica Deportiva</span>
-      <span class="cred-pill">Fisiología del Ejercicio</span>
-      <span class="cred-pill alt">Entrenamiento Deportivo</span>
-      <span class="cred-pill">Pilates Mat, Reformer & Suspensión</span>
+  <div class="photo-row">
+    <img src="foto_ensenando.jpg" alt="Lic. Antonella Gutiérrez enseñando biomecánica en Reformer">
+    <div class="photo-fade"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <p class="desc">
+      <strong>Comprende la ciencia detrás del movimiento.</strong> Este workshop te brinda las bases anatómicas y biomecánicas para entender cómo se mueve el cuerpo humano en Pilates, permitiéndote diseñar sesiones más seguras, efectivas y fundamentadas en evidencia científica.
+    </p>
+
+    <!-- Topics -->
+    <div>
+      <div class="topics-title">Contenido del Workshop</div>
+      <div class="topics-grid">
+        <div class="topic"><span class="dot"></span> Sistema Esquelético</div>
+        <div class="topic"><span class="dot g"></span> Columna Vertebral</div>
+        <div class="topic"><span class="dot"></span> Articulaciones</div>
+        <div class="topic"><span class="dot g"></span> Power House</div>
+        <div class="topic"><span class="dot"></span> Sistema Muscular</div>
+        <div class="topic"><span class="dot g"></span> Hombro, Cadera y Rodilla</div>
+        <div class="topic"><span class="dot"></span> Principios Biomecánicos</div>
+        <div class="topic"><span class="dot g"></span> Ejercicios Clásicos de Pilates</div>
+      </div>
+    </div>
+
+    <!-- Credentials -->
+    <div class="creds">
+      <span class="pill">Master Trainer Pilates</span>
+      <span class="pill g">Biomecánica Deportiva</span>
+      <span class="pill">Fisiología del Ejercicio</span>
+      <span class="pill g">Entrenamiento Deportivo</span>
+      <span class="pill">Pilates Mat, Reformer & Suspensión</span>
+    </div>
+
+    <!-- Dirigido a -->
+    <div class="dirigido">
+      <div class="label">Dirigido a</div>
+      Profesores de Pilates, fisioterapeutas, entrenadores personales y profesionales del movimiento que desean profundizar en los fundamentos anatómicos y biomecánicos para elevar la calidad de sus clases.
+    </div>
+
+    <!-- Modality -->
+    <div class="details">
+      <div class="presencial"><span class="live-dot"></span> Modalidad Presencial</div>
     </div>
   </div>
 
@@ -271,9 +256,9 @@
     <span class="flag" role="img" aria-label="Venezuela">&#127483;&#127466;</span>
   </div>
 
-  <!-- BOTTOM -->
-  <div class="bottom">
-    <div class="bottom-brand">
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
       <svg width="22" height="22" viewBox="0 0 60 60" fill="none">
         <path d="M30 5 L55 48 L5 48 Z" stroke="url(#g)" stroke-width="3" fill="none"/>
         <defs><linearGradient id="g" x1="5" y1="48" x2="55" y2="5"><stop stop-color="#4caf50"/><stop offset="1" stop-color="#00bcd4"/></linearGradient></defs>
@@ -281,11 +266,8 @@
       </svg>
       <div>
         <div class="brand-name"><span class="c1">Anto</span><span class="c2">Bio</span>M<span class="c1">oo</span>ve</div>
-        <div class="bottom-tag">Biomecánica & Anatomía en Movimiento</div>
+        <div class="brand-sub">Biomecánica & Anatomía en Movimiento</div>
       </div>
-    </div>
-    <div class="bottom-modality">
-      <span class="dot-live"></span> Presencial
     </div>
   </div>
 </div>
