@@ -545,6 +545,22 @@
     .stagger-4 { transition-delay: .4s; }
   }
 
+  /* ─── VIDEO SECTION ─── */
+  .video-section {
+    padding: 0 0 40px;
+  }
+  .video-wrapper {
+    max-width: 360px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  }
+  .video-wrapper video {
+    width: 100%;
+    display: block;
+  }
+
   /* ─── FLOATING WHATSAPP ─── */
   .whatsapp-float {
     position: fixed;
@@ -709,6 +725,17 @@
     </div>
     <div class="reveal-right">
       <img src="img/foto_biomecanica.jpg" alt="Antonella Gutiérrez dando clase de biomecánica" class="hero-photo">
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="video-section">
+  <div class="section-inner">
+    <div class="video-wrapper reveal-scale">
+      <video autoplay muted loop playsinline>
+        <source src="img/video_antobiomove.mp4" type="video/mp4">
+      </video>
     </div>
   </div>
 </section>
