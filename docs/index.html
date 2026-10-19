@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AntoBioMove</title>
   <meta name="description" content="Antonella Gutiérrez — Instructora de Pilates, Biomecánica y Anatomía en Movimiento. Clases, workshops y formación.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap">
 <style>
   /* Layout: single-column scroll, content-width hero, alternating warm/white sections */
   :root {
@@ -119,13 +119,13 @@
 
   /* ─── HERO ─── */
   .hero {
-    padding: 72px 0 64px;
+    padding: 64px 0 48px;
   }
   .hero-inner {
     max-width: 960px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 380px;
+    grid-template-columns: 1fr 320px;
     gap: 48px;
     align-items: center;
   }
@@ -179,6 +179,15 @@
     width: 100%;
     box-shadow: 0 16px 48px rgba(0,0,0,0.1);
   }
+  .hero-video-wrap {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  }
+  .hero-video-wrap video {
+    width: 100%;
+    display: block;
+  }
 
   /* ─── SECTIONS ─── */
   .section {
@@ -215,15 +224,16 @@
   /* ─── SOBRE MÍ ─── */
   .about-grid {
     display: grid;
-    grid-template-columns: 340px 1fr;
-    gap: 48px;
-    align-items: start;
+    grid-template-columns: 300px 1fr;
+    gap: 44px;
+    align-items: center;
   }
   .about-photo {
     width: 100%;
     border-radius: 14px;
     object-fit: cover;
     aspect-ratio: 3/4;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.1);
   }
   .about-text p {
     font-size: 15px;
@@ -263,6 +273,21 @@
   .service-card:hover {
     border-color: var(--accent);
   }
+  .service-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .service-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: #fff;
+  }
   .service-card h3 {
     font-family: var(--font-display);
     font-size: 18px;
@@ -274,13 +299,6 @@
     font-size: 14px;
     color: var(--fg-muted);
     line-height: 1.6;
-  }
-  .service-stripe {
-    width: 32px;
-    height: 3px;
-    border-radius: 2px;
-    background: var(--gradient);
-    margin-bottom: 16px;
   }
 
   /* ─── FORMACIÓN ─── */
@@ -326,17 +344,27 @@
   /* ─── GALERÍA ─── */
   .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
-  .gallery-grid img {
+  .gallery-grid img,
+  .gallery-grid video {
     width: 100%;
-    aspect-ratio: 3/4;
+    aspect-ratio: 4/5;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 12px;
     transition: transform .3s;
   }
-  .gallery-grid img:hover { transform: scale(1.03); }
+  .gallery-grid img:hover,
+  .gallery-grid video:hover { transform: scale(1.02); }
+  .gallery-item-tall {
+    grid-row: span 2;
+  }
+  .gallery-item-tall img,
+  .gallery-item-tall video {
+    aspect-ratio: auto;
+    height: 100%;
+  }
 
   /* ─── EVENTO ─── */
   .event-card {
@@ -488,11 +516,16 @@
       grid-template-columns: 1fr;
       gap: 32px;
     }
-    .hero-photo { max-width: 320px; margin: 0 auto; display: block; }
+    .hero-inner { gap: 28px; }
+    .hero-photo,
+    .hero-video-wrap { max-width: 280px; margin: 0 auto; display: block; }
     .about-grid { grid-template-columns: 1fr; gap: 28px; }
-    .about-photo { max-width: 320px; }
+    .about-photo { max-width: 280px; margin: 0 auto; display: block; }
     .services-grid { grid-template-columns: 1fr; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item-tall { grid-row: span 1; }
+    .gallery-item-tall img,
+    .gallery-item-tall video { aspect-ratio: 4/5; height: auto; }
     .event-card {
       grid-template-columns: 1fr;
       text-align: center;
@@ -543,22 +576,6 @@
     .stagger-2 { transition-delay: .2s; }
     .stagger-3 { transition-delay: .3s; }
     .stagger-4 { transition-delay: .4s; }
-  }
-
-  /* ─── VIDEO SECTION ─── */
-  .video-section {
-    padding: 0 0 40px;
-  }
-  .video-wrapper {
-    max-width: 360px;
-    margin: 0 auto;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-  }
-  .video-wrapper video {
-    width: 100%;
-    display: block;
   }
 
   /* ─── FLOATING WHATSAPP ─── */
@@ -724,18 +741,11 @@
       </a>
     </div>
     <div class="reveal-right">
-      <img src="img/foto_biomecanica.jpg" alt="Antonella Gutiérrez dando clase de biomecánica" class="hero-photo">
-    </div>
-  </div>
-</section>
-
-<!-- VIDEO -->
-<section class="video-section">
-  <div class="section-inner">
-    <div class="video-wrapper reveal-scale">
-      <video autoplay muted loop playsinline>
-        <source src="img/video_antobiomove.mp4" type="video/mp4">
-      </video>
+      <div class="hero-video-wrap">
+        <video autoplay muted loop playsinline>
+          <source src="img/video_antobiomove.mp4" type="video/mp4">
+        </video>
+      </div>
     </div>
   </div>
 </section>
@@ -773,22 +783,22 @@
     <div class="section-rule"></div>
     <div class="services-grid">
       <div class="service-card reveal-scale stagger-1">
-        <div class="service-stripe"></div>
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
         <h3>Clases de Pilates</h3>
         <p>Sesiones personalizadas y grupales de Pilates Mat, Reformer y Suspensión, adaptadas a tu nivel y objetivos.</p>
       </div>
       <div class="service-card reveal-scale stagger-2">
-        <div class="service-stripe"></div>
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg></div>
         <h3>Formación de Instructores</h3>
         <p>Acompañamiento en tu camino como instructor, compartiendo las bases de biomecánica y anatomía que todo profesional necesita.</p>
       </div>
       <div class="service-card reveal-scale stagger-3">
-        <div class="service-stripe"></div>
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
         <h3>Workshops Internacionales</h3>
         <p>Talleres intensivos presenciales sobre biomecánica, anatomía y método Pilates para profesionales del movimiento.</p>
       </div>
       <div class="service-card reveal-scale stagger-4">
-        <div class="service-stripe"></div>
+        <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg></div>
         <h3>Asesoría en Biomecánica</h3>
         <p>Evaluación biomecánica y diseño de programas de ejercicio fundamentados en evidencia científica.</p>
       </div>
@@ -847,10 +857,15 @@
     <h2 class="section-heading reveal">Galería</h2>
     <div class="section-rule"></div>
     <div class="gallery-grid">
-      <img src="img/foto_ensenando.jpg" alt="Corrigiendo técnica en reformer" class="reveal-scale stagger-1">
-      <img src="img/foto_clase.jpg" alt="Clase de Pilates mat grupal" class="reveal-scale stagger-2">
-      <img src="img/foto_reformer.jpg" alt="Clase de Pilates reformer" class="reveal-scale stagger-3">
-      <img src="img/foto_biomecanica.jpg" alt="Workshop de biomecánica" class="reveal-scale stagger-4">
+      <div class="gallery-item-tall reveal-scale stagger-1">
+        <video autoplay muted loop playsinline>
+          <source src="img/video_antobiomove.mp4" type="video/mp4">
+        </video>
+      </div>
+      <img src="img/foto_ensenando.jpg" alt="Corrigiendo técnica en reformer" class="reveal-scale stagger-2">
+      <img src="img/foto_biomecanica.jpg" alt="Workshop de biomecánica" class="reveal-scale stagger-3">
+      <img src="img/foto_clase.jpg" alt="Clase de Pilates mat grupal" class="reveal-scale stagger-4">
+      <img src="img/foto_reformer.jpg" alt="Clase de Pilates reformer" class="reveal-scale">
     </div>
   </div>
 </section>
@@ -904,7 +919,9 @@
 
 <!-- FOOTER -->
 <div class="footer">
-  <p>© 2026 AntoBioMove — Antonella Gutiérrez · Biomecánica &amp; Anatomía en Movimiento</p>
+  <p style="margin-bottom:6px;color:rgba(255,255,255,0.8);font-weight:500;">AntoBioMove</p>
+  <p>© 2026 Antonella Gutiérrez · Biomecánica &amp; Anatomía en Movimiento</p>
+  <p style="margin-top:8px;"><a href="https://instagram.com/anto_biomove" target="_blank" rel="noopener">@anto_biomove</a></p>
 </div>
 
 <!-- LIGHTBOX -->
