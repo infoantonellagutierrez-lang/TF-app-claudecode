@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluacion Presentacion Workshop</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap">
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    color: #1a1a1a;
+    background: #fff;
+    font-size: 11px;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page { max-width: 210mm; margin: 0 auto; padding: 0 4mm; }
+  .page-break { page-break-before: always; padding-top: 8mm; }
+
+  /* Header */
+  .doc-header {
+    display: flex; align-items: center; gap: 14px;
+    padding-bottom: 10px; margin-bottom: 12px;
+    border-bottom: 3px solid #00bcd4;
+  }
+  .doc-header .logo-area {
+    width: 50px; height: 50px; border-radius: 50%;
+    background: linear-gradient(135deg, #4caf50, #00bcd4);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .doc-header .logo-area span { color: #fff; font-size: 20px; font-weight: 900; }
+  .doc-header h1 { font-size: 18px; font-weight: 800; color: #5d4037; line-height: 1.2; }
+  .doc-header .subtitle { font-size: 10px; color: #6d6359; font-weight: 500; }
+
+  /* Meta info */
+  .meta-bar {
+    display: flex; gap: 20px; padding: 8px 12px;
+    background: #f5f2ee; border-radius: 6px; margin-bottom: 14px;
+    font-size: 9.5px; color: #6d6359;
+  }
+  .meta-bar strong { color: #5d4037; }
+
+  /* Section headers */
+  .section-title {
+    font-size: 13px; font-weight: 800; color: #5d4037;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    padding: 6px 0 4px; margin-top: 10px;
+    border-bottom: 2px solid #00bcd4;
+    margin-bottom: 8px;
+  }
+  .section-title.green { border-bottom-color: #4caf50; }
+  .section-title.red { border-bottom-color: #c62828; }
+  .section-title.orange { border-bottom-color: #e65100; }
+
+  /* Cards */
+  .card {
+    background: #fafaf8; border-radius: 6px; padding: 8px 10px;
+    margin-bottom: 6px; border-left: 3px solid #00bcd4;
+  }
+  .card.positive { border-left-color: #4caf50; }
+  .card.warning { border-left-color: #e65100; }
+  .card.critical { border-left-color: #c62828; }
+  .card.action { border-left-color: #1565c0; background: #f0f4ff; }
+
+  .card-title {
+    font-size: 11px; font-weight: 700; color: #5d4037; margin-bottom: 2px;
+  }
+  .card p { font-size: 10px; line-height: 1.45; color: #444; }
+
+  /* Rating */
+  .rating-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    margin-bottom: 10px;
+  }
+  .rating-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 5px 8px; background: #fafaf8; border-radius: 4px;
+  }
+  .rating-bar {
+    flex: 1; height: 6px; background: #eae5de; border-radius: 3px; overflow: hidden;
+  }
+  .rating-fill { height: 100%; border-radius: 3px; }
+  .rating-fill.high { background: #4caf50; }
+  .rating-fill.mid { background: #ff9800; }
+  .rating-fill.low { background: #c62828; }
+  .rating-label { font-size: 9px; font-weight: 600; color: #5d4037; min-width: 100px; }
+  .rating-score { font-size: 9px; font-weight: 700; color: #6d6359; min-width: 30px; text-align: right; }
+
+  /* Numbered list */
+  .numbered-list { counter-reset: item; padding-left: 0; list-style: none; }
+  .numbered-list li {
+    counter-increment: item; padding: 4px 0 4px 24px; position: relative;
+    font-size: 10px; color: #444; line-height: 1.45;
+  }
+  .numbered-list li::before {
+    content: counter(item); position: absolute; left: 0; top: 4px;
+    width: 16px; height: 16px; border-radius: 50%; background: #00bcd4;
+    color: #fff; font-size: 8px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .numbered-list li strong { color: #5d4037; }
+
+  /* Typo table */
+  .typo-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 9.5px; }
+  .typo-table th {
+    background: #5d4037; color: #fff; padding: 4px 8px;
+    text-align: left; font-weight: 600; font-size: 9px;
+  }
+  .typo-table td { padding: 4px 8px; border-bottom: 1px solid #eae5de; }
+  .typo-table tr:nth-child(even) { background: #fafaf8; }
+  .wrong { color: #c62828; font-weight: 600; text-decoration: line-through; }
+  .correct { color: #4caf50; font-weight: 600; }
+
+  /* Priority badge */
+  .priority {
+    display: inline-block; font-size: 7.5px; font-weight: 700;
+    padding: 1px 5px; border-radius: 2px; text-transform: uppercase;
+    letter-spacing: 0.5px; vertical-align: middle; margin-left: 4px;
+  }
+  .priority.alta { background: #ffebee; color: #c62828; }
+  .priority.media { background: #fff3e0; color: #e65100; }
+  .priority.baja { background: #e8f5e9; color: #2e7d32; }
+
+  /* Footer */
+  .doc-footer {
+    margin-top: 14px; padding-top: 8px; border-top: 1px solid #eae5de;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 8px; color: #999;
+  }
+  .doc-footer .brand { font-weight: 700; color: #5d4037; }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    padding: 3px 0 3px 18px; position: relative;
+    font-size: 10px; color: #444;
+  }
+  .checklist li::before {
+    content: ''; position: absolute; left: 0; top: 6px;
+    width: 10px; height: 10px; border: 1.5px solid #00bcd4;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="logo-area"><span>A</span></div>
+    <div>
+      <h1>Evaluacion de Presentacion</h1>
+      <div class="subtitle">Workshop Biomecanica y Anatomia Aplicada al Pilates &mdash; AntoBioMove</div>
+    </div>
+  </div>
+
+  <!-- META -->
+  <div class="meta-bar">
+    <span><strong>Trainer:</strong> Lic. Antonella Gutierrez</span>
+    <span><strong>Fecha del evento:</strong> 30 de Octubre 2026</span>
+    <span><strong>Sede:</strong> Valencia, Venezuela</span>
+    <span><strong>Fecha de evaluacion:</strong> 19 de Octubre 2026</span>
+  </div>
+
+  <!-- RESUMEN EJECUTIVO -->
+  <div class="section-title">Resumen Ejecutivo</div>
+  <div class="card positive">
+    <p>La presentacion cuenta con <strong>contenido academico solido</strong>, un recorrido completo desde anatomia basica (sistema esqueletico, articulaciones, musculos) hasta su aplicacion en ejercicios clasicos de Pilates. El material visual es de alta calidad con ilustraciones anatomicas profesionales. Sin embargo, existen oportunidades importantes de mejora en <strong>ortografia, consistencia idiomatica y personalizacion de marca</strong> que elevarian significativamente el nivel profesional del workshop.</p>
+  </div>
+
+  <!-- PUNTUACION GENERAL -->
+  <div class="section-title green">Puntuacion General por Areas</div>
+  <div class="rating-grid">
+    <div class="rating-item">
+      <span class="rating-label">Contenido academico</span>
+      <div class="rating-bar"><div class="rating-fill high" style="width:90%"></div></div>
+      <span class="rating-score">9/10</span>
+    </div>
+    <div class="rating-item">
+      <span class="rating-label">Calidad visual</span>
+      <div class="rating-bar"><div class="rating-fill high" style="width:85%"></div></div>
+      <span class="rating-score">8.5/10</span>
+    </div>
+    <div class="rating-item">
+      <span class="rating-label">Estructura y flujo</span>
+      <div class="rating-bar"><div class="rating-fill high" style="width:80%"></div></div>
+      <span class="rating-score">8/10</span>
+    </div>
+    <div class="rating-item">
+      <span class="rating-label">Ortografia y redaccion</span>
+      <div class="rating-bar"><div class="rating-fill low" style="width:50%"></div></div>
+      <span class="rating-score">5/10</span>
+    </div>
+    <div class="rating-item">
+      <span class="rating-label">Consistencia idiomatica</span>
+      <div class="rating-bar"><div class="rating-fill mid" style="width:55%"></div></div>
+      <span class="rating-score">5.5/10</span>
+    </div>
+    <div class="rating-item">
+      <span class="rating-label">Marca personal (AntoBioMove)</span>
+      <div class="rating-bar"><div class="rating-fill mid" style="width:40%"></div></div>
+      <span class="rating-score">4/10</span>
+    </div>
+    <div class="rating-item">
+      <span class="rating-label">Aplicacion practica</span>
+      <div class="rating-bar"><div class="rating-fill high" style="width:85%"></div></div>
+      <span class="rating-score">8.5/10</span>
+    </div>
+    <div class="rating-item">
+      <span class="rating-label">Engagement del publico</span>
+      <div class="rating-bar"><div class="rating-fill mid" style="width:65%"></div></div>
+      <span class="rating-score">6.5/10</span>
+    </div>
+  </div>
+
+  <!-- FORTALEZAS -->
+  <div class="section-title green">Fortalezas de la Presentacion</div>
+
+  <div class="card positive">
+    <div class="card-title">1. Recorrido anatomico completo y logico</div>
+    <p>La presentacion sigue un flujo pedagogico excelente: inicia con beneficios del Pilates, pasa a huesos, articulaciones (fibrosas, cartilaginosas, sinoviales), columna vertebral, sistema muscular, y finaliza con ejercicios clasicos. Esta secuencia va de lo general a lo especifico, facilitando la comprension progresiva.</p>
+  </div>
+
+  <div class="card positive">
+    <div class="card-title">2. Ilustraciones anatomicas de alta calidad</div>
+    <p>Las imagenes 3D del sistema musculoesqueletico (cuadriceps, tendones de la corva, musculos del cuello, articulacion de la cadera) son detalladas y profesionales. Las etiquetas anatomicas estan bien posicionadas y son claras.</p>
+  </div>
+
+  <div class="card positive">
+    <div class="card-title">3. Datos concretos y verificables</div>
+    <p>Se incluyen datos especificos como las 360 articulaciones del cuerpo humano con desglose por region (cadera: 2 troclear, columna: 76 artrodias, etc.), lo que aporta credibilidad cientifica al contenido.</p>
+  </div>
+
+  <div class="card positive">
+    <div class="card-title">4. Conexion teoria-practica</div>
+    <p>El cierre con la Serie Clasica de Ejercicios (The Hundred, Roll Up, Roll-Over, One Leg Circle, Rolling Back) y la frase "Si ya sabes como funciona nuestro cuerpo, entonces comencemos" crea un puente efectivo entre la teoria anatomica y la practica de Pilates.</p>
+  </div>
+
+  <div class="card positive">
+    <div class="card-title">5. Tipos de contracciones musculares</div>
+    <p>La slide sobre contracciones isometricas, concentricas y excentricas es especialmente relevante para instructores de Pilates, ya que estos conceptos se aplican directamente en la ensenanza de ejercicios.</p>
+  </div>
+
+  <!-- ERRORES ORTOGRAFICOS -->
+  <div class="section-title red">Errores Ortograficos Detectados</div>
+  <p style="font-size:10px; color:#444; margin-bottom:6px;">Se detectaron los siguientes errores que deben corregirse antes de la presentacion:</p>
+
+  <table class="typo-table">
+    <tr><th>Slide</th><th>Error</th><th>Correccion</th><th>Prioridad</th></tr>
+    <tr>
+      <td>Portada</td>
+      <td><span class="wrong">ALBAERTO</span></td>
+      <td><span class="correct">ALBERTO</span></td>
+      <td><span class="priority alta">Alta</span></td>
+    </tr>
+    <tr>
+      <td>Respiracion</td>
+      <td><span class="wrong">THE HUMDRED</span></td>
+      <td><span class="correct">THE HUNDRED</span></td>
+      <td><span class="priority alta">Alta</span></td>
+    </tr>
+    <tr>
+      <td>Respiracion</td>
+      <td><span class="wrong">THE SPINE STRECH</span></td>
+      <td><span class="correct">THE SPINE STRETCH</span></td>
+      <td><span class="priority alta">Alta</span></td>
+    </tr>
+    <tr>
+      <td>Ejercicios</td>
+      <td><span class="wrong">sscissors</span></td>
+      <td><span class="correct">scissors</span></td>
+      <td><span class="priority media">Media</span></td>
+    </tr>
+    <tr>
+      <td>Varios</td>
+      <td><span class="wrong">PERTENECEN (con tilde incorrecta)</span></td>
+      <td><span class="correct">PERTENECEN</span></td>
+      <td><span class="priority media">Media</span></td>
+    </tr>
+    <tr>
+      <td>Cuadriceps</td>
+      <td><span class="wrong">Vato lateral</span></td>
+      <td><span class="correct">Vasto lateral</span></td>
+      <td><span class="priority alta">Alta</span></td>
+    </tr>
+    <tr>
+      <td>Cuadriceps</td>
+      <td><span class="wrong">Semimenbranoso</span></td>
+      <td><span class="correct">Semimembranoso</span></td>
+      <td><span class="priority alta">Alta</span></td>
+    </tr>
+  </table>
+
+</div><!-- end page 1 -->
+
+<!-- PAGE 2 -->
+<div class="page page-break">
+
+  <!-- PUNTOS DE MEJORA -->
+  <div class="section-title orange">Puntos de Mejora Prioritarios</div>
+
+  <div class="card critical">
+    <div class="card-title">1. Personalizacion de marca AntoBioMove <span class="priority alta">Alta</span></div>
+    <p>La presentacion actualmente muestra el nombre de <strong>"Carlos Alberto Zorrilla"</strong> como trainer y los logos de Centro Zen/IDCA/PMA. Cuando tu impartas este workshop bajo tu marca AntoBioMove, necesitas: (a) reemplazar el nombre del trainer por "Lic. Antonella Gutierrez", (b) incluir tu logo AntoBioMove en la portada y cierre, (c) agregar tus credenciales especificas (Centro Zen Authorized Trainer). Esto es fundamental para posicionarte como la facilitadora del contenido.</p>
+  </div>
+
+  <div class="card critical">
+    <div class="card-title">2. Consistencia idiomatica Espanol/Ingles <span class="priority alta">Alta></span></div>
+    <p>Hay una mezcla inconsistente de idiomas: las etiquetas anatomicas de la cadera estan en ingles (Acetabulum, Head of femur, Greater trochanter) mientras que en otros slides se usan terminos en espanol. La slide final tambien tiene labels en ingles (Pectineus, Rectus abdominis, External oblique). <strong>Recomendacion:</strong> mantener la terminologia anatomica en espanol con el termino en ingles entre parentesis la primera vez que aparece, para que los estudiantes conozcan ambas nomenclaturas.</p>
+  </div>
+
+  <div class="card warning">
+    <div class="card-title">3. Contenido cortado en bordes <span class="priority media">Media</span></div>
+    <p>En la slide de ejercicios (frame 35), la tabla de siluetas de ejercicios Pilates aparece cortada en el borde derecho. Tambien algunas etiquetas anatomicas quedan parcialmente ocultas. Verificar que todo el contenido sea visible en formato 16:9 y al proyectarse.</p>
+  </div>
+
+  <div class="card warning">
+    <div class="card-title">4. Falta de interactividad y dinamismo <span class="priority media">Media</span></div>
+    <p>La presentacion es muy informativa pero predominantemente unidireccional. Para un workshop presencial se recomienda incluir: (a) preguntas interactivas para el publico, (b) ejercicios de palpacion anatomica entre participantes, (c) momentos de practica en Reformer/Mat conectados con la teoria, (d) casos clinicos breves para analisis grupal.</p>
+  </div>
+
+  <div class="card warning">
+    <div class="card-title">5. Slide de beneficios demasiado densa <span class="priority media">Media</span></div>
+    <p>La slide "Beneficios" contiene 6 puntos extensos que pueden ser dificiles de procesar. Recomendacion: dividirla en 2 slides o usar iconos/graficos que simplifiquen la lectura visual. Los participantes retienen mejor la informacion cuando hay menos texto por slide.</p>
+  </div>
+
+  <div class="card warning">
+    <div class="card-title">6. Falta seccion de Power House <span class="priority media">Media</span></div>
+    <p>Siendo uno de los temas anunciados en el contenido del workshop ("Power House: centro de fuerza y estabilidad"), no se identifica una slide dedicada exclusivamente a este tema. Agregar una seccion clara sobre los musculos del Power House (transverso del abdomen, oblicuos, multifidos, suelo pelvico, diafragma) con su relacion especifica al Pilates.</p>
+  </div>
+
+  <!-- ENFOQUE PARA LA PRESENTACION -->
+  <div class="section-title">En Que Enfocarte al Presentar</div>
+
+  <ol class="numbered-list">
+    <li><strong>Domina la narrativa, no leas las slides.</strong> Como formadora, tu valor esta en explicar el "por que" detras de cada concepto anatomico. Las slides son soporte visual, no un guion. Practica explicar cada sistema sin mirar la pantalla.</li>
+    <li><strong>Conecta cada concepto con un ejercicio real.</strong> Cuando expliques la articulacion de la cadera, demuestra inmediatamente como afecta a ejercicios como Leg Circle o Single Leg Stretch. Esta conexion teoria-practica es tu diferenciador.</li>
+    <li><strong>Usa el lenguaje corporal para ensenar anatomia.</strong> Senala en tu propio cuerpo donde estan los musculos que describes. Pide a los participantes que toquen sus propios puntos anatomicos (cresta iliaca, escapula, etc.).</li>
+    <li><strong>Administra el tiempo por bloques.</strong> Con tanto contenido, es facil extenderse en anatomia basica y apurar los ejercicios. Sugiero: Beneficios y huesos (20 min), Articulaciones (25 min), Musculos y contracciones (25 min), Power House (20 min), Serie clasica y practica (30 min).</li>
+    <li><strong>Cierra con impacto.</strong> La frase "Si ya sabes como funciona nuestro cuerpo, entonces comencemos" es excelente. Asegurate de que ese momento de transicion a la practica sea energico y motivador.</li>
+    <li><strong>Prepara respuestas para preguntas frecuentes.</strong> Los participantes probablemente preguntaran sobre: lesiones especificas (hernia discal, condromalacia), adaptaciones para poblaciones especiales (embarazadas, adultos mayores), y diferencias entre Pilates clasico y contemporaneo.</li>
+  </ol>
+
+  <!-- RECOMENDACIONES DE ACCION -->
+  <div class="section-title green">Plan de Accion Pre-Workshop</div>
+
+  <div class="card action">
+    <div class="card-title">Semana 1 (Inmediato): Correcciones Tecnicas</div>
+    <ul class="checklist">
+      <li>Corregir todos los errores ortograficos listados en la tabla</li>
+      <li>Reemplazar nombre del trainer por "Lic. Antonella Gutierrez"</li>
+      <li>Agregar logo AntoBioMove en portada y cierre</li>
+      <li>Unificar terminologia anatomica (espanol + ingles entre parentesis)</li>
+    </ul>
+  </div>
+
+  <div class="card action">
+    <div class="card-title">Semana 2: Mejoras de Contenido</div>
+    <ul class="checklist">
+      <li>Desarrollar slide dedicada al Power House</li>
+      <li>Dividir slide de Beneficios en 2 slides mas visuales</li>
+      <li>Verificar que ninguna imagen/texto quede cortado</li>
+      <li>Agregar slides de preguntas interactivas entre secciones</li>
+    </ul>
+  </div>
+
+  <div class="card action">
+    <div class="card-title">Semana 3: Preparacion de la Facilitadora</div>
+    <ul class="checklist">
+      <li>Ensayar la presentacion completa cronometrando cada bloque</li>
+      <li>Preparar material complementario impreso (diagrama del Power House)</li>
+      <li>Definir 3-4 ejercicios practicos de demostracion en vivo</li>
+      <li>Preparar evaluacion o quiz final para los participantes</li>
+    </ul>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div>
+      <span class="brand">AntoBioMove</span> &mdash; Biomecanica & Anatomia en Movimiento
+    </div>
+    <div>Documento preparado para Lic. Antonella Gutierrez &bull; Octubre 2026</div>
+  </div>
+
+</div><!-- end page 2 -->
+
+</body>
+</html>
