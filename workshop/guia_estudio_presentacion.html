@@ -1,0 +1,950 @@
+<title>Guía de Estudio — Biomecánica</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  /* Layout: vertical document, numbered slide guide cards */
+  :root {
+    --bg: #FDFAF5;
+    --fg: #2A1F1A;
+    --card: #FFFFFF;
+    --card-border: #E8DDD2;
+    --accent: #9B2C2C;
+    --accent-light: #FEE8E8;
+    --orange: #D97B2A;
+    --orange-light: #FEF0E0;
+    --muted: #7A6E63;
+    --divider: #E8DDD2;
+    --tag-bg: #F0EBE4;
+    --display: 'DM Serif Display', Georgia, serif;
+    --body: 'Inter', system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1A1614;
+      --fg: #E8E0D8;
+      --card: #252019;
+      --card-border: #3D352C;
+      --accent: #E8706E;
+      --accent-light: #3A2020;
+      --orange: #E89A4A;
+      --orange-light: #332818;
+      --muted: #9A8E83;
+      --divider: #3D352C;
+      --tag-bg: #2E2820;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1A1614;
+    --fg: #E8E0D8;
+    --card: #252019;
+    --card-border: #3D352C;
+    --accent: #E8706E;
+    --accent-light: #3A2020;
+    --orange: #E89A4A;
+    --orange-light: #332818;
+    --muted: #9A8E83;
+    --divider: #3D352C;
+    --tag-bg: #2E2820;
+    color-scheme: dark;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+  }
+  .wrapper {
+    max-width: 780px;
+    margin: 0 auto;
+    padding-block: 2rem 4rem;
+  }
+
+  /* Header */
+  .doc-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--accent);
+  }
+  .doc-header h1 {
+    font-family: var(--display);
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    color: var(--accent);
+    margin: 0 0 0.3rem;
+    text-wrap: balance;
+    font-weight: 400;
+  }
+  .doc-header .subtitle {
+    font-size: 1.05rem;
+    color: var(--orange);
+    font-weight: 600;
+    margin: 0 0 1rem;
+  }
+  .doc-header .meta {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* Tips box */
+  .tips-box {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 2.5rem;
+  }
+  .tips-box h2 {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    color: var(--accent);
+    margin: 0 0 0.6rem;
+    font-weight: 400;
+  }
+  .tips-box ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+  .tips-box li {
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+  }
+
+  /* Slide cards */
+  .slide-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .slide-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--accent);
+    color: #fff;
+  }
+  .slide-num {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    min-width: 2.2rem;
+    text-align: center;
+    opacity: 0.7;
+  }
+  .slide-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .slide-body {
+    padding: 1.2rem 1.4rem;
+  }
+
+  .duration {
+    display: inline-block;
+    background: var(--orange-light);
+    color: var(--orange);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .key-points {
+    margin: 0.6rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .key-points li {
+    position: relative;
+    padding-left: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.88rem;
+  }
+  .key-points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+  }
+
+  .script-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 1rem 0 0.3rem;
+  }
+  .script-text {
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--fg);
+    font-style: italic;
+  }
+  .script-text strong {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .tip-inline {
+    background: var(--orange-light);
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font-size: 0.82rem;
+    margin-top: 0.8rem;
+    color: var(--orange);
+    font-weight: 500;
+  }
+
+  /* Study plan */
+  .study-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--divider);
+  }
+  .study-section h2 {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin: 0 0 1rem;
+    font-weight: 400;
+    text-wrap: balance;
+  }
+  .week-block {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .week-block h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--orange);
+    margin: 0 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .week-block ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+  .week-block li {
+    margin-bottom: 0.3rem;
+    font-size: 0.88rem;
+  }
+
+  .faq-item {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 0.6rem;
+  }
+  .faq-q {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .faq-a {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--divider);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .footer-note strong { color: var(--orange); }
+
+  @media print {
+    .slide-card { break-inside: avoid; }
+  }
+</style>
+
+<div class="wrapper">
+
+  <div class="doc-header">
+    <h1>Guía de Estudio y Guion de Presentación</h1>
+    <div class="subtitle">Biomecánica y Anatomía en el Pilates</div>
+    <div class="meta">
+      Autor de la presentación: Prof. Carlos Alberto Zorrilla<br>
+      Facilitadora del taller: Lic. Antonella Gutiérrez — AntoBioMove<br>
+      26 diapositivas · Duración estimada: 90–120 min
+    </div>
+  </div>
+
+  <div class="tips-box">
+    <h2>Antes de presentar</h2>
+    <ul>
+      <li><strong>Domina la narrativa, no leas las slides.</strong> Tu valor está en explicar el "por qué" detrás de cada concepto.</li>
+      <li><strong>Conecta cada concepto con un ejercicio real.</strong> Demuestra en tu propio cuerpo.</li>
+      <li><strong>Usa lenguaje corporal:</strong> señala en ti misma dónde están los músculos que describes.</li>
+      <li><strong>Administra el tiempo por bloques:</strong> Beneficios y huesos (20 min), Articulaciones (25 min), Músculos y contracciones (25 min), Power House (20 min), Serie clásica y práctica (30 min).</li>
+      <li><strong>Prepara respuestas a preguntas frecuentes</strong> (hernia discal, embarazo, condromalacia, adultos mayores).</li>
+    </ul>
+  </div>
+
+  <!-- SLIDE 1 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">1</span>
+      <span class="slide-title">Portada</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">2 minutos — Bienvenida</span>
+      <ul class="key-points">
+        <li>Presentarte como facilitadora del taller</li>
+        <li>Dar crédito al Prof. Carlos Alberto Zorrilla como autor del material</li>
+        <li>Explicar la estructura del taller y su duración</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Bienvenidos al taller de <strong>Biomecánica y Anatomía en el Pilates</strong>. Mi nombre es Antonella Gutiérrez, soy instructora de Pilates y facilitadora de este taller. El material que vamos a trabajar hoy fue desarrollado por el <strong>Prof. Carlos Alberto Zorrilla</strong>. En las próximas dos horas vamos a entender cómo funciona nuestro cuerpo para poder aplicar ese conocimiento en cada ejercicio de Pilates. Vamos a dividir el taller en bloques: primero la base teórica, luego anatomía, después músculos y finalmente la serie de ejercicios."
+      </div>
+      <div class="tip-inline">Tip: Pide a los participantes que se presenten brevemente y digan su experiencia con Pilates.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">2</span>
+      <span class="slide-title">¿Qué es Pilates?</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li>Joseph Hubertus Pilates (1883–1967) — creador del método</li>
+        <li>"Contrología" = coordinación completa de cuerpo, mente y espíritu</li>
+        <li>Combina gimnasia, traumatología y yoga</li>
+        <li>Se centra en músculos internos para equilibrio y estabilidad</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Pilates no es solo 'hacer abdominales en una colchoneta'. Joseph Pilates lo llamó <strong>Contrología</strong> — la coordinación completa de cuerpo, mente y espíritu. A diferencia de otros métodos, Pilates trabaja de adentro hacia afuera: primero los músculos profundos que estabilizan, después los superficiales que mueven. Por eso es tan efectivo para la postura y la prevención de lesiones."
+      </div>
+      <div class="tip-inline">Tip: Pregunta al grupo "¿Alguien sabe quién inventó Pilates?" para generar participación.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">3</span>
+      <span class="slide-title">Beneficios del Pilates</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li>Flexibilidad, agilidad, equilibrio y coordinación</li>
+        <li>Alineación postural</li>
+        <li>Fortalece y tonifica sin volumen excesivo</li>
+        <li>Vitalidad física y mental, autoestima</li>
+        <li>Conexión cuerpo-mente mediante concentración y respiración</li>
+        <li>Prevención y rehabilitación de lesiones</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Estos seis beneficios son los que deben saber explicar a sus alumnos cuando les pregunten '¿para qué sirve Pilates?'. El más importante para nosotros como instructores es la <strong>prevención de lesiones</strong> — y para eso necesitamos entender la anatomía. Si no sabemos cómo funciona una articulación, no podemos protegerla. Por eso estamos aquí hoy."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">4</span>
+      <span class="slide-title">Historia del Pilates</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li>Nació en Düsseldorf, 1883 — niño enfermizo (asma, raquitismo, fiebre reumática)</li>
+        <li>Estudió anatomía, yoga, artes marciales, boxeo, gimnasia</li>
+        <li>WWI: rehabilitó soldados heridos usando muelles de camas</li>
+        <li>1926: emigró a Nueva York, abrió primer estudio</li>
+        <li>Cita: "En 10 sesiones sentirás la diferencia, en 20 la verás, en 30 tendrás un cuerpo nuevo"</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "La historia de Joseph Pilates es inspiradora. Era un niño enfermo que decidió dedicar su vida a superar sus limitaciones. Eso lo llevó a crear un método basado en su propio estudio de la anatomía y el movimiento. <strong>Los aparatos de Pilates nacieron literalmente de muelles de camas de hospital</strong> — él los usaba para rehabilitar soldados durante la Primera Guerra Mundial. Cuando alguien les diga que Pilates es 'suavecito', cuenten esta historia."
+      </div>
+      <div class="tip-inline">Tip: Esta cita de Pilates es muy poderosa para motivar alumnos nuevos. Memorízala.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">5</span>
+      <span class="slide-title">Hablemos de Anatomía</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">1 minuto — Transición</span>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Ahora vamos a entrar en la parte de anatomía. Sé que para algunos puede parecer denso, pero les prometo que <strong>si entienden cómo funciona el cuerpo, van a ser mejores instructores</strong>. No necesitan memorizar cada hueso — necesitan entender los principios para poder corregir a sus alumnos con fundamento."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">6</span>
+      <span class="slide-title">¿Qué son los huesos y qué hacen?</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li>Los huesos son tejido vivo (no son "palos secos")</li>
+        <li>5 funciones: soporte, protección, movimiento, almacenamiento de minerales, producción de células sanguíneas</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Lo primero que deben saber: <strong>los huesos son tejido vivo</strong>. Se regeneran, se adaptan a las cargas, responden al ejercicio. Por eso Pilates es tan bueno para la salud ósea. Los huesos no solo sostienen el cuerpo — protegen órganos, producen células de la sangre y almacenan minerales. Cuando hacemos Pilates estamos estimulando todo este sistema."
+      </div>
+      <div class="tip-inline">Tip: Toca tu propia cresta ilíaca y pide al grupo que haga lo mismo. Aprender anatomía es táctil.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">7</span>
+      <span class="slide-title">El Esqueleto Humano</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li>206 huesos en el adulto</li>
+        <li>Esqueleto axial (80): cráneo, columna, costillas, esternón</li>
+        <li>Esqueleto apendicular (126): extremidades y cinturas</li>
+        <li>Huesos clave para Pilates: escápula, pelvis, fémur, columna</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "No necesitan memorizar los 206 huesos. Pero sí necesitan ubicar los que mencionamos constantemente en clase: <strong>la escápula</strong> cuando decimos 'bajen los hombros', <strong>la pelvis</strong> cuando pedimos posición neutra, <strong>el fémur</strong> cuando trabajamos piernas. El esqueleto se divide en dos partes: el axial, que es el eje central — columna, costillas, cráneo — y el apendicular, que son las extremidades. En Pilates trabajamos ambos, pero el eje central es la prioridad."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">8</span>
+      <span class="slide-title">Articulaciones del cuerpo humano</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li>360 articulaciones en total</li>
+        <li>86 cráneo, 6 garganta, 66 tórax, 76 columna/pelvis</li>
+        <li>32 cada extremidad superior, 31 cada inferior</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "El cuerpo tiene <strong>360 articulaciones</strong>. Parece mucho, pero piensen que solo el cráneo tiene 86. Lo importante para nosotros son las articulaciones que movemos en Pilates: hombro, cadera, rodilla, columna. Cada una tiene características diferentes y por eso las vamos a ver una por una."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">9</span>
+      <span class="slide-title">Tipos de articulaciones</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li><strong>Fibrosas:</strong> inmóviles (suturas del cráneo)</li>
+        <li><strong>Cartilaginosas:</strong> parcialmente móviles (discos intervertebrales, sínfisis del pubis)</li>
+        <li><strong>Sinoviales:</strong> móviles — las que más nos importan en Pilates</li>
+        <li>Movimientos sinoviales: flexión, extensión, abducción, aducción, rotación, circunducción</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Hay tres tipos de articulaciones. Las <strong>fibrosas</strong> no se mueven — como las del cráneo. Las <strong>cartilaginosas</strong> se mueven poquito — como los discos entre las vértebras, por eso la columna es flexible pero no tanto. Las que más nos importan son las <strong>sinoviales</strong> — hombro, cadera, rodilla — son completamente móviles. Ahora, los movimientos que hacen estas articulaciones son seis. Vamos a practicarlos."
+      </div>
+      <div class="tip-inline">Tip: Haz que todo el grupo se ponga de pie y practique cada movimiento: flexión de cadera, extensión, abducción (abrir pierna al lado), aducción (cerrar), rotación y circunducción (círculos).</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">10</span>
+      <span class="slide-title">La Columna Vertebral</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">8 minutos — Diapositiva clave</span>
+      <ul class="key-points">
+        <li>5 regiones: cervical (7), torácica (12), lumbar (5), sacro (5 fusionadas), coxis (4 fusionadas)</li>
+        <li>33 vértebras en niñez → 26 en adulto (fusión sacro y coxis)</li>
+        <li>Curvaturas: lordosis cervical, cifosis torácica, lordosis lumbar</li>
+        <li>Pilates: articulación vértebra por vértebra</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "La columna es <strong>el tema más importante de todo el taller</strong>. Si hay algo que deben dominar es esto. Tiene 5 regiones — apréndanse los números: <strong>7 cervicales, 12 torácicas, 5 lumbares</strong>, más el sacro y el coxis. Las curvaturas naturales son lordosis en el cuello, cifosis en la espalda media, lordosis en la zona lumbar. Cuando decimos 'posición neutra' en Pilates, estamos respetando estas curvaturas. Cuando hacemos Roll Up, estamos articulando <strong>vértebra por vértebra</strong> — eso significa que cada una de esas 26 vértebras se mueve secuencialmente. Si un alumno 'se levanta en bloque', no está articulando."
+      </div>
+      <div class="tip-inline">Tip: Tócate la columna desde la nuca hasta el sacro. Pide a los participantes que se palpen las espinosas. Esto hace la anatomía real.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">11</span>
+      <span class="slide-title">Articulación del Hombro</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li>La más móvil del cuerpo → también la más inestable</li>
+        <li>Acromion, clavícula, cabeza del húmero</li>
+        <li>Manguito rotador: 4 músculos que estabilizan (Supraespinoso, Infraespinoso, Redondo menor, Subescapular)</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "El hombro es la articulación <strong>más móvil del cuerpo</strong>, pero eso también la hace la más inestable. Por eso tantas personas se lesionan el hombro. El <strong>manguito rotador</strong> — cuatro músculos profundos — es el que mantiene la cabeza del húmero en su sitio. En Pilates, cuando decimos 'estabilicen los hombros' o 'bajen las escápulas', estamos activando este sistema. Tóquense el acromion — es el puntito del hueso en la parte superior del hombro."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">12</span>
+      <span class="slide-title">Articulación de la Cadera</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li>Articulación esférica (enartrosis) — muy estable</li>
+        <li>Acetábulo: cavidad en el hueso coxal</li>
+        <li>Cabeza del fémur: encaja como bola en copa</li>
+        <li>Trocánter mayor: prominencia lateral del fémur</li>
+        <li>Mismos movimientos que el hombro pero con más estabilidad</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "La cadera es lo opuesto al hombro: también es esférica, pero es <strong>mucho más estable</strong>. El acetábulo es una cavidad profunda donde encaja la cabeza del fémur, como una pelota en un tazón. Tóquense el trocánter mayor — es el hueso que sobresale a los lados de la cadera. En Pilates, la cadera es fundamental: cuando hacemos Leg Circle, todo el movimiento sale de aquí. La estabilidad pélvica mientras la pierna se mueve es el desafío."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">13</span>
+      <span class="slide-title">La Rodilla</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li>Fémur, rótula, tibia</li>
+        <li>4 ligamentos: LCA, LCP, LCM, LCL + ligamento rotuliano</li>
+        <li>Cartílago hialino y meniscos</li>
+        <li>Regla de oro: la rodilla nunca sobrepasa los dedos del pie</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "La rodilla es una articulación que <strong>solo hace flexión y extensión</strong> — no está diseñada para rotar bajo carga. Por eso es tan vulnerable. Tiene cuatro ligamentos principales: los <strong>cruzados</strong> — anterior y posterior — que evitan que la tibia se deslice, y los <strong>colaterales</strong> que dan estabilidad lateral. En Pilates, la regla es: <strong>la rodilla siempre alineada con el segundo dedo del pie</strong>, y nunca sobrepasa la punta de los dedos en ejercicios de carga."
+      </div>
+      <div class="tip-inline">Tip: Pregunta si alguien tiene problemas de rodilla. Es muy común y genera conexión con el contenido.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">14</span>
+      <span class="slide-title">Tipos de Músculos</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li><strong>Esqueléticos</strong> (estriados): voluntarios, se adhieren a huesos, 40% del peso corporal</li>
+        <li><strong>Lisos</strong> (involuntarios): órganos, vasos, tubo digestivo</li>
+        <li><strong>Cardíaco</strong>: involuntario, no se fatiga, solo en el corazón</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Hay tres tipos de músculos. Los que nos importan en Pilates son los <strong>esqueléticos</strong> — son voluntarios, los controlamos nosotros. Representan el <strong>40% de nuestro peso corporal</strong>. Los lisos están en los órganos — no los controlamos. Y el cardíaco es especial: es el único músculo que no se cansa nunca. Dato interesante: el transverso del abdomen, que activamos constantemente en Pilates, trabaja tanto de forma voluntaria como involuntaria."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 15 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">15</span>
+      <span class="slide-title">Tipos de Contracciones</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos — Diapositiva clave</span>
+      <ul class="key-points">
+        <li><strong>Isométrica:</strong> tensión sin movimiento (ej: plancha, posición de The Hundred)</li>
+        <li><strong>Concéntrica:</strong> músculo se acorta (ej: subir en Roll Up)</li>
+        <li><strong>Excéntrica:</strong> músculo se alarga bajo tensión (ej: bajar en Roll Up)</li>
+        <li>También: heterométricas y auxotónicas</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Esto es <strong>fundamental</strong> para dar clase. Cuando hacen un Roll Up, la subida es <strong>concéntrica</strong> — los abdominales se acortan. La bajada es <strong>excéntrica</strong> — se alargan controlando el movimiento. Y si sostienen la posición arriba, es <strong>isométrica</strong>. ¿Por qué importa? Porque la contracción excéntrica es la que más fuerza genera y la que más protege contra lesiones. Cuando decimos 'bajen lento, con control', estamos trabajando excéntrico. Pilates es el rey del trabajo excéntrico."
+      </div>
+      <div class="tip-inline">Tip: Demuestra con una pesa o botella de agua: subir = concéntrica, mantener = isométrica, bajar lento = excéntrica.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 16 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">16</span>
+      <span class="slide-title">El Power House</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">8 minutos — Diapositiva clave</span>
+      <ul class="key-points">
+        <li><strong>Anterior:</strong> oblicuo externo, oblicuo interno, transverso del abdomen, recto abdominal</li>
+        <li><strong>Posterior:</strong> erector de la espina (espinal, longísimo, iliocostal), multífido, cuadrado lumbar</li>
+        <li><strong>Glúteos:</strong> mayor, medio, menor</li>
+        <li><strong>Iliopsoas:</strong> psoas mayor, psoas menor, ilíaca</li>
+        <li>Va desde las costillas hasta la línea de la cadera</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "El Power House es <strong>el concepto central del Pilates</strong>. No es solo 'apretar abdominales'. Es un cilindro de músculos que va desde la parte inferior de las costillas hasta la línea de la cadera. Incluye los abdominales por delante, los erectores de la espina por detrás, el suelo pélvico abajo, el diafragma arriba, los glúteos y el iliopsoas. Cuando decimos 'activa el centro', estamos pidiendo que <strong>todo este cilindro se co-contraiga</strong> para estabilizar la columna. El transverso del abdomen es la faja natural del cuerpo — apréndanse ese nombre."
+      </div>
+      <div class="tip-inline">Tip: Haz que el grupo practique la activación del Power House acostados: "Imaginen que se ponen un cinturón muy apretado y lo cierran desde adentro."</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 17 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">17</span>
+      <span class="slide-title">Los Glúteos</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">4 minutos</span>
+      <ul class="key-points">
+        <li><strong>Glúteo mayor:</strong> el más grande, extensión y rotación externa</li>
+        <li><strong>Glúteo medio:</strong> abducción, estabilidad pélvica al caminar</li>
+        <li><strong>Glúteo menor:</strong> el más profundo, asiste al medio</li>
+        <li><strong>Piriforme:</strong> rotador externo, puede comprimir el ciático</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Los glúteos no son solo para la estética. El <strong>glúteo medio</strong> es el más importante para Pilates: es el que nos da estabilidad pélvica cuando estamos parados en una pierna. Si un alumno 'se cae' hacia un lado en Single Leg Circle, tiene el glúteo medio débil. El <strong>piriforme</strong> es pequeño pero problemático: cuando se contractura, puede comprimir el nervio ciático y causar dolor que baja por la pierna."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 18 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">18</span>
+      <span class="slide-title">Cuádriceps y Tendones de la Corva</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">4 minutos</span>
+      <ul class="key-points">
+        <li><strong>Cuádriceps:</strong> recto femoral, vasto intermedio, vasto lateral, vasto medial</li>
+        <li><strong>Isquiotibiales:</strong> bíceps femoral, semitendinoso, semimembranoso, poplíteo</li>
+        <li>Son antagonistas: cuádriceps extiende la rodilla, isquiotibiales la flexionan</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Cuádriceps adelante, isquiotibiales atrás — son <strong>antagonistas</strong>. Cuando uno se contrae, el otro se estira. En Pilates trabajamos el equilibrio entre ambos. Muchas personas tienen cuádriceps fuertes pero isquiotibiales débiles — eso es un factor de riesgo para lesiones de rodilla. Single Leg Kick y Double Leg Kick trabajan específicamente los isquiotibiales."
+      </div>
+      <div class="tip-inline">Tip: Nota que en la presentación original decía "Vato lateral" y "Semimenbranoso" — son errores. Lo correcto es "Vasto lateral" y "Semimembranoso".</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 19 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">19</span>
+      <span class="slide-title">Músculos del Cuello</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">3 minutos</span>
+      <ul class="key-points">
+        <li>Esternocleidomastoideo (ECM): flexión y rotación</li>
+        <li>Escalenos: flexión lateral</li>
+        <li>Largo del cuello: flexor cervical profundo</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "El cuello es donde más se quejan los alumnos principiantes. '¡Me duele el cuello en los abdominales!' ¿Por qué? Porque usan el ECM — el esternocleidomastoideo, este músculo grande a los lados — en vez de los abdominales. La corrección es: <strong>'Mira hacia tu ombligo, no tires de la cabeza con las manos, deja que los abdominales hagan el trabajo.'</strong> Los flexores cervicales profundos son los que deben sostener la cabeza, no el ECM."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 20 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">20</span>
+      <span class="slide-title">Trapecio</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">3 minutos</span>
+      <ul class="key-points">
+        <li><strong>Fibras superiores:</strong> elevan la escápula (las que se tensan con el estrés)</li>
+        <li><strong>Fibras medias:</strong> retracción escapular</li>
+        <li><strong>Fibras inferiores:</strong> depresión escapular</li>
+        <li>En Pilates: activar medias e inferiores, relajar superiores</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "El trapecio es el músculo de la tensión. Las <strong>fibras superiores</strong> se contraen con el estrés — por eso las personas cargan los hombros hacia las orejas. En Pilates queremos lo contrario: <strong>activar las fibras medias e inferiores</strong> para bajar y estabilizar las escápulas. Cuando decimos 'hombros lejos de las orejas' o 'metan las escápulas en los bolsillos de atrás', estamos activando las fibras inferiores del trapecio."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 21 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">21</span>
+      <span class="slide-title">Clasificación de Ejercicios</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li><strong>Abdominales (5):</strong> The Hundred, Roll Up, Neck Pull, Teaser, Criss-Cross</li>
+        <li><strong>Flexión y Rotación (4):</strong> The Saw, Spine Stretch Forward, Spine Twist, Scissors</li>
+        <li><strong>Extensión (3):</strong> Swan Dive, Swimming, Single Leg Kick</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Los ejercicios de Pilates se clasifican por su finalidad. Los <strong>abdominales</strong> trabajan la flexión de tronco desde el Power House. Los de <strong>flexión y rotación</strong> agregan el componente rotacional — fundamental para la vida diaria. Y los de <strong>extensión</strong> trabajan la cadena posterior — los que menos hacemos en la vida moderna y los que más necesitamos. Un buen programa de Pilates equilibra las tres categorías."
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 22 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">22</span>
+      <span class="slide-title">Serie Clásica — Bloque de Calentamiento</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">8 minutos</span>
+      <ul class="key-points">
+        <li>1. The Hundred (El Cien)</li>
+        <li>2. The Roll Up (Rodar hacia arriba)</li>
+        <li>3. The Roll-Over with Leg Spread (Rodar con piernas extendidas)</li>
+        <li>4. The One Leg Circle (Círculos con una pierna)</li>
+        <li>5. Rolling Back / Rolling Like a Ball (Rodar como una pelota)</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Estos cinco ejercicios son el <strong>calentamiento de la serie clásica</strong> de Joseph Pilates. El orden no es aleatorio: <strong>The Hundred calienta todo el cuerpo</strong> con la respiración y la activación del centro. El Roll Up moviliza la columna vértebra por vértebra. El Roll-Over lleva esa movilización más lejos. El Leg Circle trabaja la disociación de cadera — mover la pierna sin mover la pelvis. Y Rolling Back masajea la columna y prepara el equilibrio. Cada uno prepara al cuerpo para el siguiente."
+      </div>
+      <div class="tip-inline">Tip: Si el tiempo lo permite, demuestra cada ejercicio mientras lo explicas. La práctica fija mejor que la teoría.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 23 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">23</span>
+      <span class="slide-title">Mat Básico</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li>The Hundred, Roll Up, Single Leg Circle</li>
+        <li>Roll Down / Rolling Like a Ball</li>
+        <li>Single Leg Stretch, Double Leg Stretch</li>
+        <li>Spine Stretch Forward</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "El Mat Básico es la secuencia que deben dominar para dar una clase de nivel principiante. Son 7 ejercicios en total. La clave es que cada uno construye sobre el anterior: primero calentamos con The Hundred, movilizamos la columna con Roll Up, trabajamos la disociación de cadera con Single Leg Circle, y luego entramos en la serie de estiramiento — Single y Double Leg Stretch — que combinan todo lo anterior. <strong>Si dominan estos 7 ejercicios con buena técnica, pueden dar una clase completa.</strong>"
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 24 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">24</span>
+      <span class="slide-title">Ejercicio de Respiración</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos</span>
+      <ul class="key-points">
+        <li><strong>The Hundred:</strong> 5 tiempos inhalación + 5 tiempos exhalación</li>
+        <li><strong>Double Leg Stretch:</strong> inhalar al extender, exhalar al recoger</li>
+        <li><strong>Spine Stretch:</strong> exhalar al flexionar hacia adelante</li>
+        <li><strong>The Saw:</strong> exhalar al rotar y flexionar, inhalar al volver</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "La respiración en Pilates es <strong>lateral o costal</strong> — expandimos las costillas hacia los lados, no hacia arriba ni inflando el abdomen. ¿Por qué? Porque si inflamos el abdomen, desactivamos el transverso. La regla general es: <strong>exhalar en el esfuerzo</strong>. En The Hundred, la respiración ES el ejercicio: 5 tiempos adentro, 5 tiempos afuera, mientras los brazos bombean. Si un alumno no puede mantener la respiración coordinada, simplifiquen el ejercicio antes de complicar la respiración."
+      </div>
+      <div class="tip-inline">Tip: Practica con el grupo la respiración lateral: manos en las costillas, inhalar expandiendo lateralmente, exhalar cerrando.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 25 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">25</span>
+      <span class="slide-title">Principios de Biomecánica de Pilates</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">8 minutos — Diapositiva clave</span>
+      <ul class="key-points">
+        <li><strong>Movimiento escapular:</strong> estabilizar escápulas durante el movimiento</li>
+        <li><strong>Colocación de cabeza y columna:</strong> alineación neutra cervical y dorsal</li>
+        <li><strong>Colocación de la caja torácica:</strong> costillas conectadas, no abiertas</li>
+        <li><strong>Colocación pélvica:</strong> posición neutra — ni anteroversión ni retroversión excesiva</li>
+        <li><strong>Respiración:</strong> lateral/costal, expandir costillas al inhalar</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Estos 5 principios son <strong>lo que revisan ANTES de cada ejercicio</strong>. Es como un checklist: ¿Escápulas estabilizadas? ¿Cabeza alineada? ¿Costillas cerradas? ¿Pelvis neutra? ¿Respiración correcta? Si alguno de estos falla, el ejercicio se hace mal aunque la forma externa se vea bien. La biomecánica no es teoría — es lo que corregimos en cada repetición. Cada vez que tocan a un alumno para corregir, están aplicando biomecánica."
+      </div>
+      <div class="tip-inline">Tip: Haz una demostración con un voluntario: colócalo en posición supina y revisa los 5 principios uno por uno mientras el grupo observa.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 26 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <span class="slide-num">26</span>
+      <span class="slide-title">Posición de Inicio — Cierre</span>
+    </div>
+    <div class="slide-body">
+      <span class="duration">5 minutos — Cierre motivacional</span>
+      <ul class="key-points">
+        <li>"Si ya sabes cómo funciona nuestro cuerpo, entonces comencemos"</li>
+        <li>Transición de teoría a práctica</li>
+        <li>Momento de motivar al grupo</li>
+      </ul>
+      <div class="script-label">Qué decir</div>
+      <div class="script-text">
+        "Hemos recorrido todo el cuerpo: desde los huesos que nos sostienen, las articulaciones que nos permiten movernos, los músculos que generan la fuerza, hasta los principios biomecánicos que guían cada ejercicio. Ahora ya saben <strong>por qué</strong> hacemos lo que hacemos en Pilates. No es 'estira aquí, contrae allá' — es un sistema basado en cómo funciona el cuerpo. <strong>Si ya saben cómo funciona nuestro cuerpo, entonces comencemos.</strong> Vamos a la colchoneta."
+      </div>
+      <div class="tip-inline">Tip: Este es el momento más energético. Ponte de pie, sube la voz, genera entusiasmo. La transición a la práctica debe sentirse como un premio después de la teoría.</div>
+    </div>
+  </div>
+
+  <!-- PLAN DE ESTUDIO -->
+  <div class="study-section">
+    <h2>Plan de estudio — 4 semanas</h2>
+
+    <div class="week-block">
+      <h3>Semana 1 — Fundamentos</h3>
+      <ul>
+        <li>Biografía de Joseph Pilates — memoriza las fechas y la cita</li>
+        <li>6 principios del método: concentración, control, centro, fluidez, precisión, respiración</li>
+        <li>6 beneficios — practica explicar cada uno con un ejemplo</li>
+        <li>Contrología: practica explicar el concepto en una oración</li>
+      </ul>
+    </div>
+
+    <div class="week-block">
+      <h3>Semana 2 — Anatomía ósea y articular</h3>
+      <ul>
+        <li>206 huesos: ubica los principales en tu cuerpo (escápula, pelvis, fémur, húmero)</li>
+        <li>Columna: 7-12-5-sacro-coxis — repítelo hasta que salga automático</li>
+        <li>3 tipos de articulaciones — practica dar un ejemplo de cada una</li>
+        <li>6 movimientos articulares: flexión, extensión, abducción, aducción, rotación, circunducción</li>
+        <li>Hombro, cadera, rodilla: sus componentes y por qué importan en Pilates</li>
+      </ul>
+    </div>
+
+    <div class="week-block">
+      <h3>Semana 3 — Musculatura</h3>
+      <ul>
+        <li>3 tipos de músculos y sus características</li>
+        <li>3 contracciones: isométrica, concéntrica, excéntrica — ejemplo de cada una en Pilates</li>
+        <li>Power House: memoriza los 4 abdominales, los erectores, los glúteos y el iliopsoas</li>
+        <li>Cuádriceps (4 músculos) e isquiotibiales (4 músculos) — nombres correctos</li>
+        <li>Trapecio: 3 porciones y qué hacen en Pilates</li>
+      </ul>
+    </div>
+
+    <div class="week-block">
+      <h3>Semana 4 — Ejercicios y biomecánica</h3>
+      <ul>
+        <li>5 ejercicios del bloque de calentamiento — nombre en inglés y español</li>
+        <li>7 ejercicios del Mat Básico — practica cada uno</li>
+        <li>Respiración: patrón de respiración de The Hundred, Double Leg Stretch, Spine Stretch, The Saw</li>
+        <li>5 principios de biomecánica — practica el "checklist" en ti misma</li>
+        <li>Practica dar una clase completa de Mat Básico con las correcciones biomecánicas</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PREGUNTAS FRECUENTES -->
+  <div class="study-section">
+    <h2>Preguntas frecuentes que te harán</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">¿Pilates sirve para hernia discal?</div>
+      <div class="faq-a">Sí, con modificaciones. Evitar flexión lumbar profunda (Roll Up completo) y rotación bajo carga. Priorizar estabilización del Power House, ejercicios en posición neutra y extensión suave (Swan prep). Siempre con autorización médica.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">¿Se puede hacer Pilates estando embarazada?</div>
+      <div class="faq-a">Sí, es uno de los mejores ejercicios para el embarazo. Modificaciones: evitar supino prolongado después del primer trimestre (comprime la vena cava), evitar abdominales con flexión de tronco, priorizar suelo pélvico, respiración y movilidad. Siempre con autorización del obstetra.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">¿Diferencia entre Pilates clásico y contemporáneo?</div>
+      <div class="faq-a">El clásico sigue la secuencia original de Joseph Pilates sin modificaciones. El contemporáneo incorpora conocimientos actuales de biomecánica, fisioterapia y ciencias del deporte, permitiendo adaptaciones y variaciones. Ambos son válidos; el contemporáneo es más adaptable a poblaciones especiales.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">¿Pilates para adultos mayores?</div>
+      <div class="faq-a">Excelente opción. Beneficios: mejora equilibrio (previene caídas), mantiene densidad ósea, flexibilidad articular, fuerza funcional. Modificaciones: ritmo más lento, rango de movimiento adaptado, evitar posiciones que comprometan el equilibrio, usar props (pelota, banda, bloques).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">¿Condromalacia rotuliana y Pilates?</div>
+      <div class="faq-a">Pilates puede ayudar mucho. La condromalacia es el desgaste del cartílago detrás de la rótula. El tratamiento incluye fortalecer el vasto medial oblicuo (VMO) del cuádriceps para mejorar el tracking de la rótula. Evitar sentadillas profundas y ejercicios de alto impacto. Pilates en máquina (Reformer) es ideal por la resistencia controlada.</div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Presentación: Prof. Carlos Alberto Zorrilla<br>
+    Facilitadora: <strong>Lic. Antonella Gutiérrez — AntoBioMove</strong><br>
+    WhatsApp: +58 412-558-7131 · Instagram: @anto_biomove
+  </div>
+
+</div>
