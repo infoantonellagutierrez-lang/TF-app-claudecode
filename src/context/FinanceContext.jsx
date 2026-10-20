@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
-const FinanceContext = createContext();
+export const FinanceContext = createContext();
 
 const DEFAULT_ACCOUNTS = [
   { id: 'cash', name: 'Efectivo', icon: 'banknote', balance: 0, currency: 'USD' },
