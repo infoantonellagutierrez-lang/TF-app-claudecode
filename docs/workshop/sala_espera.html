@@ -1,0 +1,466 @@
+<title>AntoBioMove — Sala de Espera</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap">
+<style>
+  :root {
+    --bg: #0F0A08;
+    --fg: #F5EDE4;
+    --accent: #E87A2E;
+    --accent-glow: #E87A2E40;
+    --red: #9B2C2C;
+    --red-soft: #C44A4A;
+    --muted: #8A7D72;
+    --card-bg: #1A1410;
+    --card-border: #2A2218;
+    --display: 'Playfair Display', Georgia, serif;
+    --body: 'Outfit', system-ui, sans-serif;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #FDF8F3;
+      --fg: #1A1210;
+      --accent: #D46A1E;
+      --accent-glow: #E87A2E20;
+      --red: #8B1A1A;
+      --red-soft: #B03030;
+      --muted: #7A6E63;
+      --card-bg: #FFFFFF;
+      --card-border: #E8DDD2;
+      color-scheme: light;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #FDF8F3;
+    --fg: #1A1210;
+    --accent: #D46A1E;
+    --accent-glow: #E87A2E20;
+    --red: #8B1A1A;
+    --red-soft: #B03030;
+    --muted: #7A6E63;
+    --card-bg: #FFFFFF;
+    --card-border: #E8DDD2;
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    margin: 0;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+    overflow: hidden;
+    height: 100vh;
+    height: 100dvh;
+  }
+  html { height: 100%; }
+
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    padding-left: max(2rem, env(safe-area-inset-left, 0px));
+    padding-right: max(2rem, env(safe-area-inset-right, 0px));
+    opacity: 0;
+    transform: scale(0.97);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    pointer-events: none;
+    text-align: center;
+  }
+  .screen.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  /* Ambient glow */
+  .glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-1 { top: -100px; right: -100px; }
+  .glow-2 { bottom: -100px; left: -100px; background: #9B2C2C30; }
+
+  /* Emoji icon */
+  .icon {
+    font-size: clamp(3rem, 10vw, 5rem);
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Category tag */
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    border-radius: 100px;
+    padding: 0.25rem 0.9rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .fact-number {
+    font-family: var(--display);
+    font-size: clamp(3rem, 12vw, 6rem);
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .fact-title {
+    font-family: var(--display);
+    font-size: clamp(1.4rem, 5vw, 2.4rem);
+    font-weight: 700;
+    color: var(--fg);
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    text-wrap: balance;
+    max-width: 700px;
+  }
+
+  .fact-body {
+    font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 580px;
+    font-weight: 300;
+  }
+
+  /* Brand bar */
+  .brand-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding: 0.9rem 1.5rem;
+    padding-bottom: max(0.9rem, env(safe-area-inset-bottom, 0px));
+    padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
+    background: var(--card-bg);
+    border-top: 1px solid var(--card-border);
+    z-index: 10;
+    font-size: 0.82rem;
+  }
+  .brand-name {
+    font-weight: 800;
+    color: var(--accent);
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+  }
+  .brand-item {
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .brand-item strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  /* Progress dots */
+  .progress {
+    position: fixed;
+    top: 50%;
+    right: max(12px, env(safe-area-inset-right, 0px));
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 10;
+  }
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    opacity: 0.3;
+    transition: opacity 0.4s, background 0.4s, transform 0.4s;
+  }
+  .dot.active {
+    background: var(--accent);
+    opacity: 1;
+    transform: scale(1.4);
+  }
+
+  /* Timer bar */
+  .timer-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent);
+    z-index: 20;
+    transition: width 0.3s linear;
+  }
+
+  /* Welcome screen special */
+  .welcome-subtitle {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    color: var(--muted);
+    font-weight: 300;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+  .welcome-instructor {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .welcome-instructor strong {
+    color: var(--fg);
+  }
+
+  @media (max-width: 500px) {
+    .brand-bar { gap: 0.5rem; font-size: 0.72rem; }
+    .brand-name { font-size: 0.85rem; }
+    .progress { right: 6px; }
+    .dot { width: 5px; height: 5px; }
+    .screen { padding: 1.5rem; }
+  }
+
+  /* Image slide */
+  .slide-img {
+    max-width: min(90vw, 420px);
+    max-height: min(55vh, 500px);
+    border-radius: 16px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .icon { animation: none; }
+    .screen { transition: opacity 0.3s ease; transform: none !important; }
+    .screen.active { transform: none !important; }
+  }
+</style>
+
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+<div class="timer-bar" id="timerBar"></div>
+<div class="progress" id="progressDots"></div>
+
+<!-- SLIDE 0: Welcome -->
+<div class="screen active" data-slide="0">
+  <div class="icon">🧘‍♀️</div>
+  <div class="fact-title" style="font-size:clamp(1.8rem,6vw,3rem)">Biomecánica y Anatomía<br>en el Pilates</div>
+  <div class="welcome-subtitle">El taller comenzará en unos minutos</div>
+  <div class="welcome-instructor">
+    Facilitadora: <strong>Lic. Antonella Gutiérrez</strong><br>
+    Autor del material: Prof. Carlos Alberto Zorrilla
+  </div>
+</div>
+
+<!-- SLIDE 1 -->
+<div class="screen" data-slide="1">
+  <div class="icon">🦴</div>
+  <div class="tag">Huesos</div>
+  <div class="fact-number">206</div>
+  <div class="fact-title">huesos tiene tu cuerpo</div>
+  <div class="fact-body">80 forman el eje central (cráneo, columna, costillas) y 126 las extremidades. Son tejido vivo que se regenera constantemente.</div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="screen" data-slide="2">
+  <div class="icon">🔗</div>
+  <div class="tag">Articulaciones</div>
+  <div class="fact-number">360</div>
+  <div class="fact-title">articulaciones conectan tus huesos</div>
+  <div class="fact-body">Solo el cráneo tiene 86. Las que más usamos en Pilates son las sinoviales: hombro, cadera y rodilla — completamente móviles.</div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="screen" data-slide="3">
+  <div class="icon">🧬</div>
+  <div class="tag">Columna</div>
+  <div class="fact-number">7 · 12 · 5</div>
+  <div class="fact-title">vértebras: cervicales, torácicas y lumbares</div>
+  <div class="fact-body">La columna tiene 26 vértebras en el adulto. En Pilates articulamos "vértebra por vértebra" — cada una se mueve de forma secuencial.</div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="screen" data-slide="4">
+  <div class="icon">💪</div>
+  <div class="tag">Músculos</div>
+  <div class="fact-number">40%</div>
+  <div class="fact-title">de tu peso corporal son músculos</div>
+  <div class="fact-body">Los músculos esqueléticos son los únicos que controlamos voluntariamente. El músculo cardíaco, en cambio, nunca se cansa.</div>
+</div>
+
+<!-- SLIDE 5: Anatomy Image -->
+<div class="screen" data-slide="5">
+  <img class="slide-img" src="img_anatomia_nervios.jpg" alt="Sistema nervioso craneal y columna cervical — vista posterior">
+  <div class="tag">Anatomía</div>
+  <div class="fact-title">Sistema nervioso y columna cervical</div>
+  <div class="fact-body">Los nervios craneales y espinales conectan el cerebro con cada parte del cuerpo. Una buena postura protege estas v&iacute;as de comunicaci&oacute;n vital.</div>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="screen" data-slide="6">
+  <div class="icon">🎯</div>
+  <div class="tag">Power House</div>
+  <div class="fact-title">El centro de todo movimiento</div>
+  <div class="fact-body">El Power House es un cilindro de músculos desde las costillas hasta la cadera: abdominales, espalda baja, glúteos y suelo pélvico. En Pilates, todo comienza aquí.</div>
+</div>
+
+<!-- SLIDE 7 -->
+<div class="screen" data-slide="7">
+  <div class="icon">🫁</div>
+  <div class="tag">Respiración</div>
+  <div class="fact-title">Respiración lateral</div>
+  <div class="fact-body">En Pilates respiramos expandiendo las costillas hacia los lados, no inflando el abdomen. Así mantenemos activo el transverso abdominal — la faja natural del cuerpo.</div>
+</div>
+
+<!-- SLIDE 8 -->
+<div class="screen" data-slide="8">
+  <div class="icon">⚡</div>
+  <div class="tag">Contracciones</div>
+  <div class="fact-title">Tres formas de contraer un músculo</div>
+  <div class="fact-body">Concéntrica: el músculo se acorta. Excéntrica: se alarga bajo control. Isométrica: genera tensión sin moverse. Pilates es el rey del trabajo excéntrico.</div>
+</div>
+
+<!-- SLIDE 9 -->
+<div class="screen" data-slide="9">
+  <div class="icon">🦵</div>
+  <div class="tag">Rodilla</div>
+  <div class="fact-number">4</div>
+  <div class="fact-title">ligamentos protegen tu rodilla</div>
+  <div class="fact-body">Los cruzados (anterior y posterior) y los colaterales (medial y lateral). La regla de oro: la rodilla siempre alineada con el segundo dedo del pie.</div>
+</div>
+
+<!-- SLIDE 10 -->
+<div class="screen" data-slide="10">
+  <div class="icon">🏋️‍♀️</div>
+  <div class="tag">Historia</div>
+  <div class="fact-title" style="font-family:var(--display);font-style:italic">"En 10 sesiones sentirás la diferencia, en 20 la verás y en 30 tendrás un cuerpo nuevo"</div>
+  <div class="fact-body">— Joseph Hubertus Pilates (1883–1967), creador del método que llamó "Contrología": la coordinación completa de cuerpo, mente y espíritu.</div>
+</div>
+
+<!-- SLIDE 11 -->
+<div class="screen" data-slide="11">
+  <div class="icon">🔄</div>
+  <div class="tag">Movimiento</div>
+  <div class="fact-number">6</div>
+  <div class="fact-title">movimientos articulares básicos</div>
+  <div class="fact-body">Flexión, extensión, abducción, aducción, rotación y circunducción. Todos los ejercicios de Pilates son combinaciones de estos seis movimientos.</div>
+</div>
+
+<!-- SLIDE 12 -->
+<div class="screen" data-slide="12">
+  <div class="icon">🤸‍♀️</div>
+  <div class="tag">Serie clásica</div>
+  <div class="fact-number">5</div>
+  <div class="fact-title">ejercicios del calentamiento Pilates</div>
+  <div class="fact-body">The Hundred, Roll Up, Roll-Over, One Leg Circle y Rolling Back. El orden no es aleatorio: cada ejercicio prepara al cuerpo para el siguiente.</div>
+</div>
+
+<!-- SLIDE 13: Brand -->
+<div class="screen" data-slide="13">
+  <div class="icon">✨</div>
+  <div class="tag">Bienvenidos</div>
+  <div class="fact-title" style="color:var(--accent)">AntoBioMove</div>
+  <div class="fact-body" style="font-size:clamp(1rem,3vw,1.2rem);color:var(--fg)">
+    Pilates · Biomecánica · Movimiento consciente
+  </div>
+  <div style="margin-top:1.5rem;font-size:0.95rem;color:var(--muted);line-height:2">
+    <strong style="color:var(--fg)">Instagram:</strong> @anto_biomove<br>
+    <strong style="color:var(--fg)">WhatsApp:</strong> +58 412-558-7131<br>
+    <strong style="color:var(--fg)">Taller WhatsApp:</strong> +58 424-445-6882 (Mónica)
+  </div>
+</div>
+
+<div class="brand-bar">
+  <span class="brand-name">AntoBioMove</span>
+  <span class="brand-item"><strong>IG:</strong> @anto_biomove</span>
+  <span class="brand-item"><strong>WA:</strong> +58 412-558-7131</span>
+</div>
+
+<script>
+(function() {
+  const screens = document.querySelectorAll('.screen');
+  const total = screens.length;
+  const INTERVAL = 8000;
+  let current = 0;
+  let timer = null;
+  let startTime = 0;
+  const bar = document.getElementById('timerBar');
+  const dotsContainer = document.getElementById('progressDots');
+
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    dotsContainer.appendChild(d);
+  }
+  const dots = dotsContainer.querySelectorAll('.dot');
+
+  function show(index) {
+    screens.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    screens[index].classList.add('active');
+    dots[index].classList.add('active');
+    current = index;
+    startTime = Date.now();
+  }
+
+  function next() {
+    show((current + 1) % total);
+  }
+
+  function updateBar() {
+    const elapsed = Date.now() - startTime;
+    const pct = Math.min((elapsed / INTERVAL) * 100, 100);
+    bar.style.width = pct + '%';
+    requestAnimationFrame(updateBar);
+  }
+
+  function start() {
+    clearInterval(timer);
+    timer = setInterval(next, INTERVAL);
+    startTime = Date.now();
+    requestAnimationFrame(updateBar);
+  }
+
+  start();
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show((current + 1) % total); clearInterval(timer); start(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show((current - 1 + total) % total); clearInterval(timer); start(); }
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+  document.addEventListener('touchend', function(e) {
+    const diff = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(diff) > 50) {
+      show(diff < 0 ? (current + 1) % total : (current - 1 + total) % total);
+      clearInterval(timer);
+      start();
+    }
+  }, {passive: true});
+})();
+</script>
