@@ -265,15 +265,16 @@
 
   /* Video slide */
   .slide-video {
-    width: min(90vw, 360px);
-    height: min(70vh, 640px);
+    max-width: min(90vw, 360px);
+    max-height: min(60vh, 580px);
     border-radius: 16px;
     border: none;
     box-shadow: 0 8px 40px rgba(0,0,0,0.4);
     margin-bottom: 1rem;
+    background: #000;
   }
   @media (max-width: 500px) {
-    .slide-video { width: 85vw; height: 60vh; }
+    .slide-video { max-width: 85vw; max-height: 55vh; }
   }
 
   /* Image slide */
@@ -368,11 +369,14 @@
   <div class="fact-body">Los nervios craneales y espinales conectan el cerebro con cada parte del cuerpo. Una buena postura protege estas v&iacute;as de comunicaci&oacute;n vital.</div>
 </div>
 
-<!-- SLIDE 6: Video -->
+<!-- SLIDE 6: Video Introducción -->
 <div class="screen" data-slide="6">
-  <iframe class="slide-video" src="https://www.youtube.com/embed/15NxvsxUcMY?autoplay=0&loop=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  <div class="tag">Video</div>
-  <div class="fact-title">Biomecánica en movimiento</div>
+  <video class="slide-video" controls playsinline preload="metadata" poster="">
+    <source src="introduccion.mp4" type="video/mp4">
+    Tu navegador no soporta video HTML5.
+  </video>
+  <div class="tag">Introducción</div>
+  <div class="fact-title">Bienvenidos al taller</div>
 </div>
 
 <!-- SLIDE 7 -->
