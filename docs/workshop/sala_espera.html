@@ -263,18 +263,18 @@
     .logos-row { gap: 1rem; }
   }
 
-  /* Video slide */
-  .slide-video {
-    max-width: min(90vw, 360px);
-    max-height: min(60vh, 580px);
-    border-radius: 16px;
-    border: none;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-    margin-bottom: 1rem;
-    background: #000;
-  }
-  @media (max-width: 500px) {
-    .slide-video { max-width: 85vw; max-height: 55vh; }
+  /* Background video */
+  .bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.25;
+    pointer-events: none;
   }
 
   /* Image slide */
@@ -304,6 +304,9 @@
   }
 </style>
 
+<video class="bg-video" autoplay muted loop playsinline>
+  <source src="introduccion.mp4" type="video/mp4">
+</video>
 <div class="glow glow-1"></div>
 <div class="glow glow-2"></div>
 <div class="timer-bar" id="timerBar"></div>
@@ -369,42 +372,32 @@
   <div class="fact-body">Los nervios craneales y espinales conectan el cerebro con cada parte del cuerpo. Una buena postura protege estas v&iacute;as de comunicaci&oacute;n vital.</div>
 </div>
 
-<!-- SLIDE 6: Video Introducción -->
+<!-- SLIDE 6 -->
 <div class="screen" data-slide="6">
-  <video class="slide-video" controls playsinline preload="metadata" poster="">
-    <source src="introduccion.mp4" type="video/mp4">
-    Tu navegador no soporta video HTML5.
-  </video>
-  <div class="tag">Introducción</div>
-  <div class="fact-title">Bienvenidos al taller</div>
-</div>
-
-<!-- SLIDE 7 -->
-<div class="screen" data-slide="7">
   <div class="icon">🎯</div>
   <div class="tag">Power House</div>
   <div class="fact-title">El centro de todo movimiento</div>
   <div class="fact-body">El Power House es un cilindro de músculos desde las costillas hasta la cadera: abdominales, espalda baja, glúteos y suelo pélvico. En Pilates, todo comienza aquí.</div>
 </div>
 
-<!-- SLIDE 8 -->
-<div class="screen" data-slide="8">
+<!-- SLIDE 7 -->
+<div class="screen" data-slide="7">
   <div class="icon">🫁</div>
   <div class="tag">Respiración</div>
   <div class="fact-title">Respiración lateral</div>
   <div class="fact-body">En Pilates respiramos expandiendo las costillas hacia los lados, no inflando el abdomen. Así mantenemos activo el transverso abdominal — la faja natural del cuerpo.</div>
 </div>
 
-<!-- SLIDE 9 -->
-<div class="screen" data-slide="9">
+<!-- SLIDE 8 -->
+<div class="screen" data-slide="8">
   <div class="icon">⚡</div>
   <div class="tag">Contracciones</div>
   <div class="fact-title">Tres formas de contraer un músculo</div>
   <div class="fact-body">Concéntrica: el músculo se acorta. Excéntrica: se alarga bajo control. Isométrica: genera tensión sin moverse. Pilates es el rey del trabajo excéntrico.</div>
 </div>
 
-<!-- SLIDE 10 -->
-<div class="screen" data-slide="10">
+<!-- SLIDE 9 -->
+<div class="screen" data-slide="9">
   <div class="icon">🦵</div>
   <div class="tag">Rodilla</div>
   <div class="fact-number">4</div>
@@ -412,16 +405,16 @@
   <div class="fact-body">Los cruzados (anterior y posterior) y los colaterales (medial y lateral). La regla de oro: la rodilla siempre alineada con el segundo dedo del pie.</div>
 </div>
 
-<!-- SLIDE 11 -->
-<div class="screen" data-slide="11">
+<!-- SLIDE 10 -->
+<div class="screen" data-slide="10">
   <div class="icon">🏋️‍♀️</div>
   <div class="tag">Historia</div>
   <div class="fact-title" style="font-family:var(--display);font-style:italic">"En 10 sesiones sentirás la diferencia, en 20 la verás y en 30 tendrás un cuerpo nuevo"</div>
   <div class="fact-body">— Joseph Hubertus Pilates (1883–1967), creador del método que llamó "Contrología": la coordinación completa de cuerpo, mente y espíritu.</div>
 </div>
 
-<!-- SLIDE 12 -->
-<div class="screen" data-slide="12">
+<!-- SLIDE 11 -->
+<div class="screen" data-slide="11">
   <div class="icon">🔄</div>
   <div class="tag">Movimiento</div>
   <div class="fact-number">6</div>
@@ -429,8 +422,8 @@
   <div class="fact-body">Flexión, extensión, abducción, aducción, rotación y circunducción. Todos los ejercicios de Pilates son combinaciones de estos seis movimientos.</div>
 </div>
 
-<!-- SLIDE 13 -->
-<div class="screen" data-slide="13">
+<!-- SLIDE 12 -->
+<div class="screen" data-slide="12">
   <div class="icon">🤸‍♀️</div>
   <div class="tag">Serie clásica</div>
   <div class="fact-number">5</div>
@@ -438,8 +431,8 @@
   <div class="fact-body">The Hundred, Roll Up, Roll-Over, One Leg Circle y Rolling Back. El orden no es aleatorio: cada ejercicio prepara al cuerpo para el siguiente.</div>
 </div>
 
-<!-- SLIDE 14: Brand -->
-<div class="screen" data-slide="14">
+<!-- SLIDE 13: Brand -->
+<div class="screen" data-slide="13">
   <div class="icon">✨</div>
   <div class="tag">Bienvenidos</div>
   <div class="fact-title" style="color:var(--accent)">AntoBioMove</div>
