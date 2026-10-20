@@ -243,6 +243,26 @@
     .screen { padding: 1.5rem; }
   }
 
+  /* Logos row */
+  .logos-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .logos-row img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+  @media (max-width: 500px) {
+    .logos-row img { height: 36px; }
+    .logos-row { gap: 1rem; }
+  }
+
   /* Image slide */
   .slide-img {
     max-width: min(90vw, 420px);
@@ -273,6 +293,11 @@
   <div class="welcome-instructor">
     Facilitadora: <strong>Lic. Antonella Gutiérrez</strong><br>
     Autor del material: Prof. Carlos Alberto Zorrilla
+  </div>
+  <div class="logos-row">
+    <img src="/_blob/b08b165b376883183557408378288067" alt="PMA - Pilates Method Alliance">
+    <img src="/_blob/143f22f1065507a9fd1ae5c0b79bc610" alt="CentroZen Pilates">
+    <img src="/_blob/3069a1accaa47f67510f3062867ea07b" alt="IDCA - Instituto Internacional del Deporte">
   </div>
 </div>
 
@@ -391,6 +416,11 @@
     <strong style="color:var(--fg)">Instagram:</strong> @anto_biomove<br>
     <strong style="color:var(--fg)">WhatsApp:</strong> +58 412-558-7131<br>
     <strong style="color:var(--fg)">Taller WhatsApp:</strong> +58 424-445-6882 (Mónica)
+  </div>
+  <div class="logos-row" style="margin-top:1.2rem">
+    <img src="/_blob/b08b165b376883183557408378288067" alt="PMA">
+    <img src="/_blob/143f22f1065507a9fd1ae5c0b79bc610" alt="CentroZen">
+    <img src="/_blob/3069a1accaa47f67510f3062867ea07b" alt="IDCA">
   </div>
 </div>
 
