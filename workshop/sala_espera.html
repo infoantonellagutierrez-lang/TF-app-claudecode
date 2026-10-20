@@ -297,6 +297,29 @@
     .bar-logo { height: 20px; }
   }
 
+  /* Sound toggle */
+  .sound-btn {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 30;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--card-bg);
+    color: var(--accent);
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .sound-btn:hover { background: var(--accent); color: var(--bg); transform: scale(1.1); }
+  .sound-btn.unmuted { background: var(--accent); color: var(--bg); }
+
   @media (prefers-reduced-motion: reduce) {
     .icon { animation: none; }
     .screen { transition: opacity 0.3s ease; transform: none !important; }
@@ -304,9 +327,10 @@
   }
 </style>
 
-<video class="bg-video" autoplay muted loop playsinline>
+<video class="bg-video" id="bgVideo" autoplay muted loop playsinline>
   <source src="/_blob/4704d966bffa870516bddea39fad405e" type="video/mp4">
 </video>
+<button class="sound-btn" id="soundBtn" title="Activar sonido">🔇</button>
 <div class="glow glow-1"></div>
 <div class="glow glow-2"></div>
 <div class="timer-bar" id="timerBar"></div>
@@ -510,6 +534,15 @@
   document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show((current + 1) % total); clearInterval(timer); start(); }
     if (e.key === 'ArrowLeft') { e.preventDefault(); show((current - 1 + total) % total); clearInterval(timer); start(); }
+  });
+
+  const bgVideo = document.getElementById('bgVideo');
+  const soundBtn = document.getElementById('soundBtn');
+  soundBtn.addEventListener('click', function() {
+    bgVideo.muted = !bgVideo.muted;
+    soundBtn.textContent = bgVideo.muted ? '🔇' : '🔊';
+    soundBtn.classList.toggle('unmuted', !bgVideo.muted);
+    soundBtn.title = bgVideo.muted ? 'Activar sonido' : 'Silenciar';
   });
 
   let touchStartX = 0;
