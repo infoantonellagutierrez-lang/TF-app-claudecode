@@ -273,6 +273,16 @@
     box-shadow: 0 8px 40px rgba(0,0,0,0.4);
   }
 
+  .bar-logo {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 3px;
+  }
+  @media (max-width: 500px) {
+    .bar-logo { height: 20px; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .icon { animation: none; }
     .screen { transition: opacity 0.3s ease; transform: none !important; }
@@ -425,9 +435,12 @@
 </div>
 
 <div class="brand-bar">
+  <img src="logo_pma.png" alt="PMA" class="bar-logo">
+  <img src="logo_centrozen.png" alt="CentroZen" class="bar-logo">
   <span class="brand-name">AntoBioMove</span>
   <span class="brand-item"><strong>IG:</strong> @anto_biomove</span>
   <span class="brand-item"><strong>WA:</strong> +58 412-558-7131</span>
+  <img src="logo_idca.png" alt="IDCA" class="bar-logo">
 </div>
 
 <script>
