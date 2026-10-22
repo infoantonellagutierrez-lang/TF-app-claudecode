@@ -1,0 +1,274 @@
+<title>Workshop Biomecánica</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap">
+<style>
+  :root {
+    --bg: #f5f2ee;
+    --fg: #1a1a1a;
+    --brown: #5d4037;
+    --teal: #00bcd4;
+    --green: #4caf50;
+    --red: #c62828;
+    --muted: #6d6359;
+    --surface: #eae5de;
+    color-scheme: light;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Outfit', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+  }
+
+  .poster {
+    width: 100%;
+    max-width: 540px;
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  /* === GRADIENT TOP BAR === */
+  .bar-top { height: 4px; background: linear-gradient(90deg, var(--green), var(--teal)); }
+
+  /* === HEADER: logo + title === */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 10px 18px 8px;
+  }
+  .logo { width: 60px; height: 60px; object-fit: contain; flex-shrink: 0; }
+  .hdr-text { flex: 1; min-width: 0; }
+  .hdr-text .sup {
+    font-size: 9px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--teal); line-height: 1.4;
+  }
+  .hdr-text h1 {
+    font-size: 18px; font-weight: 900; line-height: 1.08;
+    margin: 2px 0 4px; text-transform: uppercase; color: var(--brown);
+    text-wrap: balance;
+  }
+  .hdr-text .by {
+    font-size: 11px; font-weight: 500; color: var(--muted);
+  }
+  .hdr-text .by strong { color: var(--brown); font-weight: 700; }
+
+  /* === PHOTO — horizontal crop === */
+  .photo-row {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .photo-row img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 25% 15%;
+    display: block;
+    filter: brightness(1.3) contrast(1.1);
+  }
+  .photo-fade {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+    background: linear-gradient(to top, var(--bg), transparent);
+    pointer-events: none;
+  }
+
+  /* === CONTENT SECTION === */
+  .content {
+    padding: 8px 18px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .desc {
+    font-size: 11px; line-height: 1.5; color: var(--muted);
+  }
+  .desc strong { color: var(--fg); font-weight: 600; }
+
+  /* Topics grid */
+  .topics-title {
+    font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--teal); margin-bottom: 6px;
+  }
+  .topics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+  .topic {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 9.5px; font-weight: 500; color: var(--fg);
+  }
+  .topic .dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--teal); flex-shrink: 0;
+  }
+  .topic .dot.g { background: var(--green); }
+
+  /* Credentials pills */
+  .creds {
+    display: flex; flex-wrap: wrap; gap: 4px;
+    padding-top: 3px;
+    border-top: 1px solid var(--surface);
+  }
+  .pill {
+    font-size: 8px; font-weight: 700; letter-spacing: 0.3px;
+    text-transform: uppercase; padding: 2px 6px; border-radius: 2px;
+    border-left: 2px solid var(--teal);
+    background: var(--surface); color: var(--brown);
+  }
+  .pill.g { border-left-color: var(--green); }
+
+  /* Dirigido a */
+  .dirigido {
+    font-size: 9.5px; line-height: 1.45; color: var(--muted);
+    padding-top: 3px; border-top: 1px solid var(--surface);
+  }
+  .dirigido .label {
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--green); margin-bottom: 3px;
+  }
+
+  /* Details row */
+  .details {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 6px;
+  }
+  .presencial {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--teal);
+  }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+    animation: blink 1.8s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+  /* === RED BAND === */
+  .band {
+    background: var(--red);
+    padding: 10px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .band-left { display: flex; align-items: center; gap: 12px; }
+  .band .date { font-size: 17px; font-weight: 800; color: #fff; letter-spacing: .5px; }
+  .band .sep { width: 2px; height: 18px; background: rgba(255,255,255,.4); }
+  .band .loc { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.9); }
+  .band .flag { font-size: 26px; }
+
+  /* === FOOTER === */
+  .footer {
+    background: #1a1512; padding: 10px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-left { display: flex; align-items: center; gap: 8px; }
+  .brand-name { font-size: 14px; font-weight: 800; color: #fff; }
+  .brand-name .c1 { color: var(--green); }
+  .brand-name .c2 { color: var(--teal); }
+  .brand-sub { font-size: 8px; font-weight: 500; letter-spacing: 1px; color: rgba(255,255,255,.4); text-transform: uppercase; }
+
+  @media (max-width: 420px) {
+    .hdr-text h1 { font-size: 18px; }
+    .logo { width: 60px; height: 60px; }
+    .photo-row { height: 200px; }
+    .topics-grid { grid-template-columns: 1fr; }
+    .band .date { font-size: 14px; }
+    .band .loc { font-size: 12px; }
+  }
+</style>
+
+<div class="poster">
+  <div class="bar-top"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <img class="logo" src="logo_antobiomove.jpg" alt="AntoBioMove">
+    <div class="hdr-text">
+      <div class="sup">Workshop Internacional</div>
+      <h1>Biomecánica y Anatomía Aplicada al Pilates</h1>
+      <div class="by">por <strong>Lic. Antonella Gutiérrez</strong></div>
+    </div>
+  </div>
+
+  <!-- PHOTO -->
+  <div class="photo-row">
+    <img src="foto_clase_grupal.jpg" alt="Lic. Antonella Gutiérrez enseñando clase grupal">
+    <div class="photo-fade"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <p class="desc">
+      <strong>Comprende la ciencia detrás del movimiento.</strong> Este workshop te brinda las bases anatómicas y biomecánicas para entender cómo se mueve el cuerpo humano en Pilates, permitiéndote diseñar sesiones más seguras, efectivas y fundamentadas en evidencia científica.
+    </p>
+
+    <!-- Topics -->
+    <div>
+      <div class="topics-title">Contenido del Workshop</div>
+      <div class="topics-grid">
+        <div class="topic"><span class="dot"></span> Sistema Esquelético</div>
+        <div class="topic"><span class="dot g"></span> Columna Vertebral</div>
+        <div class="topic"><span class="dot"></span> Articulaciones</div>
+        <div class="topic"><span class="dot g"></span> Power House</div>
+        <div class="topic"><span class="dot"></span> Sistema Muscular</div>
+        <div class="topic"><span class="dot g"></span> Hombro, Cadera y Rodilla</div>
+        <div class="topic"><span class="dot"></span> Principios Biomecánicos</div>
+        <div class="topic"><span class="dot g"></span> Ejercicios Clásicos de Pilates</div>
+      </div>
+    </div>
+
+    <!-- Credentials -->
+    <div class="creds">
+      <span class="pill">Centro Zen Authorized Trainer</span>
+      <span class="pill g">Biomecánica Deportiva</span>
+      <span class="pill">Fisiología del Ejercicio</span>
+      <span class="pill g">Entrenamiento Deportivo</span>
+      <span class="pill">Pilates Mat, Reformer &amp; Suspensión</span>
+    </div>
+
+    <!-- Dirigido a -->
+    <div class="dirigido">
+      <div class="label">Dirigido a</div>
+      Profesores de Pilates, fisioterapeutas, entrenadores personales y profesionales del movimiento que desean profundizar en los fundamentos anatómicos y biomecánicos para elevar la calidad de sus clases.
+    </div>
+
+    <!-- Modality -->
+    <div class="details">
+      <div class="presencial"><span class="live-dot"></span> Modalidad Presencial</div>
+    </div>
+  </div>
+
+  <!-- RED BAND -->
+  <div class="band">
+    <div class="band-left">
+      <span class="date">30 DE OCTUBRE</span>
+      <span class="sep"></span>
+      <span class="loc">VALENCIA, VENEZUELA.</span>
+    </div>
+    <span class="flag" role="img" aria-label="Venezuela">&#127483;&#127466;</span>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <svg width="22" height="22" viewBox="0 0 60 60" fill="none">
+        <path d="M30 5 L55 48 L5 48 Z" stroke="url(#g)" stroke-width="3" fill="none"/>
+        <defs><linearGradient id="g" x1="5" y1="48" x2="55" y2="5"><stop stop-color="#4caf50"/><stop offset="1" stop-color="#00bcd4"/></linearGradient></defs>
+        <circle cx="30" cy="22" r="2" fill="#8d6e63"/><circle cx="30" cy="27" r="2.5" fill="#8d6e63"/><circle cx="30" cy="32" r="2.8" fill="#8d6e63"/><circle cx="30" cy="37" r="2.5" fill="#8d6e63"/><circle cx="30" cy="42" r="2" fill="#8d6e63"/>
+      </svg>
+      <div>
+        <div class="brand-name"><span class="c1">Anto</span><span class="c2">Bio</span>M<span class="c1">oo</span>ve</div>
+        <div class="brand-sub">Biomecánica & Anatomía en Movimiento</div>
+      </div>
+    </div>
+  </div>
+</div>

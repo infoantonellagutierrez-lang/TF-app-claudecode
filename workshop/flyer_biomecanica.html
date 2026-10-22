@@ -65,17 +65,18 @@
   .photo-row {
     position: relative;
     width: 100%;
-    height: 120px;
+    height: 220px;
     overflow: hidden;
     background: var(--surface);
   }
   .photo-row img {
     width: 100%; height: 100%;
-    object-fit: cover; object-position: center 25%;
+    object-fit: cover; object-position: center 20%;
     display: block;
+    filter: brightness(1.15) contrast(1.05);
   }
   .photo-fade {
-    position: absolute; bottom: 0; left: 0; right: 0; height: 50px;
+    position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
     background: linear-gradient(to top, var(--bg), transparent);
     pointer-events: none;
   }
@@ -178,7 +179,7 @@
   @media (max-width: 420px) {
     .hdr-text h1 { font-size: 18px; }
     .logo { width: 60px; height: 60px; }
-    .photo-row { height: 160px; }
+    .photo-row { height: 200px; }
     .topics-grid { grid-template-columns: 1fr; }
     .band .date { font-size: 14px; }
     .band .loc { font-size: 12px; }

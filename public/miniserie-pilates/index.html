@@ -1,0 +1,840 @@
+<title>Pilates Decodificado</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  /* Layout: vertical card feed — each episode is a social-media content brief */
+  :root {
+    --bg: #f7f5f2;
+    --fg: #201a14;
+    --surface: #edeae5;
+    --teal: #00897b;
+    --teal-soft: #e0f2f0;
+    --green: #43a047;
+    --brown: #5d4037;
+    --muted: #7a6e62;
+    --border: #ddd6cc;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161210;
+      --fg: #e8e0d6;
+      --surface: #241f1a;
+      --teal: #4db6ac;
+      --teal-soft: #1a2e2c;
+      --green: #66bb6a;
+      --brown: #bcaaa4;
+      --muted: #9a8e82;
+      --border: #342e28;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161210;
+    --fg: #e8e0d6;
+    --surface: #241f1a;
+    --teal: #4db6ac;
+    --teal-soft: #1a2e2c;
+    --green: #66bb6a;
+    --brown: #bcaaa4;
+    --muted: #9a8e82;
+    --border: #342e28;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Newsreader', Georgia, serif;
+    margin: 0;
+    padding: 0;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+    display: flex;
+    justify-content: center;
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 640px;
+    padding: 28px 0 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 32px 0 20px;
+  }
+  .hero .series-badge {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    border: 1.5px solid var(--teal);
+    padding: 4px 14px;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(28px, 7vw, 42px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--brown);
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero .tagline {
+    font-style: italic;
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .hero .meta {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-top: 14px;
+    letter-spacing: 0.5px;
+  }
+  .hero .meta strong { color: var(--fg); font-weight: 700; }
+
+  /* Episode card */
+  .ep {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .ep-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+  }
+  .ep-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    white-space: nowrap;
+  }
+  .ep-format {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    background: var(--teal-soft);
+    color: var(--teal);
+  }
+
+  .ep-body { padding: 16px; }
+  .ep-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(17px, 4vw, 20px);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--fg);
+    margin: 0 0 4px;
+    text-wrap: balance;
+  }
+  .ep-hook {
+    font-style: italic;
+    font-size: 14px;
+    color: var(--brown);
+    margin: 0 0 12px;
+  }
+
+  .ep-section-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 14px 0 5px;
+  }
+  .ep-section-label:first-of-type { margin-top: 0; }
+
+  .ep-body p {
+    margin: 0 0 8px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--fg);
+  }
+
+  .caption-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 14px;
+    margin: 8px 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--fg);
+    position: relative;
+    white-space: pre-line;
+  }
+  .caption-box .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .caption-box .copy-btn:hover { opacity: 0.85; }
+  .caption-box .copy-btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  .visual-dir {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 6px 0 4px;
+  }
+  .visual-dir .v-tag {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9.5px;
+    font-weight: 600;
+    padding: 2px 8px;
+    background: var(--teal-soft);
+    color: var(--teal);
+    border-left: 2px solid var(--teal);
+  }
+
+  .hashtags {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 10px;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+
+  /* Calendar strip */
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin: 0;
+  }
+  .cal-day {
+    text-align: center;
+    padding: 8px 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .cal-day .cd-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cal-day .cd-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--brown);
+  }
+  .cal-day.active {
+    border-color: var(--teal);
+    background: var(--teal-soft);
+  }
+  .cal-day.active .cd-label { color: var(--teal); }
+  .cal-day.active .cd-num { color: var(--teal); }
+
+  /* Section intro */
+  .section-intro {
+    padding: 16px 0;
+    border-bottom: 2px solid var(--teal);
+  }
+  .section-intro h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 0 0 6px;
+  }
+  .section-intro p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 480px) {
+    .calendar { grid-template-columns: repeat(3, 1fr); }
+    .ep-head { flex-wrap: wrap; }
+  }
+</style>
+
+<div class="page">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="series-badge">Mini Serie para Redes</div>
+    <h1>Pilates<br><span>Decodificado</span></h1>
+    <p class="tagline">Los términos que escuchas en clase y nadie te ha explicado bien</p>
+    <p class="meta">por <strong>Lic. Antonella Gutiérrez</strong> &middot; @anto_biomove &middot; 10 episodios</p>
+  </div>
+
+  <!-- STRATEGY -->
+  <div class="section-intro">
+    <h2>Estrategia de Publicación</h2>
+    <p>2 publicaciones por semana (martes y viernes). Cada episodio tiene un texto listo para copiar y dirección visual para el diseño. Formato sugerido: carrusel de 4–6 láminas en Instagram.</p>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="calendar">
+    <div class="cal-day active"><div class="cd-label">Sem 1</div><div class="cd-num">Ma</div></div>
+    <div class="cal-day active"><div class="cd-label">Sem 1</div><div class="cd-num">Vi</div></div>
+    <div class="cal-day active"><div class="cd-label">Sem 2</div><div class="cd-num">Ma</div></div>
+    <div class="cal-day active"><div class="cd-label">Sem 2</div><div class="cd-num">Vi</div></div>
+    <div class="cal-day active"><div class="cd-label">Sem 3</div><div class="cd-num">Ma</div></div>
+    <div class="cal-day active"><div class="cd-label">Sem 3</div><div class="cd-num">Vi</div></div>
+    <div class="cal-day active"><div class="cd-label">Sem 4</div><div class="cd-num">Ma</div></div>
+    <div class="cal-day active"><div class="cd-label">Sem 4</div><div class="cd-num">Vi</div></div>
+    <div class="cal-day active"><div class="cd-label">Sem 5</div><div class="cd-num">Ma</div></div>
+    <div class="cal-day active"><div class="cd-label">Sem 5</div><div class="cd-num">Vi</div></div>
+  </div>
+
+  <!-- EPISODE 1 -->
+  <div class="ep">
+    <div class="ep-head">
+      <span class="ep-num">Episodio 01</span>
+      <span class="ep-format">Carrusel 5 láminas</span>
+    </div>
+    <div class="ep-body">
+      <h3 class="ep-title">El Power House no son "los abdominales"</h3>
+      <p class="ep-hook">El error más común al empezar Pilates</p>
+
+      <div class="ep-section-label">Concepto clave</div>
+      <p>El Power House es mucho más que los abdominales. Es el centro de fuerza que incluye la zona abdominal completa (transverso, oblicuos, recto), la espalda baja (cuadrado lumbar, erectores espinales), la pelvis y el suelo pélvico. Funciona como una faja natural que estabiliza la columna y genera fuerza para todos los movimientos.</p>
+
+      <div class="ep-section-label">Caption para Instagram</div>
+      <div class="caption-box" id="cap1">"Activa el core."
+"Contrae los abdominales."
+
+Seguro lo has escuchado mil veces. Pero en Pilates, cuando hablamos del Power House, NO estamos hablando solo de abdominales.
+
+El Power House es tu CENTRO DE FUERZA. Incluye:
+
+&#9679; Transverso abdominal (la faja profunda)
+&#9679; Oblicuos internos y externos
+&#9679; Recto abdominal
+&#9679; Cuadrado lumbar
+&#9679; Suelo pélvico
+&#9679; Erectores espinales
+
+Es la "central eléctrica" de tu cuerpo: de ahí sale la fuerza, el equilibrio y la estabilidad para CADA movimiento que haces en Pilates.
+
+Sin Power House activado, no hay Hundred. No hay Roll Up. No hay Teaser.
+
+Cuando tu profe dice "activa el centro"... ya sabes que no es solo meter la barriga.
+
+#PilatesDecodificado #AntoBioMove #PowerHouse #AnatomíaEnMovimiento #PilatesVenezuela #BiomecánicaPilates
+<button class="copy-btn" onclick="copyCaption('cap1')">Copiar</button></div>
+
+      <div class="ep-section-label">Dirección visual</div>
+      <div class="visual-dir">
+        <span class="v-tag">Lámina 1: Pregunta provocadora sobre fondo teal</span>
+        <span class="v-tag">Lámina 2: Silueta con zona del PH iluminada</span>
+        <span class="v-tag">Lámina 3: Lista de músculos con íconos</span>
+        <span class="v-tag">Lámina 4: Foto tuya señalando la zona</span>
+        <span class="v-tag">Lámina 5: Frase cierre + logo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPISODE 2 -->
+  <div class="ep">
+    <div class="ep-head">
+      <span class="ep-num">Episodio 02</span>
+      <span class="ep-format">Carrusel 5 láminas</span>
+    </div>
+    <div class="ep-body">
+      <h3 class="ep-title">Contracción concéntrica, excéntrica e isométrica</h3>
+      <p class="ep-hook">Tu músculo trabaja de 3 formas distintas y nunca te lo explicaron</p>
+
+      <div class="ep-section-label">Concepto clave</div>
+      <p>El músculo no solo "se contrae y ya". Hay 3 tipos principales de contracción: concéntrica (el músculo se acorta), excéntrica (se alarga bajo tensión) e isométrica (mantiene sin moverse). Entenderlas cambia cómo ejecutas cada ejercicio.</p>
+
+      <div class="ep-section-label">Caption para Instagram</div>
+      <div class="caption-box" id="cap2">Cuando haces un curl de bíceps y subes el peso: CONTRACCIÓN CONCÉNTRICA. El músculo se acorta.
+
+Cuando bajas el peso lentamente: CONTRACCIÓN EXCÉNTRICA. El músculo se alarga pero sigue trabajando. (Por eso bajar lento quema más.)
+
+Cuando sostienes una plancha sin moverte: CONTRACCIÓN ISOMÉTRICA. El músculo trabaja sin cambiar de longitud.
+
+En Pilates usamos las 3 TODO EL TIEMPO:
+
+&#9679; Roll Up subiendo = concéntrica del recto abdominal
+&#9679; Roll Up bajando = excéntrica de los erectores espinales
+&#9679; Hundred manteniendo la posición = isométrica del core
+
+La próxima vez que estés en clase, pregúntate: ¿qué tipo de contracción estoy haciendo ahora?
+
+Eso es Pilates consciente.
+
+#PilatesDecodificado #AntoBioMove #ContracciónMuscular #AnatomíaPilates #PilatesConsciente
+<button class="copy-btn" onclick="copyCaption('cap2')">Copiar</button></div>
+
+      <div class="ep-section-label">Dirección visual</div>
+      <div class="visual-dir">
+        <span class="v-tag">Lámina 1: "3 formas en que trabaja tu músculo"</span>
+        <span class="v-tag">Lámina 2: Concéntrica con flecha de acortamiento</span>
+        <span class="v-tag">Lámina 3: Excéntrica con flecha de alargamiento</span>
+        <span class="v-tag">Lámina 4: Isométrica con símbolo de pausa</span>
+        <span class="v-tag">Lámina 5: Ejemplo en Roll Up con las 3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPISODE 3 -->
+  <div class="ep">
+    <div class="ep-head">
+      <span class="ep-num">Episodio 03</span>
+      <span class="ep-format">Reel 45 seg + Carrusel</span>
+    </div>
+    <div class="ep-body">
+      <h3 class="ep-title">Se dice CIFOSIS, no "sifosis"</h3>
+      <p class="ep-hook">Los errores más comunes al hablar de la columna vertebral</p>
+
+      <div class="ep-section-label">Concepto clave</div>
+      <p>La columna no es recta: tiene 4 curvaturas naturales. Las lordosis (cervical y lumbar, curvatura hacia adelante) y las cifosis (torácica y sacra, curvatura hacia atrás). Cuando se pronuncian más de lo normal, hablamos de hiperlordosis o hipercifosis. El error "sifosis" es muy extendido pero incorrecto.</p>
+
+      <div class="ep-section-label">Caption para Instagram</div>
+      <div class="caption-box" id="cap3">Hora de la verdad: ¿alguna vez dijiste "sifosis"?
+
+No te preocupes, es uno de los errores más comunes. Pero el término correcto es CIFOSIS (del griego kyphosis).
+
+Tu columna tiene 4 curvaturas naturales que forman una S suave:
+
+&#9679; Cervical → LORDOSIS (curva hacia adelante)
+&#9679; Torácica → CIFOSIS (curva hacia atrás)
+&#9679; Lumbar → LORDOSIS (curva hacia adelante)
+&#9679; Sacra → CIFOSIS (curva hacia atrás)
+
+Estas curvas son NORMALES y NECESARIAS. Le dan elasticidad y capacidad de absorción de impacto a tu columna.
+
+El problema aparece cuando se exageran:
+HIPERLORDOSIS = lordosis aumentada
+HIPERCIFOSIS = cifosis aumentada
+
+En Pilates trabajamos para respetar estas curvaturas, no para eliminarlas. La "columna neutra" no es una columna plana.
+
+Ahora sí: cifosis. Con C.
+
+#PilatesDecodificado #AntoBioMove #ColumnaVertebral #Cifosis #AnatomíaEnMovimiento #PilatesEducativo
+<button class="copy-btn" onclick="copyCaption('cap3')">Copiar</button></div>
+
+      <div class="ep-section-label">Dirección visual</div>
+      <div class="visual-dir">
+        <span class="v-tag">Reel: tú diciendo "sifosis" tachado → "cifosis" correcto</span>
+        <span class="v-tag">Lámina 1: Columna de perfil con las 4 curvas señaladas</span>
+        <span class="v-tag">Lámina 2: Normal vs Hiper (comparación visual)</span>
+        <span class="v-tag">Lámina 3: "Con C, no con S" como frase final</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPISODE 4 -->
+  <div class="ep">
+    <div class="ep-head">
+      <span class="ep-num">Episodio 04</span>
+      <span class="ep-format">Carrusel 6 láminas</span>
+    </div>
+    <div class="ep-body">
+      <h3 class="ep-title">Respiración en Pilates: nariz-nariz o nariz-boca</h3>
+      <p class="ep-hook">La eterna confusión resuelta en un post</p>
+
+      <div class="ep-section-label">Concepto clave</div>
+      <p>El Pilates Clásico (como Joseph lo diseñó) usa respiración nariz-nariz. El Pilates Contemporáneo (desde los años 70) incorporó la respiración nariz-boca para facilitar la conexión con el Power House. Ambas son torácicas laterales. En Mat Básico solo hay 3 ejercicios donde la respiración se marca obligatoriamente.</p>
+
+      <div class="ep-section-label">Caption para Instagram</div>
+      <div class="caption-box" id="cap4">¿Inhalo por la nariz y exhalo por la boca? ¿O todo por la nariz?
+
+Depende.
+
+PILATES CLÁSICO (como Joseph lo creó):
+Inhalar y exhalar por la NARIZ. Esta es la respiración original del método.
+
+PILATES CONTEMPORÁNEO (desde los años 70):
+Inhalar por nariz, exhalar por BOCA. Se introdujo para facilitar una mayor contracción concéntrica del transverso abdominal.
+
+En ambos casos la respiración es TORÁCICA LATERAL: al inhalar, la caja torácica se expande hacia los lados (no inflas la barriga).
+
+Dato que pocos saben: en Mat Básico/Intermedio, solo hay 3 ejercicios donde se DEBEN marcar los patrones de respiración obligatoriamente:
+
+1. The Hundred (5 tiempos inhala, 5 tiempos exhala)
+2. Double Leg Stretch
+3. Spine Stretch Forward
+
+En los demás ejercicios, la respiración fluye naturalmente.
+
+La próxima vez que vayas a clase, pregúntale a tu profe: ¿trabajamos línea clásica o contemporánea?
+
+#PilatesDecodificado #AntoBioMove #RespiraciónPilates #PilatesClásico #MetodoPilates
+<button class="copy-btn" onclick="copyCaption('cap4')">Copiar</button></div>
+
+      <div class="ep-section-label">Dirección visual</div>
+      <div class="visual-dir">
+        <span class="v-tag">Lámina 1: "¿Nariz o boca?" sobre fondo dividido</span>
+        <span class="v-tag">Lámina 2: Clásico = nariz-nariz (icono)</span>
+        <span class="v-tag">Lámina 3: Contemporáneo = nariz-boca (icono)</span>
+        <span class="v-tag">Lámina 4: Torácica lateral explicada</span>
+        <span class="v-tag">Lámina 5: Los 3 ejercicios obligatorios</span>
+        <span class="v-tag">Lámina 6: Cierre + pregunta para comentarios</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPISODE 5 -->
+  <div class="ep">
+    <div class="ep-head">
+      <span class="ep-num">Episodio 05</span>
+      <span class="ep-format">Reel 30 seg + Carrusel</span>
+    </div>
+    <div class="ep-body">
+      <h3 class="ep-title">Agonista vs. Antagonista: los músculos trabajan en parejas</h3>
+      <p class="ep-hook">Ningún músculo trabaja solo. Siempre hay uno que frena.</p>
+
+      <div class="ep-section-label">Caption para Instagram</div>
+      <div class="caption-box" id="cap5">Cuando flexionas el codo, el bíceps se contrae. Eso lo sabes.
+
+Pero ¿sabías que al mismo tiempo el tríceps se relaja para PERMITIR ese movimiento?
+
+Así trabajan los músculos: en PAREJAS.
+
+AGONISTA = el que hace el movimiento principal
+ANTAGONISTA = el que se opone, controla y frena
+
+Ejemplos en Pilates:
+&#9679; Roll Up subiendo → Agonista: recto abdominal / Antagonista: erectores espinales
+&#9679; Extensión de rodilla → Agonista: cuádriceps / Antagonista: isquiotibiales
+&#9679; Abducción de pierna → Agonista: abductores / Antagonista: aductores
+
+Y hay un tercero: el SINERGISTA. Es el asistente que ayuda al agonista.
+
+Ejemplo: en la flexión lateral de columna, los oblicuos son los agonistas y el cuadrado lumbar es sinergista (ayuda en los primeros grados del movimiento).
+
+Conocer estas relaciones te hace un mejor instructor y un alumno más consciente.
+
+#PilatesDecodificado #AntoBioMove #AgonistaAntagonista #AnatomíaFuncional #PilatesEducativo
+<button class="copy-btn" onclick="copyCaption('cap5')">Copiar</button></div>
+
+      <div class="ep-section-label">Dirección visual</div>
+      <div class="visual-dir">
+        <span class="v-tag">Reel: demostración de flexión de codo señalando cada músculo</span>
+        <span class="v-tag">Lámina 1: Diagrama de pareja muscular en brazo</span>
+        <span class="v-tag">Lámina 2: Agonista / Antagonista / Sinergista definidos</span>
+        <span class="v-tag">Lámina 3: Ejemplos en ejercicios de Pilates</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPISODE 6 -->
+  <div class="ep">
+    <div class="ep-head">
+      <span class="ep-num">Episodio 06</span>
+      <span class="ep-format">Carrusel 5 láminas</span>
+    </div>
+    <div class="ep-body">
+      <h3 class="ep-title">MANGUITO rotador, no "mangos rotadores"</h3>
+      <p class="ep-hook">4 músculos que protegen tu hombro (y cómo se llaman de verdad)</p>
+
+      <div class="ep-section-label">Caption para Instagram</div>
+      <div class="caption-box" id="cap6">Vamos a aclarar esto de una vez:
+
+Se dice MANGUITO ROTADOR.
+No "mangos rotadores". No "mango rotador".
+
+MANGUITO. Como una manga que envuelve la articulación del hombro.
+
+Son 4 músculos que estabilizan y permiten el movimiento del hombro:
+
+1. SUPRAESPINOSO → Levanta el brazo (abducción)
+2. INFRAESPINOSO → Rota el brazo hacia afuera
+3. SUBESCAPULAR → Rota el brazo hacia adentro
+4. REDONDO MENOR → También rota hacia afuera
+
+Juntos, sostienen la cabeza del húmero dentro de la cavidad del hombro. Sin ellos, tu hombro literalmente se desestabilizaría.
+
+En Pilates los trabajamos constantemente: cada vez que mantienes los brazos estables durante el Hundred, cada vez que empujas en el Reformer, cada vez que haces círculos con los brazos.
+
+Ahora ya sabes: MANGUITO. Con M de movimiento.
+
+#PilatesDecodificado #AntoBioMove #ManguitoRotador #HombroPilates #AnatomíaAplicada
+<button class="copy-btn" onclick="copyCaption('cap6')">Copiar</button></div>
+
+      <div class="ep-section-label">Dirección visual</div>
+      <div class="visual-dir">
+        <span class="v-tag">Lámina 1: "Mangos" tachado → "MANGUITO" correcto</span>
+        <span class="v-tag">Lámina 2–3: Cada músculo con función simplificada</span>
+        <span class="v-tag">Lámina 4: Foto tuya señalando hombro en clase</span>
+        <span class="v-tag">Lámina 5: "Con M de movimiento" + logo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPISODE 7 -->
+  <div class="ep">
+    <div class="ep-head">
+      <span class="ep-num">Episodio 07</span>
+      <span class="ep-format">Reel 45 seg</span>
+    </div>
+    <div class="ep-body">
+      <h3 class="ep-title">Pelvis neutra vs. retroversión: cuándo usar cada una</h3>
+      <p class="ep-hook">"Pega la espalda al mat" no siempre es lo correcto</p>
+
+      <div class="ep-section-label">Caption para Instagram</div>
+      <div class="caption-box" id="cap7">"Pega la espalda baja al mat."
+
+¿Cuántas veces lo has escuchado? Pero ojo: no siempre es correcto.
+
+PELVIS NEUTRA: Respeta las curvaturas naturales de tu columna. Hay un pequeño espacio entre tu lumbar y el mat. Esta es tu posición base.
+
+RETROVERSIÓN PÉLVICA: El pubis sube hacia las costillas, la espalda baja se aplana contra el mat. El recto abdominal tira del pubis hacia arriba.
+
+¿Cuándo usamos cada una?
+
+PELVIS NEUTRA:
+&#9679; Posición inicial de la mayoría de ejercicios
+&#9679; Footwork en Reformer
+&#9679; Cuando trabajamos estabilidad
+
+RETROVERSIÓN:
+&#9679; Rolling Like a Ball
+&#9679; Teaser
+&#9679; Hundred (al subir)
+&#9679; Shoulder Bridge
+&#9679; Boomerang
+
+La retroversión es un MOVIMIENTO, no una posición permanente. El recto abdominal hala del pubis para generarla, y si lo sueltas, los erectores espinales extienden la columna y pierdes la posición.
+
+Dominar esta diferencia es lo que separa a un alumno principiante de uno intermedio.
+
+#PilatesDecodificado #AntoBioMove #PelvisNeutra #Retroversión #BiomecánicaPilates
+<button class="copy-btn" onclick="copyCaption('cap7')">Copiar</button></div>
+
+      <div class="ep-section-label">Dirección visual</div>
+      <div class="visual-dir">
+        <span class="v-tag">Reel: demostración acostada mostrando neutra vs retroversión</span>
+        <span class="v-tag">Texto overlay señalando el espacio lumbar</span>
+        <span class="v-tag">Lista de ejercicios para cada posición al final</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPISODE 8 -->
+  <div class="ep">
+    <div class="ep-head">
+      <span class="ep-num">Episodio 08</span>
+      <span class="ep-format">Carrusel 4 láminas</span>
+    </div>
+    <div class="ep-body">
+      <h3 class="ep-title">"Hombros lejos de las orejas" ¿por qué lo repiten tanto?</h3>
+      <p class="ep-hook">La escápula es la protagonista oculta del Pilates</p>
+
+      <div class="ep-section-label">Caption para Instagram</div>
+      <div class="caption-box" id="cap8">Tu profe lo dice 20 veces por clase:
+"Baja los hombros."
+"Hombros lejos de las orejas."
+"Escápulas al bolsillo del pantalón."
+
+Pero ¿por qué es TAN importante?
+
+Porque la ESCÁPULA es el puente entre tus brazos y tu columna. Si no está bien colocada, todo el movimiento del hombro se desestabiliza.
+
+La escápula se mueve en 4 direcciones:
+&#9679; PROTRACCIÓN → hacia adelante (separar escápulas)
+&#9679; RETRACCIÓN → hacia atrás (juntar escápulas)
+&#9679; ELEVACIÓN → hacia arriba (subir hombros)
+&#9679; DEPRESIÓN → hacia abajo (bajar hombros)
+
+El punto medio entre las 4 es tu POSICIÓN NEUTRA. Y encontrarla es un ejercicio en sí mismo.
+
+¿Cómo? Brazos al techo → protracción → retracción → siente el punto medio. Ahí están tus escápulas neutras.
+
+Los músculos que la estabilizan: trapecio (las 3 porciones), serrato anterior, romboides.
+
+Cuando tu profe dice "baja los hombros", lo que realmente pide es: activa tu trapecio inferior y lleva las escápulas a su lugar.
+
+#PilatesDecodificado #AntoBioMove #Escápula #CinturaEscapular #MovimientoConsciente
+<button class="copy-btn" onclick="copyCaption('cap8')">Copiar</button></div>
+
+      <div class="ep-section-label">Dirección visual</div>
+      <div class="visual-dir">
+        <span class="v-tag">Lámina 1: Frase "Hombros lejos de las orejas" estilo pizarra</span>
+        <span class="v-tag">Lámina 2: 4 movimientos de la escápula con flechas</span>
+        <span class="v-tag">Lámina 3: Foto con escápulas señaladas</span>
+        <span class="v-tag">Lámina 4: "Al bolsillo del pantalón" + logo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPISODE 9 -->
+  <div class="ep">
+    <div class="ep-head">
+      <span class="ep-num">Episodio 09</span>
+      <span class="ep-format">Carrusel 6 láminas</span>
+    </div>
+    <div class="ep-body">
+      <h3 class="ep-title">Pilates Clásico vs. Contemporáneo: son diferentes, no rivales</h3>
+      <p class="ep-hook">La historia real de por qué existen dos líneas</p>
+
+      <div class="ep-section-label">Caption para Instagram</div>
+      <div class="caption-box" id="cap9">¿Clásico o contemporáneo? ¿Cuál es mejor?
+
+Ninguno es "mejor". Son dos caminos del mismo método. Y conocer la historia te ayuda a entender por qué.
+
+PILATES CLÁSICO:
+&#9679; Enseña los ejercicios tal como Joseph los creó
+&#9679; 34 ejercicios originales (37 con los de Romana)
+&#9679; Respiración nariz-nariz
+&#9679; Sin balones, bandas elásticas ni accesorios
+&#9679; Los ejercicios se dividen en Mat I, II y III
+&#9679; Las transiciones entre ejercicios son parte del método
+
+PILATES CONTEMPORÁNEO:
+&#9679; Comienza después de la muerte de Joseph (1967)
+&#9679; Los alumnos de los Elders involucraron fisioterapeutas
+&#9679; Introdujeron modificaciones y adaptaciones
+&#9679; Respiración nariz-boca
+&#9679; Incorporan accesorios y variaciones
+
+Dato histórico: Romana Kryzanowska llegó como alumna a los 16 años por una lesión de tobillo. Junto con Clara (esposa de Joseph), mantuvieron el método purista y tradicionalista.
+
+Lo importante: sea cual sea la línea, los fundamentos anatómicos y biomecánicos son los mismos. El cuerpo no cambia de anatomía según la escuela.
+
+Elige la línea que resuene contigo, pero conoce ambas.
+
+#PilatesDecodificado #AntoBioMove #PilatesClásico #PilatesContemporáneo #HistoriaPilates
+<button class="copy-btn" onclick="copyCaption('cap9')">Copiar</button></div>
+
+      <div class="ep-section-label">Dirección visual</div>
+      <div class="visual-dir">
+        <span class="v-tag">Lámina 1: "Clásico vs. Contemporáneo" estilo VS</span>
+        <span class="v-tag">Lámina 2–3: Columna izq/der comparando cada aspecto</span>
+        <span class="v-tag">Lámina 4: Timeline histórica simplificada</span>
+        <span class="v-tag">Lámina 5: "No son rivales, son caminos"</span>
+        <span class="v-tag">Lámina 6: CTA "¿cuál practicas tú?"</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EPISODE 10 -->
+  <div class="ep">
+    <div class="ep-head">
+      <span class="ep-num">Episodio 10</span>
+      <span class="ep-format">Reel 60 seg + Carrusel</span>
+    </div>
+    <div class="ep-body">
+      <h3 class="ep-title">Cómo analizar cualquier ejercicio de Pilates</h3>
+      <p class="ep-hook">El cierre de la serie: el método para entender todo ejercicio</p>
+
+      <div class="ep-section-label">Caption para Instagram</div>
+      <div class="caption-box" id="cap10">Después de 9 episodios de #PilatesDecodificado, ya tienes las herramientas. Ahora te enseño a USARLAS.
+
+Para analizar cualquier ejercicio de Pilates, hazte estas 5 preguntas:
+
+1. ¿CUÁL ES LA POSICIÓN INICIAL?
+Columna neutra, pelvis neutra, escápulas neutras, dentro del marco del cuerpo.
+
+2. ¿CUÁLES SON LOS MÚSCULOS MOVEDORES?
+Los que generan el movimiento principal (agonistas).
+
+3. ¿CUÁLES SON LOS ESTABILIZADORES?
+Core, cintura escapular, los que mantienen la postura mientras otros se mueven.
+
+4. ¿QUÉ TIPO DE CONTRACCIÓN PREDOMINA?
+Concéntrica al ir, excéntrica al volver, isométrica al mantener.
+
+5. ¿CUÁL ES LA RESPIRACIÓN?
+¿Es uno de los 3 ejercicios con patrón obligatorio? Si no, fluye natural.
+
+Ejemplo rápido — ROLL UP:
+&#9679; Movedores: recto abdominal, oblicuos, flexores de cadera
+&#9679; Estabilizadores: transverso abdominal, cuadrado lumbar, trapecio inferior
+&#9679; Subiendo: concéntrica del abdomen
+&#9679; Bajando: excéntrica de los erectores espinales
+
+Cuando entiendes la ciencia detrás del movimiento, dejas de copiar ejercicios y empiezas a ENSEÑARLOS.
+
+Esto es Biomecánica y Anatomía en Movimiento.
+
+#PilatesDecodificado #AntoBioMove #BiomecánicaPilates #AnatomíaEnMovimiento #PilatesConsciente #PilatesVenezuela
+<button class="copy-btn" onclick="copyCaption('cap10')">Copiar</button></div>
+
+      <div class="ep-section-label">Dirección visual</div>
+      <div class="visual-dir">
+        <span class="v-tag">Reel: analizar Roll Up en vivo con las 5 preguntas en pantalla</span>
+        <span class="v-tag">Lámina 1: "5 preguntas para cualquier ejercicio"</span>
+        <span class="v-tag">Lámina 2–3: Las 5 preguntas como checklist</span>
+        <span class="v-tag">Lámina 4: Ejemplo aplicado al Roll Up</span>
+        <span class="v-tag">Lámina 5: "Deja de copiar. Empieza a enseñar." + logo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HASHTAGS MASTER LIST -->
+  <div class="section-intro" style="margin-top: 8px;">
+    <h2>Hashtags Recurrentes</h2>
+    <p style="font-family: 'Outfit', sans-serif; font-size: 12px; color: var(--muted); line-height: 1.7;">
+      #PilatesDecodificado #AntoBioMove #AnatomíaEnMovimiento #BiomecánicaPilates #PilatesVenezuela #PilatesEducativo #PilatesConsciente #AnatomíaPilates #MetodoPilates #PilatesClásico #InstructorDePilates #FormacionPilates #CentroZenPilates #PowerHouse #PilatesMat #PilatesReformer
+    </p>
+  </div>
+</div>
+
+<script>
+function copyCaption(id) {
+  const box = document.getElementById(id);
+  if (!box) return;
+  const btn = box.querySelector('.copy-btn');
+  const text = box.textContent.replace('Copiar', '').replace('Copiado', '').trim();
+  try {
+    navigator.clipboard.writeText(text).then(() => {
+      if (btn) { btn.textContent = 'Copiado'; setTimeout(() => { btn.textContent = 'Copiar'; }, 2000); }
+    }).catch(() => {
+      const range = document.createRange();
+      range.selectNodeContents(box);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+  } catch(e) {
+    const range = document.createRange();
+    range.selectNodeContents(box);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+}
+</script>
