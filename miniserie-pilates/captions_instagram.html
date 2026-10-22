@@ -1,0 +1,687 @@
+<title>Captions & Guía Instagram</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+:root {
+  --bg: #faf8f6;
+  --fg: #1a1512;
+  --surface: #ffffff;
+  --teal: #00897b;
+  --teal-soft: #e0f2f0;
+  --green: #43a047;
+  --brown: #5d4037;
+  --accent: #e91e63;
+  --accent-soft: #fce4ec;
+  --muted: #7a6e62;
+  --border: #e8e0d6;
+  --gradient-start: #00897b;
+  --gradient-end: #43a047;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141210;
+    --fg: #e8e0d6;
+    --surface: #1e1a16;
+    --teal: #4db6ac;
+    --teal-soft: #1a2e2c;
+    --green: #66bb6a;
+    --brown: #bcaaa4;
+    --accent: #f48fb1;
+    --accent-soft: #2a1a20;
+    --muted: #9a8e82;
+    --border: #302a24;
+    --gradient-start: #4db6ac;
+    --gradient-end: #66bb6a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141210;
+  --fg: #e8e0d6;
+  --surface: #1e1a16;
+  --teal: #4db6ac;
+  --teal-soft: #1a2e2c;
+  --green: #66bb6a;
+  --brown: #bcaaa4;
+  --accent: #f48fb1;
+  --accent-soft: #2a1a20;
+  --muted: #9a8e82;
+  --border: #302a24;
+  --gradient-start: #4db6ac;
+  --gradient-end: #66bb6a;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Outfit', system-ui, sans-serif;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+  padding: 2.5rem 1rem 1.5rem;
+}
+.hero h1 {
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  line-height: 1.2;
+}
+.hero p {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  color: var(--muted);
+  margin: .5rem 0 0;
+  font-size: 1.05rem;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: .5rem;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+.tab {
+  padding: .6rem 1rem;
+  font-weight: 600;
+  font-size: .85rem;
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all .2s;
+  font-family: inherit;
+}
+.tab.active {
+  color: var(--teal);
+  border-bottom-color: var(--teal);
+}
+.tab:hover { color: var(--fg); }
+
+/* Sections */
+.section { display: none; }
+.section.active { display: block; }
+
+/* Caption card */
+.caption-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.caption-label {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--teal);
+  background: var(--teal-soft);
+  padding: .3rem .7rem;
+  border-radius: 6px;
+  margin-bottom: .8rem;
+}
+.caption-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 .8rem;
+}
+.caption-text {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: .95rem;
+  line-height: 1.7;
+  color: var(--fg);
+  white-space: pre-wrap;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: .8rem;
+}
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: .8rem;
+  font-weight: 600;
+  padding: .5rem 1rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--teal);
+  background: transparent;
+  color: var(--teal);
+  cursor: pointer;
+  transition: all .2s;
+}
+.copy-btn:hover {
+  background: var(--teal);
+  color: #fff;
+}
+.copy-btn.copied {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+.hashtags {
+  font-size: .8rem;
+  color: var(--muted);
+  margin-top: .6rem;
+  line-height: 1.6;
+  word-break: break-word;
+}
+.hashtags strong { color: var(--teal); }
+
+/* Tip box */
+.tip-box {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.tip-box h4 {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 .4rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.tip-box p, .tip-box ul {
+  font-size: .88rem;
+  margin: 0;
+  line-height: 1.6;
+  color: var(--fg);
+}
+.tip-box ul {
+  padding-left: 1.2rem;
+  margin-top: .3rem;
+}
+.tip-box li { margin-bottom: .3rem; }
+
+/* Growth strategy */
+.strategy-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.strategy-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 .6rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.strategy-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.strategy-card p, .strategy-card ul {
+  font-size: .9rem;
+  line-height: 1.65;
+  margin: 0;
+}
+.strategy-card ul {
+  padding-left: 1.2rem;
+  margin-top: .3rem;
+}
+.strategy-card li { margin-bottom: .25rem; }
+.strategy-card .example {
+  background: var(--teal-soft);
+  border-radius: 8px;
+  padding: .6rem .8rem;
+  margin-top: .6rem;
+  font-size: .85rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* Calendar */
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin: 1rem 0;
+}
+.cal-head {
+  font-size: .65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  text-align: center;
+  color: var(--muted);
+  padding-bottom: .3rem;
+}
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: .75rem;
+  font-weight: 500;
+  color: var(--muted);
+  min-width: 0;
+}
+.cal-day.post {
+  background: var(--teal);
+  color: #fff;
+  font-weight: 700;
+}
+.cal-day.story {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+}
+.cal-day.reel {
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-weight: 700;
+}
+.cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem;
+  margin-top: .5rem;
+  font-size: .75rem;
+}
+.cal-legend span {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+.cal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  font-size: .75rem;
+  color: var(--muted);
+}
+</style>
+
+<div class="hero">
+  <h1>Captions & Estrategia IG</h1>
+  <p>Pies de foto listos para copiar + guía de crecimiento para @anto_biomove</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showSection('flyers')">Captions Flyers</button>
+  <button class="tab" onclick="showSection('estrategia')">Estrategia Crecimiento</button>
+  <button class="tab" onclick="showSection('calendario')">Calendario</button>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 1: CAPTIONS PARA FLYERS           -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="flyers" class="section active">
+
+  <div class="tip-box">
+    <h4>Antes de publicar</h4>
+    <p>Publica tus flyers como <strong>carrusel</strong> (imagen 1: flyer, imagen 2: una foto tuya enseñando o del estudio). Instagram prioriza carruseles en el algoritmo. Publica entre las 7-9 PM hora Venezuela.</p>
+  </div>
+
+  <!-- FLYER REFORMER -->
+  <div class="caption-card">
+    <div class="caption-label">Flyer Reformer — Para IG</div>
+    <h3>Personal + workshop</h3>
+    <div class="caption-text" id="cap1">Hace un tiempo me di cuenta de algo: no basta con saber hacer los ejercicios. Necesitaba entender el POR QUÉ de cada movimiento.
+
+Ahí empezó mi camino con la biomecánica y la anatomía aplicada al Pilates. Y cambió todo: cómo enseño, cómo corrijo, cómo muevo mi propio cuerpo.
+
+Por eso armé este workshop junto al Prof. Carlos Alberto Zorrilla — para que tú también tengas esas herramientas.
+
+Biomecánica y Anatomía en el Pilates:
+✦ Anatomía real aplicada al movimiento
+✦ Análisis de ejercicios clásicos de Mat
+✦ Hombro, cadera, rodilla: cómo protegerlos
+✦ La ciencia del Power House
+
+📅 Sábado 22 de noviembre
+🕐 9:00 AM a 1:00 PM
+📍 AntoBioMove Studio, Caracas
+💰 Desde $20
+
+Es un espacio para instructoras que quieren dar más. Te espero.
+
+📩 Reserva: +58 412-558-7131
+
+#Pilates #BiomecánicaPilates #FormaciónPilates #PilatesVenezuela #InstructorasPilates #AntoBioMove #AnatomíaAplicada #PilatesClásico #EducaciónContinua #MovimientoConsciente</div>
+    <button class="copy-btn" onclick="copyText('cap1', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copiar
+    </button>
+  </div>
+
+  <div class="caption-card">
+    <div class="caption-label">Flyer Reformer — Para WhatsApp</div>
+    <h3>Más corto, directo, para grupos y contactos</h3>
+    <div class="caption-text" id="cap2">Hola! Les comparto algo que estoy organizando con mucho cariño.
+
+Workshop: Biomecánica y Anatomía en el Pilates
+Dictado por el Prof. Carlos Alberto Zorrilla
+
+Es un espacio para instructoras que quieren profundizar en la base científica del Pilates — anatomía funcional, biomecánica de los ejercicios clásicos, cómo proteger articulaciones y entender el Power House de verdad.
+
+📅 Sábado 22 de noviembre
+🕐 9 AM a 1 PM
+📍 AntoBioMove Studio, Caracas
+💰 $20 – $30
+
+Si te interesa o conoces a alguien que le sirva, escríbeme:
+📩 +58 412-558-7131
+
+Cupos limitados. Las espero 🤍</div>
+    <button class="copy-btn" onclick="copyText('cap2', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copiar
+    </button>
+  </div>
+
+  <div class="caption-card">
+    <div class="caption-label">Flyer Reformer — Opción corta IG</div>
+    <h3>Si prefieres algo más breve</h3>
+    <div class="caption-text" id="cap3">Enseñar Pilates es mucho más que repetir ejercicios.
+
+Este workshop es para las que quieren entender qué pasa en el cuerpo cuando nos movemos — y enseñar desde ese conocimiento.
+
+Biomecánica y Anatomía en el Pilates
+📅 22 de noviembre | 9 AM
+📍 AntoBioMove Studio
+💰 Desde $20
+
+Info: +58 412-558-7131 📩
+
+#Pilates #AntoBioMove #BiomecánicaPilates #PilatesVenezuela #FormaciónPilates #InstructorasPilates #PilatesClásico #AnatomíaDelMovimiento</div>
+    <button class="copy-btn" onclick="copyText('cap3', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copiar
+    </button>
+  </div>
+
+  <!-- FLYER CLASE GRUPAL -->
+  <div class="caption-card">
+    <div class="caption-label">Flyer Clase Grupal — Para IG</div>
+    <h3>Personal + clase práctica</h3>
+    <div class="caption-text" id="cap4">Una de las cosas que más disfruto es ver la cara de mis alumnas cuando entienden por qué un ejercicio se hace así y no de otra manera.
+
+Eso es lo que vamos a vivir en la clase grupal práctica del workshop: no solo hacer los ejercicios, sino entender qué está pasando en tu cuerpo mientras los haces.
+
+Clase grupal: Biomecánica aplicada al Mat
+🗓 Sábado 22 de noviembre
+📍 AntoBioMove Studio, Caracas
+
+Es parte del Workshop de Biomecánica y Anatomía en el Pilates.
+📩 Info y reserva: +58 412-558-7131
+
+Las espero en el Mat 🤍
+
+#ClasePilates #PilatesGrupal #BiomecánicaAplicada #AntoBioMove #PilatesCaracas #PilatesConsciente #InstructorasPilates #PilatesClásico #AnatomíaEnMovimiento #MovimientoConsciente</div>
+    <button class="copy-btn" onclick="copyText('cap4', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copiar
+    </button>
+  </div>
+
+  <div class="caption-card">
+    <div class="caption-label">Flyer Clase Grupal — Para WhatsApp</div>
+    <h3>Para enviar a grupos y contactos</h3>
+    <div class="caption-text" id="cap5">Hola! Como parte del Workshop de Biomecánica y Anatomía en el Pilates, vamos a tener una clase grupal práctica donde aplicamos todo lo visto en la teoría.
+
+Es una clase de Mat con análisis biomecánico en tiempo real — entender el movimiento mientras lo haces.
+
+📅 Sábado 22 de noviembre
+📍 AntoBioMove Studio, Caracas
+
+Abierta para quienes asistan al workshop.
+📩 Reserva: +58 412-558-7131
+
+Si te interesa o conoces a alguien, comparte 🤍</div>
+    <button class="copy-btn" onclick="copyText('cap5', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copiar
+    </button>
+  </div>
+
+  <div class="tip-box">
+    <h4>Consejo</h4>
+    <p>Para IG: publica el flyer como <strong>carrusel</strong> (imagen 1: flyer, imagen 2: una foto tuya en el estudio). Para WhatsApp: envía primero el texto y luego la imagen del flyer como foto aparte — así se lee mejor.</p>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 2: ESTRATEGIA CRECIMIENTO         -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="estrategia" class="section">
+
+  <div class="tip-box">
+    <h4>Realidad importante</h4>
+    <p>No necesitas miles de seguidores para llenar un workshop. Necesitas <strong>los seguidores correctos</strong>. 100 instructoras de Pilates que te siguen valen más que 10.000 seguidores random. Vamos a construir una audiencia pequeña pero comprometida.</p>
+  </div>
+
+  <div class="strategy-card">
+    <h3><span class="strategy-num">1</span> Contenido educativo = seguidores orgánicos</h3>
+    <p>Instagram premia el contenido que la gente guarda y comparte. Los posts educativos de Pilates son perfectos para esto.</p>
+    <ul>
+      <li><strong>Publica 3x por semana:</strong> Martes (educativo), Jueves (carrusel/tip), Sábado (personal/behind the scenes)</li>
+      <li>Usa la mini-serie "Pilates Decodificado" — ya tienes 10 episodios listos</li>
+      <li>Cada post educativo atrae instructoras que buscan aprender</li>
+    </ul>
+    <div class="example">"¿Sabías que el Power House NO son solo los abdominales? Incluye diafragma, suelo pélvico, multífidos y transverso abdominal."</div>
+  </div>
+
+  <div class="strategy-card">
+    <h3><span class="strategy-num">2</span> Reels cortos (30-60 seg)</h3>
+    <p>Los Reels son lo que más alcance orgánico da en Instagram. No necesitas producción perfecta.</p>
+    <ul>
+      <li><strong>Formato "Mito vs Realidad":</strong> "Todo el mundo dice X, pero en realidad es Y"</li>
+      <li><strong>Formato "3 cosas que no sabías":</strong> Tips rápidos con texto en pantalla</li>
+      <li><strong>Formato "POV":</strong> "POV: eres instructora y tu alumna te pregunta qué es el Power House"</li>
+      <li>Graba en tu estudio, luz natural, audio directo — lo auténtico conecta más</li>
+    </ul>
+    <div class="example">Reel idea: Grábate señalando partes del cuerpo mientras aparece el texto "Esto NO es el Power House... esto SÍ lo es" — usa la info del workshop.</div>
+  </div>
+
+  <div class="strategy-card">
+    <h3><span class="strategy-num">3</span> Stories diarias con interacción</h3>
+    <p>Las stories mantienen a tus seguidores activos. Instagram muestra tu contenido a quienes interactúan contigo.</p>
+    <ul>
+      <li><strong>Encuestas:</strong> "¿Sabías que cifosis se escribe con C y no con S?" (Sí / No tenía idea)</li>
+      <li><strong>Quiz:</strong> "¿Cuántos músculos forman el manguito rotador?" (3 / 4 / 5)</li>
+      <li><strong>Slider:</strong> "Del 1 al 10, ¿cuánto dominas la anatomía del Pilates?"</li>
+      <li><strong>Pregunta abierta:</strong> "¿Cuál es el ejercicio de Pilates que más te cuesta enseñar?"</li>
+    </ul>
+  </div>
+
+  <div class="strategy-card">
+    <h3><span class="strategy-num">4</span> Hashtags estratégicos</h3>
+    <p>Usa una mezcla de hashtags grandes, medianos y de nicho. Copia estos bloques:</p>
+    <ul>
+      <li><strong>Siempre:</strong> #AntoBioMove #PilatesVenezuela #PilatesCaracas</li>
+      <li><strong>Educativos:</strong> #AnatomíaPilates #BiomecánicaDelMovimiento #PilatesProfesional</li>
+      <li><strong>Comunidad:</strong> #InstructorasPilates #PilatesClásico #FormaciónPilates</li>
+      <li><strong>Tendencia:</strong> #MovimientoConsciente #CuerpoConsciente #PilatesLife</li>
+    </ul>
+    <div class="example">Máximo 15-20 hashtags por post. Ponlos al FINAL del caption o en el primer comentario. Rota entre 3 bloques distintos para no parecer spam.</div>
+  </div>
+
+  <div class="strategy-card">
+    <h3><span class="strategy-num">5</span> Interactúa con tu comunidad (15 min/día)</h3>
+    <p>Esto es lo que más impacta y lo que menos gente hace. Dedica 15 minutos diarios:</p>
+    <ul>
+      <li><strong>Responde TODOS los comentarios</strong> en tus posts (aunque sea un emoji)</li>
+      <li><strong>Comenta en cuentas de otras instructoras</strong> de Pilates venezolanas — aporta valor, no solo "lindo"</li>
+      <li><strong>Sigue y comenta en cuentas de estudios de Pilates</strong> en Caracas y Venezuela</li>
+      <li><strong>Responde mensajes directos</strong> — cada DM es una posible alumna</li>
+    </ul>
+  </div>
+
+  <div class="strategy-card">
+    <h3><span class="strategy-num">6</span> Colaboraciones y menciones</h3>
+    <p>El crecimiento más rápido viene de la audiencia de otros:</p>
+    <ul>
+      <li><strong>Collab posts</strong> con el Prof. Zorrilla — Instagram muestra el post a ambas audiencias</li>
+      <li><strong>Testimonios de alumnas</strong> — pídeles que te mencionen cuando publiquen algo de Pilates</li>
+      <li><strong>Tag al estudio, marcas de ropa deportiva venezolana</strong> — pueden repostearte</li>
+      <li><strong>Después del workshop:</strong> pide a cada asistente que suba una foto y te etiquete</li>
+    </ul>
+    <div class="example">Después del workshop: "Gracias a todas las que vinieron hoy 🤍 Etiquétame en tu story con lo que más te gustó del workshop y te comparto." — Esto genera contenido social proof gratis.</div>
+  </div>
+
+  <div class="strategy-card">
+    <h3><span class="strategy-num">7</span> Tu bio importa</h3>
+    <p>Tu bio de Instagram es tu carta de presentación. Debe decir en 3 líneas:</p>
+    <ul>
+      <li><strong>Línea 1:</strong> Qué eres → "Instructora de Pilates | Biomecánica del Movimiento"</li>
+      <li><strong>Línea 2:</strong> Para quién → "Formación para instructoras que quieren enseñar mejor"</li>
+      <li><strong>Línea 3:</strong> CTA → "📩 Workshop → link o WhatsApp"</li>
+    </ul>
+    <div class="example">Antonella Gutiérrez<br>🏋️‍♀️ Pilates · Biomecánica · Movimiento<br>📚 Formación para instructoras<br>📍 Caracas, Venezuela<br>👇 Próximo workshop:</div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 3: CALENDARIO                     -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="calendario" class="section">
+
+  <div class="tip-box">
+    <h4>Plan de publicación: 4 semanas antes del workshop</h4>
+    <p>Este calendario combina los captions de los flyers con la mini-serie "Pilates Decodificado" para crear expectativa y llenar cupos.</p>
+  </div>
+
+  <div class="strategy-card">
+    <h3>Semana 1 — Generar curiosidad</h3>
+    <ul>
+      <li><strong>Martes:</strong> POST — Episodio 1 mini-serie (Power House) + Stories con encuesta</li>
+      <li><strong>Jueves:</strong> REEL — "Mito vs Realidad del Power House" (30 seg)</li>
+      <li><strong>Sábado:</strong> POST — Flyer Reformer Opción C (la de cifosis/sifosis) 🔥</li>
+    </ul>
+  </div>
+
+  <div class="strategy-card">
+    <h3>Semana 2 — Educar y posicionar</h3>
+    <ul>
+      <li><strong>Martes:</strong> POST — Episodio 3 (Cifosis, no "sifosis") + Stories quiz</li>
+      <li><strong>Jueves:</strong> REEL — Mostrando un ejercicio con análisis biomecánico rápido</li>
+      <li><strong>Sábado:</strong> POST — Flyer Reformer Opción A (emocional)</li>
+    </ul>
+  </div>
+
+  <div class="strategy-card">
+    <h3>Semana 3 — Urgencia</h3>
+    <ul>
+      <li><strong>Martes:</strong> POST — Episodio 6 (Manguito Rotador) + Stories interactivas</li>
+      <li><strong>Jueves:</strong> REEL — "3 errores que cometen las instructoras" (usa errores del PPTX)</li>
+      <li><strong>Sábado:</strong> POST — Flyer Clase Grupal Opción B (FOMO/últimos cupos)</li>
+    </ul>
+  </div>
+
+  <div class="strategy-card">
+    <h3>Semana 4 — Cierre</h3>
+    <ul>
+      <li><strong>Lunes:</strong> STORIES — Countdown "faltan 5 días"</li>
+      <li><strong>Martes:</strong> POST — Episodio 9 (Clásico vs Contemporáneo) + "última semana para inscribirse"</li>
+      <li><strong>Jueves:</strong> REEL — Preparando el espacio / behind the scenes del studio</li>
+      <li><strong>Viernes:</strong> STORIES — "Mañana es el día" + lista de lo que deben traer</li>
+      <li><strong>Sábado:</strong> STORIES en vivo durante el workshop + fotos para post del domingo</li>
+      <li><strong>Domingo:</strong> POST — Recap del workshop con fotos del grupo (pide etiquetas)</li>
+    </ul>
+  </div>
+
+  <div class="tip-box">
+    <h4>Horarios ideales para Venezuela</h4>
+    <p><strong>Posts:</strong> 7-9 PM entre semana / 10 AM - 12 PM fines de semana<br>
+    <strong>Stories:</strong> 8-10 AM (mañana) y 7-9 PM (noche)<br>
+    <strong>Reels:</strong> 12-2 PM (hora de almuerzo) o 7-8 PM</p>
+  </div>
+
+</div>
+
+<footer>
+  AntoBioMove — @anto_biomove<br>
+  Captions y estrategia para el Workshop de Biomecánica y Anatomía en el Pilates
+</footer>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  try { localStorage.setItem('ig-tab', id); } catch(e) {}
+}
+
+function copyText(id, btn) {
+  const el = document.getElementById(id);
+  const text = el.textContent.trim();
+  try {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Copiado';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copiar';
+      }, 2000);
+    }).catch(() => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+  } catch(e) {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+}
+
+try {
+  const saved = localStorage.getItem('ig-tab');
+  if (saved && document.getElementById(saved)) {
+    showSection(saved);
+  }
+} catch(e) {}
+</script>
