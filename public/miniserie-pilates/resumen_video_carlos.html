@@ -1,0 +1,677 @@
+<title>Resumen Video Prof. Carlos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root {
+  --bg: #faf8f5;
+  --fg: #1a1612;
+  --surface: #ffffff;
+  --teal: #00796b;
+  --teal-soft: #e0f2f0;
+  --brown: #5d4037;
+  --brown-soft: #efebe9;
+  --red: #c62828;
+  --red-soft: #ffebee;
+  --green: #2e7d32;
+  --green-soft: #e8f5e9;
+  --purple: #6a1b9a;
+  --purple-soft: #f3e5f5;
+  --muted: #78706a;
+  --border: #e0d8d0;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141210;
+    --fg: #e8e0d6;
+    --surface: #1e1a16;
+    --teal: #4db6ac;
+    --teal-soft: #1a2e2c;
+    --brown: #bcaaa4;
+    --brown-soft: #2a2220;
+    --red: #ef9a9a;
+    --red-soft: #2a1616;
+    --green: #81c784;
+    --green-soft: #1a2a1a;
+    --purple: #ce93d8;
+    --purple-soft: #2a1a2e;
+    --muted: #9a8e82;
+    --border: #302a24;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141210;
+  --fg: #e8e0d6;
+  --surface: #1e1a16;
+  --teal: #4db6ac;
+  --teal-soft: #1a2e2c;
+  --brown: #bcaaa4;
+  --brown-soft: #2a2220;
+  --red: #ef9a9a;
+  --red-soft: #2a1616;
+  --green: #81c784;
+  --green-soft: #1a2a1a;
+  --purple: #ce93d8;
+  --purple-soft: #2a1a2e;
+  --muted: #9a8e82;
+  --border: #302a24;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Source Serif 4', Georgia, serif;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-size: 15px;
+}
+h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; line-height: 1.3; }
+
+.hero {
+  text-align: center;
+  padding: 2.5rem 0 1.5rem;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 2rem;
+}
+.hero h1 {
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  font-weight: 800;
+  color: var(--teal);
+  margin: 0;
+}
+.hero p {
+  color: var(--muted);
+  font-style: italic;
+  margin: .5rem 0 0;
+  font-size: .95rem;
+}
+.badge {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: var(--brown-soft);
+  color: var(--brown);
+  padding: .25rem .6rem;
+  border-radius: 4px;
+  margin-bottom: .8rem;
+}
+
+/* Sections */
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.section h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.section h3 {
+  font-size: .95rem;
+  font-weight: 700;
+  margin: 1.2rem 0 .4rem;
+  color: var(--fg);
+}
+.section p { margin: 0 0 .8rem; }
+.section ul { padding-left: 1.2rem; margin: 0 0 .8rem; }
+.section li { margin-bottom: .3rem; }
+
+/* Callout boxes */
+.tip {
+  border-left: 4px solid var(--green);
+  background: var(--green-soft);
+  border-radius: 0 10px 10px 0;
+  padding: .8rem 1rem;
+  margin: 1rem 0;
+  font-size: .9rem;
+}
+.tip strong { color: var(--green); }
+
+.warning {
+  border-left: 4px solid var(--red);
+  background: var(--red-soft);
+  border-radius: 0 10px 10px 0;
+  padding: .8rem 1rem;
+  margin: 1rem 0;
+  font-size: .9rem;
+}
+.warning strong { color: var(--red); }
+
+.insight {
+  border-left: 4px solid var(--purple);
+  background: var(--purple-soft);
+  border-radius: 0 10px 10px 0;
+  padding: .8rem 1rem;
+  margin: 1rem 0;
+  font-size: .9rem;
+}
+.insight strong { color: var(--purple); }
+
+.quote {
+  border-left: 4px solid var(--brown);
+  background: var(--brown-soft);
+  border-radius: 0 10px 10px 0;
+  padding: .8rem 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  font-size: .9rem;
+}
+.quote .attr {
+  display: block;
+  font-style: normal;
+  font-family: 'Outfit', sans-serif;
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: .4rem;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .8rem;
+  margin: 1rem 0;
+}
+@media (max-width: 500px) { .compare { grid-template-columns: 1fr; } }
+.compare-col {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .8rem;
+  font-size: .85rem;
+}
+.compare-col h4 {
+  font-size: .8rem;
+  font-weight: 700;
+  margin: 0 0 .4rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.compare-col.classic h4 { color: var(--brown); }
+.compare-col.contemp h4 { color: var(--teal); }
+
+.nota {
+  background: var(--teal-soft);
+  border-radius: 10px;
+  padding: .8rem 1rem;
+  margin: 1rem 0;
+  font-size: .88rem;
+  font-family: 'Outfit', sans-serif;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  font-size: .75rem;
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+}
+</style>
+
+<div class="hero">
+  <div class="badge">Material de estudio</div>
+  <h1>Resumen del Video del Prof. Carlos</h1>
+  <p>Workshop online de Biomecánica + Clase práctica de repaso<br>Transcripciones parciales (~30 min c/u) + análisis</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section">
+  <h2>1. Contexto del Workshop</h2>
+  <p>El Prof. Carlos Alberto Zorrilla se presenta como instructor de <strong>Centro Zen Pilates</strong>. Explica que este curso nace de su experiencia dando formaciones en <strong>Santiago de Chile</strong>, donde los alumnos le decían:</p>
+  <div class="quote">
+    "Profesor, buena la explicación, pero yo no sé lo que es un pectoral, yo no sé dónde queda el cuádriceps, yo no sé qué es un isquiotibial, yo no sé cuando me habla de erectores espinales — yo me confundo."
+    <span class="attr">— Prof. Carlos, citando a sus alumnos</span>
+  </div>
+  <p>Los alumnos se movían bien pero <strong>no sabían cuáles músculos participaban</strong> en cada movimiento. Esa es la razón de ser de este workshop: ir más allá de la certificación de Pilates Mat y profundizar en biomecánica y anatomía.</p>
+
+  <h3>Acreditaciones de la escuela</h3>
+  <ul>
+    <li><strong>PMA</strong> (Pilates Method Alliance) — aval de formación a nivel internacional</li>
+    <li><strong>IDCA</strong> — organismo deportivo con sede en Buenos Aires, acredita en Suramérica y España</li>
+  </ul>
+
+  <div class="tip">
+    <strong>Tip para ti, Anto:</strong> Cuando facilites, puedes abrir mencionando estas acreditaciones. Da credibilidad: "Esta formación cuenta con el aval de PMA e IDCA" — los alumnos que ya tienen certificaciones con otras escuelas van a reconocer estos nombres.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section">
+  <h2>2. Definición del Método Pilates</h2>
+  <p>Carlos define Pilates como un <strong>sistema de entrenamiento</strong> creado por el alemán Joseph Pilates en los años 30, basado en su experiencia practicando múltiples disciplinas deportivas durante su adolescencia.</p>
+
+  <h3>Deportes que practicó Joseph Pilates</h3>
+  <ul>
+    <li>Natación</li>
+    <li>Gimnasia</li>
+    <li>Esgrima</li>
+    <li><strong>Boxeo</strong> (su deporte predilecto — hay relación directa con cómo instaló su estudio)</li>
+  </ul>
+
+  <h3>Contrología</h3>
+  <p>El nombre original del método era <strong>Contrología</strong> = "el arte de controlar el cuerpo". El principio fundamental: <em>si la persona tiene un centro de poder fuerte, todo el cuerpo será fuerte</em>. Todos los ejercicios parten del centro y dirigen la energía hacia las extremidades.</p>
+
+  <div class="warning">
+    <strong>Dato importante que Carlos corrige:</strong> Joseph Pilates nació en <strong>1883</strong>, NO en 1880 como dicen muchos libros (incluyendo el de Jennifer Kries). ¿Por qué? Cuando se casó con Clara (su tercera esposa), ella era 3 años mayor que él. En esa época era mal visto, así que Joseph <strong>adulteró su partida de nacimiento</strong> para quedar con la misma edad que Clara. Muchos libros replicaron el año incorrecto.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section">
+  <h2>3. Los Principios del Método</h2>
+
+  <h3>A. Concentración</h3>
+  <p>Pilates decía: <em>"Una mente dispersa no va a lograr conectar todas las partes del cuerpo."</em> La mente gobierna el cuerpo.</p>
+  <p><strong>Responsabilidad del profesor:</strong></p>
+  <ul>
+    <li>El espacio debe tener <strong>buena iluminación</strong>, libre de ruido y elementos distractores (colores, cuadros, etc.)</li>
+    <li>Mantener el <strong>control de la clase</strong> con buenos comandos de voz y buena entonación</li>
+    <li>Los 45 minutos de sesión requieren que el alumno esté atento a las instrucciones</li>
+  </ul>
+  <div class="tip">
+    <strong>Tip para facilitar:</strong> Carlos enfatiza que sin concentración no hay precisión. Cuando enseñes, cuida tu espacio: apaga música ambiental distrayente, pide silenciar celulares, y usa un tono de voz claro y pausado.
+  </div>
+
+  <h3>B. Precisión</h3>
+  <p>Carlos cita la frase: <strong>"En Pilates, menos es más."</strong> No se trata de muchas repeticiones sino de que las 4 repeticiones estén perfectamente ejecutadas. El profesor debe observar:</p>
+  <ul>
+    <li>Buena colocación de la <strong>cabeza</strong></li>
+    <li>Buena colocación de la <strong>escápula</strong></li>
+    <li>Buena colocación de la <strong>caja torácica</strong></li>
+    <li><strong>Pelvis</strong> bien posicionada</li>
+  </ul>
+  <p>Con estos elementos alineados, el alumno ejecuta un movimiento limpio que activa los grupos musculares correctos.</p>
+
+  <h3>C. Respiración</h3>
+  <p>Este es el punto donde Carlos más se detiene y donde introduce conceptos que "pueden causar un poco de ruido":</p>
+
+  <h3 style="color: var(--teal);">Respiración torácica lateral (común a todo Pilates)</h3>
+  <ul>
+    <li><strong>Inhalación:</strong> la caja torácica se ensancha hacia los lados y al frente (respiración "tridimensional")</li>
+    <li>Los <strong>músculos intercostales</strong> generan contracción excéntrica — se alargan, creando espacio entre costilla y costilla</li>
+    <li><strong>Exhalación:</strong> los intercostales se contraen (contracción concéntrica), la caja torácica se cierra</li>
+    <li>El <strong>transverso abdominal</strong> debe estar activo al 40-50% durante la inhalación</li>
+    <li>En la exhalación: el ombligo se dirige hacia las vértebras lumbares — mayor contracción del transverso</li>
+  </ul>
+
+  <div class="quote">
+    "Yo le suelo decir a mi alumno: imagínate que tienes un anzuelo de una caña de pescar y que ese anzuelo está llevando tu ombligo hacia las vértebras lumbares."
+    <span class="attr">— Prof. Carlos (imagen para enseñar la exhalación)</span>
+  </div>
+
+  <div class="warning">
+    <strong>Ojo al enseñar:</strong> Carlos advierte que muchos alumnos al inhalar no solo expanden la caja torácica sino que también "desparraman" el abdomen — esto le quita trabajo al transverso. Como profesora, debes observar que el abdomen NO se suelte durante la inhalación.
+  </div>
+
+  <div class="compare">
+    <div class="compare-col classic">
+      <h4>Respiración Clásica (original)</h4>
+      <p>Inhalar por la nariz, exhalar por la nariz. Pilates decía: <em>"La boca no se hizo para respirar, se hizo para otra cosa."</em> Era defensor de la respiración netamente nasal para entrenar el sistema respiratorio de manera más efectiva.</p>
+    </div>
+    <div class="compare-col contemp">
+      <h4>Respiración Contemporánea</h4>
+      <p>Inhalar por la nariz, exhalar por la boca. Introducida por los fisioterapeutas/kinesiólogos en los años 70, cuando los "Elders" les mostraron el método y ellos "le metieron mano" — cambiaron la respiración, la colocación de pelvis, y muchas cosas más.</p>
+    </div>
+  </div>
+
+  <div class="insight">
+    <strong>Concepto clave — Los "Elders":</strong> Cuando Pilates murió (1967), las personas que él entrenó directamente en su "Special Room" recibieron el nombre de <strong>Elders (los mayores)</strong>. Ellos empezaron a enseñar el método. En los años 70, sus alumnos buscaron ayuda de fisioterapeutas, quienes modificaron el método y crearon lo que hoy se conoce como <strong>Pilates Contemporáneo</strong>.
+  </div>
+
+  <h3>Progresión de la respiración con alumnos nuevos</h3>
+  <p>Carlos recomienda una progresión:</p>
+  <ul>
+    <li><strong>Clases 1-6:</strong> Dejar que el alumno respire <strong>orgánicamente</strong> — cuando su cuerpo se lo pida, sin forzar patrones</li>
+    <li><strong>Clase 12-14 en adelante:</strong> Empezar a marcar "aquí se inhala, aquí se exhala"</li>
+    <li><strong>Excepción:</strong> En ejercicios que SON de respiración, siempre marcar el patrón desde el inicio — ese es su objetivo</li>
+  </ul>
+
+  <div class="tip">
+    <strong>Tip para facilitar:</strong> Esta progresión es oro para ti. No obligues a los alumnos nuevos a coordinarlo todo de una vez — déjalos respirar natural las primeras clases. Esto reduce la frustración y les permite enfocarse en el movimiento.
+  </div>
+
+  <h3>D. Control</h3>
+  <p>Movimientos controlados para evitar daño físico. Carlos advierte:</p>
+  <div class="quote">
+    "El método Pilates puede ser muy bueno, pero mal ejecutado puede causar lesiones en nuestro cuerpo."
+    <span class="attr">— Prof. Carlos</span>
+  </div>
+
+  <h3>E. Centralización (Power House)</h3>
+  <p>La "central de energía" está constituida por:</p>
+  <ul>
+    <li>Músculos del <strong>abdomen</strong></li>
+    <li>Músculos de la <strong>baja espalda</strong></li>
+    <li>Músculos de los <strong>glúteos</strong></li>
+  </ul>
+  <p>Se activa a través de la respiración: inspiro → expando caja torácica → expiro → cierro costillas → activo transverso → que a través de la <strong>fascia toracolumbar</strong> se conecta con las vértebras lumbares dando protección y sostén.</p>
+
+  <h3>F. Fluidez de movimiento</h3>
+  <p>Carlos cuenta la historia real de cómo nació este principio:</p>
+  <ul>
+    <li>En el piso de arriba del estudio de Pilates en NY había una <strong>sala de ballet</strong></li>
+    <li>Los bailarines empezaron a bajar a practicar el método</li>
+    <li>Los aparatos originales eran "bastante toscos" — tenían que pararse del Reformer para agarrar las asas</li>
+    <li>Los bailarines, acostumbrados a la <strong>fluidez de la danza</strong>, le daban ideas a Joseph: "¿por qué no le pone esto al aparato? ¿por qué no hace que la barra se mueva?"</li>
+    <li>Pilates empezó a ajustar los aparatos para que los ejercicios fueran continuos</li>
+  </ul>
+
+  <div class="nota">
+    <strong>Importante:</strong> La fluidez (transiciones sin descanso entre ejercicios) es para alumnos <strong>intermedios y avanzados</strong>, NO para básicos. Con principiantes: enseñar paso a paso, dejar descanso entre ejercicios.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section">
+  <h2>4. Beneficios del Pilates</h2>
+  <ul>
+    <li>Aumento de flexibilidad, equilibrio y coordinación</li>
+    <li>Fortalecer y tonificar sin aumentar volumen muscular</li>
+    <li>Aportar vitalidad y fuerza para tareas cotidianas</li>
+    <li>Mejorar la alineación postural y corregir hábitos posturales incorrectos</li>
+    <li>Aumentar la autoestima y el conocimiento del propio cuerpo (integración cuerpo-mente)</li>
+    <li>Prevenir y rehabilitar lesiones del sistema músculo-esquelético</li>
+  </ul>
+
+  <div class="quote">
+    "Todos los ejercicios del método son buenos. Lo que no son buenos son nuestros cuerpos."
+    <span class="attr">— Michael King (citado por el Prof. Carlos)</span>
+  </div>
+
+  <p>Carlos enfatiza que como profesoras deben:</p>
+  <ul>
+    <li>Hacer <strong>análisis postural</strong> del alumno</li>
+    <li>Hacer <strong>entrevista</strong>: historial deportivo, historial de salud</li>
+    <li>Adaptar la sesión al cuerpo de cada persona</li>
+    <li>Pilates es para TODOS: deportistas, adultos mayores, madres de casa</li>
+  </ul>
+
+  <div class="tip">
+    <strong>Consejo de Carlos sobre el negocio:</strong> "Los que mejor van a atender son los abuelitos, la gente de la tercera edad. Cuando esa abuelita puede levantarse en la mañana, pasarse el cepillo por la cabeza — ahí está su dinero, porque esa persona está invirtiendo en su salud." Es decir: los adultos mayores son los clientes más fieles y constantes.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section">
+  <h2>5. Historia: Mitos y Verdades de Joseph Pilates</h2>
+
+  <div class="warning">
+    <strong>Mito derribado #1:</strong> Pilates nació en 1880 → <strong>FALSO.</strong> Nació en <strong>1883</strong> en Düsseldorf, Alemania. Cambió su partida de nacimiento para igualar la edad de Clara.
+  </div>
+
+  <div class="warning">
+    <strong>Mito derribado #2:</strong> "El papá de Pilates era de origen griego y la mamá era naturópata, y eso lo inspiró." → Carlos dice que <strong>Pilates no tuvo esa influencia</strong> de su padre directamente. La familia era de recursos económicos "bastante precarios."
+  </div>
+
+  <p><em>La transcripción se corta aquí (TurboScribe gratuito: máximo 30 min). El resto del video cubriría más historia, anatomía detallada, y posiblemente análisis de ejercicios.</em></p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section" style="border-left: 4px solid var(--teal);">
+  <h2>6. Clase Práctica de Repaso — Ejercicios para Certificación</h2>
+  <div class="badge" style="background: var(--teal-soft); color: var(--teal);">Video 2 — Clase con Paulina y Claudia</div>
+  <p>En este segundo video, Carlos da una clase de repaso a <strong>Paulina y Claudia</strong>, preparándolas para el <strong>examen práctico</strong> de certificación de Pilates Mat. El enfoque: cómo <em>construir pedagógicamente</em> cada ejercicio según el nivel del alumno.</p>
+
+  <h3>Formato del examen práctico</h3>
+  <ul>
+    <li><strong>10 ejercicios</strong> organizados de lo más básico a lo más complejo</li>
+    <li>La secuencia debe tener <strong>lógica</strong> — hay ejercicios que se deben aprender primero para poder hacer otros</li>
+    <li>Siempre empezar con ejercicio de <strong>respiración</strong> (ej: The Hundred) para preparar los músculos</li>
+    <li>El alumno ejecuta, el profesor <strong>imparte instrucciones</strong> — no es obligatorio demostrar el ejercicio original completo</li>
+    <li><strong>Adaptar</strong> al nivel del alumno: si es básico, mostrar preparaciones y versiones simplificadas</li>
+  </ul>
+
+  <div class="warning">
+    <strong>Error común en los exámenes:</strong> Alumnos que comienzan con un Roll Up o Rolling Like a Ball directamente. Carlos enfatiza: NO se puede empezar sin un ejercicio de respiración que prepare el cuerpo primero.
+  </div>
+
+  <h3>Después de los 10 ejercicios: la explicación pedagógica</h3>
+  <ul>
+    <li>El alumno se retira y el profesor se queda en cámara</li>
+    <li>Seleccionar <strong>3 ejercicios</strong> que dominen bien</li>
+    <li>Para cada uno explicar: proceso pedagógico de construcción, patrones de respiración, músculos participantes, beneficios del ejercicio</li>
+  </ul>
+
+  <div class="nota">
+    <strong>Formato del video:</strong> Horizontal <strong>16:9</strong> (nunca vertical). Colchoneta en diagonal a la cámara (nunca de frente). Duración: <strong>30-45 minutos</strong>. Usar un reloj digital visible. Se puede tener un rotafolio detrás de cámara como guía.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section" style="border-left: 4px solid var(--teal);">
+  <h2>7. Rolling Like a Ball — Progresión Pedagógica en 4 Fases</h2>
+  <p>Carlos dedica la mayor parte de la clase a enseñar cómo <strong>construir el Rolling Like a Ball paso a paso</strong>. Este es el primer ejercicio de la serie de balance (junto con Open Leg Rocker, Crab, Seal/La Foca y Boomerang).</p>
+
+  <div class="insight">
+    <strong>Regla de oro:</strong> No se puede enseñar el Rolling Like a Ball de una vez, a menos que el alumno sea de nivel avanzado. Tanto básicos como intermedios deben pasar primero por el Roll Down.
+  </div>
+
+  <h3>Fase 1: Roll Down</h3>
+  <ul>
+    <li>Sentado, rodillas flexionadas, talones <strong>no muy cerca de los glúteos</strong> ("la cadera tiene que respirar")</li>
+    <li>Manos detrás de las rodillas, codos apuntando hacia los lados</li>
+    <li>Pulgar escondido (no sacarlo hacia afuera)</li>
+    <li>Columna se flexiona, mirada hacia los dedos de los pies</li>
+    <li><strong>Inhala:</strong> rodar hacia atrás generando retroversión de pelvis, mirada queda al horizonte, garganta abierta</li>
+    <li><strong>Exhala:</strong> volver al frente</li>
+    <li>Los brazos se extienden ligeramente durante el movimiento (no jalarlos)</li>
+    <li><strong>Repeticiones:</strong> 5-8 veces</li>
+    <li><strong>Objetivo:</strong> que el alumno aprenda la retroversión y flexibilice la musculatura lumbar</li>
+  </ul>
+
+  <div class="quote">
+    "Las escápulas tienen que ir hacia el bolsillo del pantalón... hombros para abajo, codos apuntando a los lados, ojos alejados de la oreja."
+    <span class="attr">— Prof. Carlos (imagen para colocación escapular)</span>
+  </div>
+
+  <h3>Fase 2: Rodar sobre la lumbar</h3>
+  <ul>
+    <li>Despegar los talones del piso ligeramente</li>
+    <li>Rodar <strong>solo sobre las 5 vértebras lumbares</strong></li>
+    <li>Clave: "la nariz va hacia el pubis, el pubis va en dirección hacia la nariz"</li>
+    <li>Si el alumno tira la columna hacia atrás, le da el protagonismo a los erectores espinales = lo que NO queremos</li>
+    <li><strong>Repeticiones:</strong> 4-8 veces</li>
+  </ul>
+
+  <div class="warning">
+    <strong>Error a corregir:</strong> Los alumnos tienden a extender las piernas cuando ruedan hacia atrás. Siempre mantener rodillas flexionadas — el poplíteo (detrás de la rodilla) debe estar activo manteniendo la flexión.
+  </div>
+
+  <h3>Fase 3: Rodar completo (sacro → lumbar → dorsal → cervical)</h3>
+  <ul>
+    <li>Pies siguen en el piso</li>
+    <li>Rodar hacia atrás pasando por <strong>sacro, lumbar, dorsal, cervical</strong></li>
+    <li>Regresar tocando el suelo con los pies</li>
+    <li>Mantener la flexión del tronco en todo momento</li>
+    <li>Brazos deben mantenerse <strong>hacia afuera</strong> para generar protracción escapular y potenciar la flexión dorsal-cervical</li>
+  </ul>
+
+  <h3>Fase 4: Rolling Like a Ball completo</h3>
+  <ul>
+    <li>Despegar pies del suelo, colocar en <strong>primera posición de Pilates</strong> (talones juntos, puntas separadas)</li>
+    <li>Rodillas alineadas con los hombros (rotación externa de cadera)</li>
+    <li>Manos a la altura de la pantorrilla, 4-5 dedos por encima del tobillo</li>
+    <li>Talones en dirección hacia el pubis, nariz al pubis</li>
+    <li>Equilibrarse detrás de los isquiones</li>
+    <li><strong>Inhala:</strong> rodar hacia atrás — <strong>Exhala:</strong> volver al frente</li>
+    <li><strong>Repeticiones:</strong> 6-8 veces</li>
+  </ul>
+
+  <div class="tip">
+    <strong>Tip para ti, Anto:</strong> Con un alumno básico puedes hacer solo la Fase 1 en una clase entera. No te compliques poniendo las 4 fases. Con intermedio: Fases 1 + 2 + 4. Con avanzado: directo al ejercicio completo. Esto te permite adaptar la misma clase a distintos niveles.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section" style="border-left: 4px solid var(--teal);">
+  <h2>8. Concepto Clave: El Marco del Cuerpo</h2>
+  <p>Carlos introduce el concepto del <strong>"marco del cuerpo"</strong>: un rectángulo imaginario que va de <strong>hombro a hombro y de cadera a cadera</strong>. Las extremidades inferiores siempre deben trabajar <em>dentro de ese marco</em>.</p>
+  <p>Esto aplica especialmente al Rolling Like a Ball y a todos los ejercicios donde hay rotación externa de cadera — las rodillas no pueden abrirse más allá de los hombros.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section" style="border-left: 4px solid var(--teal);">
+  <h2>9. Contracciones Musculares en Contexto</h2>
+  <p>Carlos aprovecha el Rolling Like a Ball para repasar los tipos de contracción vistos en el curso de biomecánica:</p>
+  <ul>
+    <li><strong>Contracción concéntrica:</strong> cuando los flexores de cadera traen el muslo hacia el pecho, y cuando los oblicuos/recto del abdomen flexionan el tronco</li>
+    <li><strong>Contracción isométrica:</strong> una vez que el alumno se queda en la posición flexionada sin volver a estirar, la concéntrica se <em>transforma</em> en isométrica — los músculos anteriores se acortan y mantienen</li>
+    <li><strong>Cadena anterior se acorta, cadena posterior se estira:</strong> músculos del cuello, trapecio superior y erectores espinales se estiran por completo</li>
+  </ul>
+
+  <div class="tip">
+    <strong>Tip para facilitar:</strong> Esta explicación es perfecta para conectar la biomecánica con la práctica. Cuando enseñes el Rolling Like a Ball, puedes decir: "Sientan cómo el abdomen se activa y se mantiene — eso es una contracción isométrica que protege su columna mientras ruedan."
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section" style="border-left: 4px solid var(--teal);">
+  <h2>10. Secuenciación y Respiración para Principiantes</h2>
+
+  <h3>Reglas de secuenciación del examen</h3>
+  <ul>
+    <li>Se puede seguir la secuencia del manual (básico → intermedio → avanzado) o la secuencia clásica (34 ejercicios originales)</li>
+    <li>Se pueden <strong>saltar</strong> ejercicios pero <strong>no alterar el orden</strong></li>
+    <li>Ejemplo válido: The Hundred → Roll Up → Leg Circle → (saltar Rolling) → Single Leg Stretch → Double Leg Stretch → Spine Stretch Forward</li>
+    <li>La buena ejecución de un ejercicio permite ejecutar los que están más adelante en el repertorio</li>
+  </ul>
+
+  <h3>Cuándo marcar la respiración</h3>
+  <ul>
+    <li>Con alumno básico: marcar <strong>solo el gesto motor</strong> primero, sin complicar con respiración</li>
+    <li><strong>Siempre</strong> marcar respiración en ejercicios respiratorios: The Hundred, Double Leg Stretch, Spine Stretch Forward, The Saw</li>
+    <li>En los demás ejercicios: primero el gesto motor, después incorporar la respiración cuando se arma el ejercicio completo</li>
+  </ul>
+
+  <div class="insight">
+    <strong>Ejercicios mencionados para practicar:</strong> Carlos menciona que iba a repasar también el <strong>Double Leg Stretch</strong>, <strong>Single Leg Stretch</strong> y el <strong>Criss-Cross</strong> (bicicleta), incluyendo "cosas que no les enseñé en el curso original del Criss-Cross". La transcripción se corta justo antes de esa parte.
+  </div>
+
+  <div class="warning">
+    <strong>Sobre el Double Leg Stretch:</strong> Carlos señala que es un ejercicio donde los alumnos "siempre se equivocan en el examen" porque es un <strong>ejercicio de respiración</strong> y hay que estar pendiente de cómo se marca la respiración. Con alumno no avanzado: se puede empezar solo con el movimiento del abrazo, o con brazos + pierna dejando la cabeza en el suelo.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section" style="border-left: 4px solid var(--teal);">
+  <h2>11. Serie de Balance: El Repertorio Completo</h2>
+  <p>Carlos enumera los ejercicios de la <strong>serie de balance</strong> dentro del repertorio clásico de Pilates Mat:</p>
+  <ol>
+    <li><strong>Rolling Like a Ball</strong> (primer ejercicio de la serie)</li>
+    <li><strong>Open Leg Rocker</strong></li>
+    <li><strong>Crab</strong> (Cangrejo) — dificultad media-alta</li>
+    <li><strong>Seal</strong> (La Foca)</li>
+    <li><strong>Boomerang</strong> — el más complejo de todos</li>
+  </ol>
+  <p>Carlos menciona que también tiene preparado el proceso pedagógico del Boomerang para quienes quieran incluirlo en su clase o para práctica personal.</p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section">
+  <h2>12. Comparación: Video vs. PPTX del Workshop</h2>
+  <p>Comparando lo que dice Carlos en el video con las 57 slides del PPTX:</p>
+
+  <h3>Lo que el video explica MEJOR que las slides:</h3>
+  <ul>
+    <li><strong>Respiración:</strong> Mucho más detallada — intercostales, transverso, progresión pedagógica con alumnos nuevos</li>
+    <li><strong>Clásico vs. Contemporáneo:</strong> Explica el origen histórico de ambos estilos con contexto real</li>
+    <li><strong>Los "Elders":</strong> Concepto no presente en las slides</li>
+    <li><strong>Fluidez:</strong> La historia de los bailarines de ballet que inspiraron los cambios en los aparatos</li>
+    <li><strong>Análisis postural:</strong> Enfatiza la importancia de estudiar al alumno antes de diseñar la sesión</li>
+    <li><strong>Mitos históricos:</strong> Correcciones sobre el año de nacimiento y la familia de Pilates</li>
+  </ul>
+
+  <h3>Lo que las slides cubren y el video (primeros 30 min) NO:</h3>
+  <ul>
+    <li>Anatomía ósea detallada (huesos, articulaciones)</li>
+    <li>Columna vertebral (curvaturas, vértebras)</li>
+    <li>Articulación del hombro, cadera, rodilla</li>
+    <li>Sistema muscular (tipos de contracciones)</li>
+    <li>Análisis biomecánico de ejercicios específicos</li>
+    <li>Repertorio clásico de Mat (The Hundred, Roll Up, etc.)</li>
+    <li>Ejercicios avanzados (Snake, Mermaid)</li>
+  </ul>
+  <p><em>Estos temas probablemente se cubren en las 2.5 horas restantes del video.</em></p>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section">
+  <h2>13. Tips para tu Facilitación</h2>
+
+  <div class="tip">
+    <strong>1. Usa las frases de Carlos:</strong> Él tiene imágenes muy buenas para enseñar. La del "anzuelo de la caña de pescar" para la exhalación es perfecta — úsala tal cual.
+  </div>
+
+  <div class="tip">
+    <strong>2. La progresión de respiración es clave:</strong> Clases 1-6 = respiración orgánica. Clase 12+ = marcar patrones. Esto le quita presión a los alumnos nuevos y a ti como facilitadora.
+  </div>
+
+  <div class="tip">
+    <strong>3. Cuida el espacio:</strong> Carlos es muy específico: buena iluminación, sin distractores visuales, sin ruido. Antes del workshop, revisa tu estudio con estos criterios.
+  </div>
+
+  <div class="tip">
+    <strong>4. Domina la diferencia Clásico vs. Contemporáneo:</strong> Es un tema que genera debate. Carlos explica ambos sin juzgar — tú también debes presentarlo así: son dos enfoques válidos con orígenes distintos.
+  </div>
+
+  <div class="tip">
+    <strong>5. Usa la frase de Michael King:</strong> "Todos los ejercicios del método son buenos. Lo que no son buenos son nuestros cuerpos." Esto justifica por qué como profesoras deben adaptar, no solo replicar.
+  </div>
+
+  <div class="tip">
+    <strong>6. Los mitos de Joseph son contenido gancho:</strong> La historia del cambio de partida de nacimiento por Clara es fascinante y genera conversación. Inclúyela cuando cuentes la historia.
+  </div>
+
+  <div class="tip">
+    <strong>7. Libro recomendado por Carlos:</strong> "Cultura Física" de <strong>Jennifer Kries</strong> — tiene todos los ejercicios del curso + rutinas de entrenamiento específicas para ciclistas, nadadores, boxeadores, golfistas. Consíguelo si puedes.
+  </div>
+
+  <div class="tip">
+    <strong>8. Usa la progresión de 4 fases del Rolling Like a Ball:</strong> Roll Down → Rodar sobre lumbar → Rodar completo → Ejercicio completo. Carlos dedica casi toda la clase práctica a esto. Puedes adaptar cuántas fases usas según el nivel.
+  </div>
+
+  <div class="tip">
+    <strong>9. Gesto motor primero, respiración después:</strong> Con alumnos básicos, enseña solo el movimiento. Solo marca respiración desde el inicio en ejercicios respiratorios (Hundred, Double Stretch, Spine Stretch Forward, The Saw).
+  </div>
+
+  <div class="tip">
+    <strong>10. El "marco del cuerpo":</strong> Hombro a hombro, cadera a cadera. Todo ejercicio donde haya rotación externa de cadera, las extremidades deben quedarse dentro de ese rectángulo imaginario. Úsalo como referencia constante.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<div class="section">
+  <h2>14. Para completar el resumen</h2>
+  <p>Tenemos cubiertos: los primeros 30 min del workshop teórico + 30 min de la clase práctica de repaso. Falta:</p>
+  <ul>
+    <li>Las ~2.5 horas restantes del video teórico (anatomía ósea, articulaciones, ejercicios detallados)</li>
+    <li>La parte del Criss-Cross y Double Leg Stretch que Carlos iba a enseñar en la clase práctica</li>
+    <li>Ejercicios adicionales que haya repasado después</li>
+  </ul>
+
+  <div class="nota">
+    <strong>Opción:</strong> Puedes dividir los videos en partes de 30 min en TurboScribe (gratis) e ir subiendo cada transcripción aquí. O usa <strong>NotebookLM</strong> (Google) que procesa el video completo sin límite.
+  </div>
+</div>
+
+<footer>
+  Material de estudio para Antonella Gutiérrez (@anto_biomove)<br>
+  Basado en transcripciones del Workshop Online + Clase de Repaso Práctica<br>
+  Prof. Carlos Alberto Zorrilla — Centro Zen Pilates
+</footer>
