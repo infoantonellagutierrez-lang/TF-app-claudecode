@@ -1,0 +1,368 @@
+<title>Errores del Manual</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+  :root {
+    --bg: #fafaf8; --fg: #1a1a18; --card: #fff; --border: #e8e6e0;
+    --accent: #00897b; --accent-light: #e0f2f1; --accent-dark: #00695c;
+    --red: #c62828; --red-light: #ffebee; --red-bg: #fce4ec;
+    --orange: #e65100; --orange-light: #fff3e0;
+    --yellow: #f9a825; --yellow-light: #fffde7;
+    --muted: #666; --code-bg: #f5f3ef;
+  }
+  @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#1a1a18;--fg:#e8e6e0;--card:#252522;--border:#3a3a35;
+    --accent:#4db6ac;--accent-light:#1a3330;--accent-dark:#80cbc4;
+    --red:#ef5350;--red-light:#3a1a1a;--red-bg:#2d1515;
+    --orange:#ffb74d;--orange-light:#2d1f0a;
+    --yellow:#fdd835;--yellow-light:#2d2a0a;
+    --muted:#999;--code-bg:#2a2a25;color-scheme:dark
+  }}
+  :root[data-theme="dark"]{
+    --bg:#1a1a18;--fg:#e8e6e0;--card:#252522;--border:#3a3a35;
+    --accent:#4db6ac;--accent-light:#1a3330;--accent-dark:#80cbc4;
+    --red:#ef5350;--red-light:#3a1a1a;--red-bg:#2d1515;
+    --orange:#ffb74d;--orange-light:#2d1f0a;
+    --yellow:#fdd835;--yellow-light:#2d2a0a;
+    --muted:#999;--code-bg:#2a2a25;color-scheme:dark
+  }
+  body {
+    background:var(--bg);color:var(--fg);font-family:'Outfit',system-ui,sans-serif;
+    line-height:1.6;padding-block:24px;
+    padding-left:max(16px,env(safe-area-inset-left,0px));
+    padding-right:max(16px,env(safe-area-inset-right,0px));
+    max-width:800px;margin:0 auto;
+  }
+  h1{font-size:1.6rem;font-weight:700;margin:0 0 8px;text-wrap:balance;color:var(--accent-dark)}
+  .subtitle{color:var(--muted);font-size:.9rem;margin-bottom:32px}
+  .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:32px}
+  .stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+  .stat .num{font-size:2rem;font-weight:700;line-height:1}
+  .stat .label{font-size:.75rem;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+  .stat.critical .num{color:var(--red)}
+  .stat.moderate .num{color:var(--orange)}
+  .stat.minor .num{color:var(--yellow)}
+  .section{margin-bottom:24px}
+  .section-title{font-size:1.1rem;font-weight:600;color:var(--accent-dark);margin:0 0 12px;
+    padding-bottom:8px;border-bottom:2px solid var(--accent)}
+  .error{background:var(--card);border:1px solid var(--border);border-radius:10px;
+    padding:14px 16px;margin-bottom:10px}
+  .error-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+  .page-badge{background:var(--accent-light);color:var(--accent-dark);font-size:.7rem;font-weight:600;
+    padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .severity{font-size:.65rem;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+  .severity.critical{background:var(--red-light);color:var(--red)}
+  .severity.moderate{background:var(--orange-light);color:var(--orange)}
+  .severity.minor{background:var(--yellow-light);color:var(--yellow)}
+  .wrong{color:var(--red);text-decoration:line-through;font-weight:600}
+  .right{color:var(--accent-dark);font-weight:600}
+  .arrow{color:var(--muted);margin:0 4px}
+  .context{color:var(--muted);font-size:.85rem;margin-top:4px;font-style:italic}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px;font-size:.8rem;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:4px}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .dot.c{background:var(--red)}.dot.m{background:var(--orange)}.dot.n{background:var(--yellow)}
+  .note{background:var(--accent-light);border:1px solid var(--accent);border-radius:10px;
+    padding:14px 16px;margin:24px 0;font-size:.9rem}
+  .note strong{color:var(--accent-dark)}
+</style>
+
+<h1>Errores encontrados en el Manual de Biomecánica y Anatomía en el Pilates</h1>
+<p class="subtitle">Prof. Carlos Alberto Zorrilla &middot; Centro Zen Pilates &middot; Revisado oct. 2026</p>
+
+<div class="summary">
+  <div class="stat critical"><div class="num">7</div><div class="label">Graves</div></div>
+  <div class="stat moderate"><div class="num">10</div><div class="label">Moderados</div></div>
+  <div class="stat minor"><div class="num">9</div><div class="label">Menores</div></div>
+</div>
+
+<div class="legend">
+  <span><span class="dot c"></span> Grave: cambia el significado o nombre</span>
+  <span><span class="dot m"></span> Moderado: ortografía/gramática visible</span>
+  <span><span class="dot n"></span> Menor: tilde o formato</span>
+</div>
+
+<!-- BIOGRAFÍA -->
+<div class="section">
+  <div class="section-title">Pag. 1 &mdash; Biografia</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 1</span>
+      <span class="severity moderate">Moderado</span>
+    </div>
+    <span class="wrong">entres otros</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">entre otros</span>
+    <div class="context">"...Ricardo Jaramillo, Jean Claude Nelson, entres otros"</div>
+  </div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 1</span>
+      <span class="severity moderate">Moderado</span>
+    </div>
+    <span class="wrong">reconocidas del el mundo</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">reconocidas del mundo</span>
+    <div class="context">"...personalidades reconocidas del el mundo del Pilates"</div>
+  </div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 1</span>
+      <span class="severity minor">Menor</span>
+    </div>
+    <span class="wrong">workshops&acute;s</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">workshops</span>
+    <div class="context">Ap&oacute;strofo incorrecto y sobrante en "workshops&acute;s"</div>
+  </div>
+</div>
+
+<!-- HISTORIA -->
+<div class="section">
+  <div class="section-title">Pag. 3 &mdash; Historia del Pilates</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 3</span>
+      <span class="severity minor">Menor</span>
+    </div>
+    <span class="wrong">Monchengladbach</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">M&ouml;nchengladbach</span>
+    <div class="context">Falta la di&eacute;resis en el nombre de la ciudad alemana</div>
+  </div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 3</span>
+      <span class="severity minor">Menor</span>
+    </div>
+    <span class="wrong">Dusseldorf</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">D&uuml;sseldorf</span>
+    <div class="context">Falta la di&eacute;resis en el nombre de la ciudad</div>
+  </div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 3</span>
+      <span class="severity moderate">Moderado</span>
+    </div>
+    <span class="wrong">participo</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">particip&oacute;</span>
+    <div class="context">"...durante su instancia en la isla Pilates participo como r&eacute;feri"</div>
+  </div>
+</div>
+
+<!-- DELTOIDES / MANGUITO -->
+<div class="section">
+  <div class="section-title">Pag. 20 &mdash; M&uacute;sculos de la cintura escapular</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 20</span>
+      <span class="severity critical">Grave</span>
+    </div>
+    <span class="wrong">DETOILDE</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">DELTOIDES</span>
+    <div class="context">T&iacute;tulo de secci&oacute;n con nombre de m&uacute;sculo incorrecto</div>
+  </div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 20</span>
+      <span class="severity critical">Grave</span>
+    </div>
+    <span class="wrong">MAGO ROTADORES</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">MANGUITO ROTADOR</span>
+    <div class="context">Falta "NGUITO" &mdash; "Manguito rotador" es el t&eacute;rmino anat&oacute;mico correcto</div>
+  </div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 20</span>
+      <span class="severity moderate">Moderado</span>
+    </div>
+    <span class="wrong">humero uy son</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">h&uacute;mero y son</span>
+    <div class="context">"...la cabeza del humero uy son responsables..." &mdash; sobra una "u"</div>
+  </div>
+</div>
+
+<!-- COLUMNA -->
+<div class="section">
+  <div class="section-title">Pag. 23-25 &mdash; Columna vertebral y articulaciones</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 23</span>
+      <span class="severity minor">Menor</span>
+    </div>
+    <span class="wrong">oste fibrocartilaginosa</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">osteofibrocartilaginosa</span>
+    <div class="context">"Esta estructura oste fibrocartilaginosa" &mdash; palabra cortada</div>
+  </div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 24</span>
+      <span class="severity minor">Menor</span>
+    </div>
+    <span class="wrong">d&oacute;nde se ubica</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">donde se ubica</span>
+    <div class="context">"regi&oacute;n cox&iacute;gea (d&oacute;nde se ubica el hueso...)" &mdash; no es pregunta, no lleva tilde</div>
+  </div>
+</div>
+
+<!-- COLOCACIÓN PÉLVICA -->
+<div class="section">
+  <div class="section-title">Pag. 27 &mdash; Colocaci&oacute;n p&eacute;lvica</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 27</span>
+      <span class="severity minor">Menor</span>
+    </div>
+    <span class="wrong">contemporaneo</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">contempor&aacute;neo</span>
+    <div class="context">"En el pilates contemporaneo se utiliza la columna en posici&oacute;n neutral"</div>
+  </div>
+</div>
+
+<!-- EJERCICIOS -->
+<div class="section">
+  <div class="section-title">Pag. 29 &mdash; The Hundred</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 29</span>
+      <span class="severity critical">Grave</span>
+    </div>
+    <span class="wrong">THE HUNDRE</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">THE HUNDRED</span>
+    <div class="context">Falta la "D" final en el nombre del ejercicio</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Pag. 30 &mdash; The Roll Up</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 30</span>
+      <span class="severity critical">Grave</span>
+    </div>
+    <span class="wrong">la comuna vertebral</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">la columna vertebral</span>
+    <div class="context">"...ser&aacute;n los responsables de flexionar la comuna vertebral" &mdash; error grave en t&eacute;rmino anat&oacute;mico</div>
+  </div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 30</span>
+      <span class="severity moderate">Moderado</span>
+    </div>
+    <span class="wrong">retornar el troco</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">retornar el tronco</span>
+    <div class="context">"al retornar el troco sobre la colchoneta"</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Pag. 31 &mdash; The One Leg Circle</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 31</span>
+      <span class="severity moderate">Moderado</span>
+    </div>
+    <span class="wrong">gl&uacute;teo m&iacute;nimo cunado</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">gl&uacute;teo m&iacute;nimo cuando</span>
+    <div class="context">"el gl&uacute;teo m&iacute;nimo cunado se contrae genera..."</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Pag. 35 &mdash; The Spine Stretch</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 35</span>
+      <span class="severity critical">Grave</span>
+    </div>
+    <span class="wrong">M&Uacute;CULOS ESTABILIZADORES</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">M&Uacute;SCULOS ESTABILIZADORES</span>
+    <div class="context">Falta la "S" en "M&uacute;sculos" &mdash; t&iacute;tulo de secci&oacute;n</div>
+  </div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 35</span>
+      <span class="severity critical">Grave</span>
+    </div>
+    <span class="wrong">Flexores Pasos e iliaco</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">Flexores Psoas e il&iacute;aco</span>
+    <div class="context">"Pasos" est&aacute; invertido &mdash; el m&uacute;sculo se llama "Psoas"</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Pag. 36 &mdash; The Saw</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 36</span>
+      <span class="severity moderate">Moderado</span>
+    </div>
+    <span class="wrong">poas e Iliaco</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">psoas e il&iacute;aco</span>
+    <div class="context">"flexores de cadera poas e Iliaco" &mdash; falta la "s" de psoas</div>
+  </div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 36</span>
+      <span class="severity moderate">Moderado</span>
+    </div>
+    <span class="wrong">extebder</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">extender</span>
+    <div class="context">"ser&aacute;n los responsables de extebder las v&eacute;rtebras cervicales"</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Pag. 37 &mdash; The Swan Dive</div>
+
+  <div class="error">
+    <div class="error-header">
+      <span class="page-badge">Pag. 37</span>
+      <span class="severity critical">Grave</span>
+    </div>
+    <span class="wrong">THE SAWN DIVE</span>
+    <span class="arrow">&rarr;</span>
+    <span class="right">THE SWAN DIVE</span>
+    <div class="context">"Sawn" (aserrado) no es el nombre &mdash; es "Swan" (cisne). Letras invertidas en el t&iacute;tulo del ejercicio</div>
+  </div>
+</div>
+
+<div class="note">
+  <strong>Nota importante:</strong> Como este es un archivo PDF, los cambios deben hacerse en el documento original (Word o similar) y volver a exportar a PDF. Los 7 errores graves afectan nombres de m&uacute;sculos y ejercicios &mdash; es prioritario corregirlos antes de entregar el manual a los participantes del seminario.
+</div>
