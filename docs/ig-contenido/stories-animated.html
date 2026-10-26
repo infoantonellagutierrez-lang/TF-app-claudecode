@@ -125,7 +125,7 @@ body{
 .s-sticker{
   display:inline-block;font-size:11px;font-weight:700;
   padding:8px 16px;border-radius:10px;
-  border:2px dashed rgba(255,255,255,.3);color:rgba(255,255,255,.5);
+  border:2px dashed rgba(0,0,0,.2);color:rgba(0,0,0,.4);
   letter-spacing:1px;opacity:0;transform:scale(.8);
 }
 .s-bottom{
@@ -147,11 +147,11 @@ body{
 }
 
 /* Themes */
-.th-dark{background:linear-gradient(180deg,#0a1a18,#0d2926 50%,#0a1a18);color:#e8f5f1}
-.th-teal{background:linear-gradient(180deg,#004d40,#00897b 50%,#00695c);color:#fff}
-.th-warm{background:linear-gradient(180deg,#1a1210,#3e2723 50%,#1a1210);color:#efebe9}
-.th-gold{background:linear-gradient(180deg,#1a1512,#3e2f20 50%,#1a1512);color:#ffe0b2}
-.th-bright{background:linear-gradient(180deg,#00695c,#00897b 30%,#26a69a 60%,#00695c);color:#fff}
+.th-dark{background:linear-gradient(180deg,#e0f2f1,#b2dfdb 50%,#e0f2f1);color:#1a3330}
+.th-teal{background:linear-gradient(180deg,#4db6ac,#80cbc4 50%,#4db6ac);color:#fff}
+.th-warm{background:linear-gradient(180deg,#fff3e0,#ffe0b2 50%,#fff3e0);color:#3e2723}
+.th-gold{background:linear-gradient(180deg,#fff8e1,#ffecb3 50%,#fff8e1);color:#3e2723}
+.th-bright{background:linear-gradient(180deg,#80cbc4,#b2dfdb 30%,#e0f2f1 60%,#80cbc4);color:#1a3330}
 
 /* Animated gradient shift */
 @keyframes bgShift{
@@ -252,7 +252,7 @@ const STORIES = [
     theme:'th-dark bg-animate',
     glows:[{color:'#00897b',x:'-60px',y:'-60px'}],
     elements:[
-      {type:'tag',text:'Quiz Time',style:'border:2px solid #4db6ac;color:#4db6ac',delay:0},
+      {type:'tag',text:'Quiz Time',style:'border:2px solid #00897b;color:#00897b',delay:0},
       {type:'big',text:'¿Qué es el POWER HOUSE en Pilates?',style:'font-size:28px;margin-bottom:16px',delay:.4},
       {type:'divider',style:'background:#4db6ac',delay:.8},
       {type:'sm',text:'Desliza hacia arriba para responder',style:'opacity:.5;margin-top:16px',delay:1.1},
@@ -294,11 +294,11 @@ const STORIES = [
     glows:[{color:'#00897b',x:'0px',y:'-60px'}],
     elements:[
       {type:'tag',text:'Respuesta',style:'background:#00897b;color:#fff',delay:0},
-      {type:'num',text:'360',style:'color:#4db6ac;margin-bottom:4px',delay:.5},
+      {type:'num',text:'360',style:'color:#00695c;margin-bottom:4px',delay:.5},
       {type:'big',text:'articulaciones',style:'font-size:28px',delay:.9},
       {type:'divider',style:'background:#4db6ac',delay:1.2},
       {type:'sm',text:'86 solo en el cráneo. Las articulaciones sinoviales son las que más usamos en Pilates.',style:'margin-top:8px;opacity:.85',delay:1.5},
-      {type:'med',text:'Permiten 6 tipos de movimiento',style:'margin-top:16px;color:#4db6ac',delay:2.0},
+      {type:'med',text:'Permiten 6 tipos de movimiento',style:'margin-top:16px;color:#00695c',delay:2.0},
       {type:'sm',text:'¿Quieres saber cuáles? Este viernes en el seminario de Biomecánica y Anatomía',style:'margin-top:14px;opacity:.6',delay:2.5},
       {type:'xs',text:'Escríbeme al DM',style:'margin-top:8px;opacity:.4',delay:3.0},
     ],
@@ -326,13 +326,13 @@ const STORIES = [
     theme:'th-gold bg-animate',
     glows:[{color:'#ff9800',x:'0px',y:'-40px'}],
     elements:[
-      {type:'tag',text:'Mañana',style:'border:2px solid #ffb74d;color:#ffb74d',delay:0},
-      {type:'big',text:'MAÑANA es el día',style:'font-size:30px;margin-bottom:12px;color:#ffb74d',delay:.5},
-      {type:'divider',style:'background:#ffb74d',delay:.9},
+      {type:'tag',text:'Mañana',style:'border:2px solid #e65100;color:#e65100',delay:0},
+      {type:'big',text:'MAÑANA es el día',style:'font-size:30px;margin-bottom:12px;color:#e65100',delay:.5},
+      {type:'divider',style:'background:#e65100',delay:.9},
       {type:'med',text:'Seminario:',style:'margin-top:10px',delay:1.2},
-      {type:'big',text:'Biomecánica y Anatomía en el Pilates',style:'font-size:22px;margin:6px 0;color:#ffe0b2',delay:1.5},
+      {type:'big',text:'Biomecánica y Anatomía en el Pilates',style:'font-size:22px;margin:6px 0;color:#bf360c',delay:1.5},
       {type:'sm',text:'Acreditado por el Prof. Carlos Alberto Zorrilla — Centro Zen Pilates (PMA / IIDCA)',style:'margin-top:10px;opacity:.7',delay:2.0},
-      {type:'med',text:'Quedan los últimos cupos',style:'margin-top:16px;color:#ffb74d',delay:2.5},
+      {type:'med',text:'Quedan los últimos cupos',style:'margin-top:16px;color:#e65100',delay:2.5},
       {type:'sticker',text:'AGREGAR STICKER: CUENTA REGRESIVA AL VIERNES 30',style:'margin-top:14px',delay:3.0},
       {type:'xs',text:'Escríbeme AHORA',style:'margin-top:10px;opacity:.5',delay:3.4},
     ],
