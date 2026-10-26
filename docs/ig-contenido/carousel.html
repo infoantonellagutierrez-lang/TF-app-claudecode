@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carousel IG — AntoBioMove</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#111;font-family:'Outfit',sans-serif;display:flex;flex-direction:column;align-items:center;padding:16px;gap:20px}
+
+.instructions{
+  background:#1a1a1a;color:#aaa;padding:16px 20px;border-radius:12px;
+  font-size:13px;line-height:1.6;max-width:420px;width:100%;text-align:center;
+}
+.instructions strong{color:#4db6ac}
+
+.slide{
+  width:1080px;height:1350px;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:80px 90px;
+}
+
+/* Force pixel-perfect on mobile: scale down */
+@media(max-width:1100px){
+  .slide{
+    width:360px;height:450px;
+    padding:26px 30px;
+  }
+  .slide .big{font-size:26px !important;line-height:1.15 !important}
+  .slide .med{font-size:14px !important}
+  .slide .sm{font-size:11px !important}
+  .slide .xs{font-size:9px !important}
+  .slide .num{font-size:60px !important}
+  .slide .icon-big{font-size:44px !important}
+  .slide .tag-line{font-size:10px !important;padding:4px 10px !important}
+  .slide .answer-big{font-size:22px !important}
+  .slide .option{font-size:13px !important;padding:8px 14px !important;margin:4px !important}
+  .slide .divider{width:40px !important;height:3px !important;margin:10px auto !important}
+  .slide .cta-btn{font-size:13px !important;padding:10px 24px !important}
+  .slide .logo-text{font-size:10px !important}
+  .slide .bottom-strip{padding:8px 12px !important}
+  .slide .bottom-strip span{font-size:8px !important}
+}
+
+/* ═══ Slide themes ═══ */
+.s-dark{background:linear-gradient(145deg,#0a1a18 0%,#0d2926 40%,#102e2a 100%);color:#e8f5f1}
+.s-teal{background:linear-gradient(145deg,#00695c 0%,#00897b 50%,#00796b 100%);color:#fff}
+.s-warm{background:linear-gradient(145deg,#3e2723 0%,#5d4037 50%,#4e342e 100%);color:#efebe9}
+.s-light{background:linear-gradient(145deg,#e0f2f1 0%,#f1f8f7 50%,#e8f5e9 100%);color:#1a3330}
+.s-accent{background:linear-gradient(145deg,#004d40 0%,#00695c 50%,#00897b 100%);color:#e0f2f1}
+.s-gold{background:linear-gradient(145deg,#1a1512 0%,#2e2418 50%,#3e2f20 100%);color:#ffe0b2}
+
+.big{font-size:72px;font-weight:900;line-height:1.1;letter-spacing:-1px}
+.med{font-size:38px;font-weight:600;line-height:1.35}
+.sm{font-size:28px;font-weight:400;line-height:1.45}
+.xs{font-size:22px;font-weight:300;line-height:1.5}
+.num{font-size:160px;font-weight:900;letter-spacing:-6px;line-height:1}
+.icon-big{font-size:120px;line-height:1;margin-bottom:16px}
+.answer-big{font-size:60px;font-weight:900}
+
+.tag-line{
+  display:inline-block;font-size:18px;font-weight:700;
+  letter-spacing:4px;text-transform:uppercase;
+  padding:8px 20px;border-radius:50px;
+  margin-bottom:24px;
+}
+
+.divider{width:80px;height:4px;border-radius:2px;margin:20px auto}
+.divider-teal{background:#4db6ac}
+.divider-white{background:rgba(255,255,255,.4)}
+.divider-gold{background:#ffb74d}
+.divider-dark{background:#00897b}
+
+.option{
+  display:inline-block;font-size:34px;font-weight:600;
+  padding:14px 28px;border-radius:12px;margin:6px;
+  background:rgba(255,255,255,.12);backdrop-filter:blur(4px);
+}
+.option.correct{background:#00897b;color:#fff}
+
+.cta-btn{
+  display:inline-block;font-size:32px;font-weight:800;
+  padding:18px 48px;border-radius:60px;
+  background:#fff;color:#00695c;
+  margin-top:20px;letter-spacing:1px;
+}
+
+.bottom-strip{
+  position:absolute;bottom:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 24px;
+}
+.bottom-strip span{font-size:16px;font-weight:600;opacity:.7}
+
+.logo-text{font-size:18px;font-weight:800;letter-spacing:3px;text-transform:uppercase;opacity:.5}
+
+.corner-num{
+  position:absolute;top:40px;right:50px;
+  font-size:120px;font-weight:900;opacity:.06;line-height:1;
+}
+@media(max-width:1100px){
+  .corner-num{top:12px;right:16px;font-size:40px}
+}
+
+.logo{
+  position:absolute;top:40px;left:50px;
+  width:100px;height:auto;opacity:.85;
+}
+@media(max-width:1100px){
+  .logo{top:12px;left:16px;width:36px}
+}
+
+.glow{
+  position:absolute;width:300px;height:300px;border-radius:50%;
+  filter:blur(100px);opacity:.15;pointer-events:none;
+}
+@media(max-width:1100px){
+  .glow{width:100px;height:100px;filter:blur(40px)}
+}
+</style>
+</head>
+<body>
+
+<div class="instructions">
+  <strong>Instrucciones para subir a Instagram:</strong><br>
+  1. Abre esta página en tu teléfono<br>
+  2. Haz captura de pantalla de CADA slide (una por una)<br>
+  3. Recorta para que solo se vea la slide<br>
+  4. En Instagram: Nuevo Post → selecciona las 10 fotos en orden → Carrusel<br>
+  5. Pega el caption que está al final de esta página
+</div>
+
+<!-- ══════════ SLIDE 1 — PORTADA ══════════ -->
+<div class="slide s-dark">
+  <img class="logo" src="logo.jpg" alt="AntoBioMove">
+  <div class="glow" style="background:#00897b;top:-60px;left:-60px"></div>
+  <div class="glow" style="background:#4db6ac;bottom:-40px;right:-40px"></div>
+  <div class="tag-line" style="border:2px solid #4db6ac;color:#4db6ac">Biomecánica × Pilates</div>
+  <div class="big" style="margin-bottom:20px">¿Cuánto sabes del cuerpo que entrenas cada día?</div>
+  <div class="divider divider-teal"></div>
+  <div class="sm" style="opacity:.7;margin-top:8px">5 datos de anatomía que todo instructor de Pilates debería conocer</div>
+  <div class="bottom-strip">
+    <span>@anto_biomove</span>
+    <span>Desliza →</span>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 2 — 360 ARTICULACIONES ══════════ -->
+<div class="slide s-teal">
+  <img class="logo" src="logo.jpg" alt="AntoBioMove">
+  <div class="corner-num">01</div>
+  <div class="tag-line" style="background:rgba(255,255,255,.2);color:#fff">Dato #1</div>
+  <div class="num" style="margin-bottom:8px">360</div>
+  <div class="big" style="font-size:52px;margin-bottom:16px">articulaciones tiene tu cuerpo</div>
+  <div class="divider divider-white"></div>
+  <div class="sm" style="opacity:.85">86 solo en el cráneo. Cada una cumple un rol en el movimiento.</div>
+  <div class="bottom-strip">
+    <span>@anto_biomove</span>
+    <span>1/10</span>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 3 — POWER HOUSE ══════════ -->
+<div class="slide s-dark">
+  <img class="logo" src="logo.jpg" alt="AntoBioMove">
+  <div class="corner-num">02</div>
+  <div class="glow" style="background:#ff9800;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <div class="tag-line" style="border:2px solid #ffb74d;color:#ffb74d">Dato #2</div>
+  <div class="big" style="margin-bottom:16px;font-size:62px">El Power House NO es solo el abdomen</div>
+  <div class="divider divider-gold"></div>
+  <div class="sm" style="opacity:.8">Transverso abdominal, oblicuos, suelo pélvico y diafragma. Es tu centro de fuerza y estabilidad.</div>
+  <div class="xs" style="margin-top:16px;opacity:.5">Todo el método parte de aquí.</div>
+  <div class="bottom-strip">
+    <span>@anto_biomove</span>
+    <span>2/10</span>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 4 — CONTRACCIÓN EXCÉNTRICA ══════════ -->
+<div class="slide s-warm">
+  <img class="logo" src="logo.jpg" alt="AntoBioMove">
+  <div class="corner-num">03</div>
+  <div class="tag-line" style="background:rgba(255,255,255,.15);color:#efebe9">Dato #3</div>
+  <div class="med" style="font-weight:800;margin-bottom:20px">Cuando bajas lento en un Roll Down, tus músculos se alargan...</div>
+  <div class="big" style="color:#4db6ac;font-size:58px;margin-bottom:16px">pero siguen contraídos</div>
+  <div class="divider divider-teal"></div>
+  <div class="sm" style="opacity:.8">Se llama contracción EXCÉNTRICA. Es la más frecuente en Pilates y la que más control requiere.</div>
+  <div class="bottom-strip">
+    <span>@anto_biomove</span>
+    <span>3/10</span>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 5 — CONTROLOGÍA ══════════ -->
+<div class="slide s-accent">
+  <img class="logo" src="logo.jpg" alt="AntoBioMove">
+  <div class="corner-num">04</div>
+  <div class="tag-line" style="background:rgba(255,255,255,.2);color:#fff">Dato #4</div>
+  <div class="med" style="margin-bottom:12px">Joseph Pilates NO le llamaba "Pilates" a su método</div>
+  <div class="big" style="font-size:64px;margin:12px 0;color:#fff">CONTROLOGÍA</div>
+  <div class="divider divider-white"></div>
+  <div class="sm" style="opacity:.8">El arte de controlar el cuerpo con la mente. El nombre "Pilates" llegó después de su muerte en 1967.</div>
+  <div class="bottom-strip">
+    <span>@anto_biomove</span>
+    <span>4/10</span>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 6 — MANGUITO ROTADOR ══════════ -->
+<div class="slide s-dark">
+  <img class="logo" src="logo.jpg" alt="AntoBioMove">
+  <div class="corner-num">05</div>
+  <div class="glow" style="background:#00897b;bottom:-40px;left:-40px"></div>
+  <div class="tag-line" style="border:2px solid #4db6ac;color:#4db6ac">Dato #5</div>
+  <div class="big" style="font-size:52px;margin-bottom:12px;color:#4db6ac">4 músculos</div>
+  <div class="med" style="margin-bottom:16px">estabilizan tu hombro</div>
+  <div class="divider divider-teal"></div>
+  <div class="sm" style="margin-top:12px">Supraespinoso · Infraespinoso · Subescapular · Redondo menor</div>
+  <div class="xs" style="opacity:.5;margin-top:12px">Son el manguito rotador. Si no los cuidas, cada ejercicio de brazos es un riesgo.</div>
+  <div class="bottom-strip">
+    <span>@anto_biomove</span>
+    <span>5/10</span>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 7 — PREGUNTA ══════════ -->
+<div class="slide s-teal">
+  <img class="logo" src="logo.jpg" alt="AntoBioMove">
+  <div class="corner-num">?</div>
+  <div class="tag-line" style="background:rgba(255,255,255,.2);color:#fff">Pregunta</div>
+  <div class="big" style="font-size:48px;margin-bottom:24px">¿Cuál es el primer ejercicio de la Serie Clásica de Mat?</div>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:8px">
+    <span class="option">A) Roll Up</span>
+    <span class="option">B) The Saw</span>
+    <span class="option">C) The Hundred</span>
+    <span class="option">D) Rolling Like a Ball</span>
+  </div>
+  <div class="xs" style="margin-top:24px;opacity:.6">Respuesta en el siguiente slide...</div>
+  <div class="bottom-strip">
+    <span>@anto_biomove</span>
+    <span>6/10</span>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 8 — RESPUESTA ══════════ -->
+<div class="slide s-dark">
+  <img class="logo" src="logo.jpg" alt="AntoBioMove">
+  <div class="glow" style="background:#00897b;top:30%;left:50%;transform:translate(-50%,-50%)"></div>
+  <div class="tag-line" style="background:#00897b;color:#fff">Respuesta</div>
+  <div class="answer-big" style="color:#4db6ac;margin:16px 0">C) The Hundred</div>
+  <div class="divider divider-teal"></div>
+  <div class="sm" style="margin-top:12px;opacity:.85">Es el primer ejercicio del bloque de calentamiento.</div>
+  <div class="sm" style="opacity:.85">Activa la circulación y el Power House desde el minuto uno.</div>
+  <div class="bottom-strip">
+    <span>@anto_biomove</span>
+    <span>7/10</span>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 9 — ENGANCHE ══════════ -->
+<div class="slide s-gold">
+  <img class="logo" src="logo.jpg" alt="AntoBioMove">
+  <div class="glow" style="background:#ff9800;top:-40px;right:-40px"></div>
+  <div class="tag-line" style="border:2px solid #ffb74d;color:#ffb74d">Seminario</div>
+  <div class="med" style="color:#ffe0b2;margin-bottom:12px">¿Quieres dominar estos conceptos?</div>
+  <div class="divider divider-gold"></div>
+  <div class="sm" style="margin-top:12px">Este viernes 30 de octubre</div>
+  <div class="big" style="font-size:44px;margin:12px 0;color:#ffb74d">Biomecánica y Anatomía en el Pilates</div>
+  <div class="xs" style="opacity:.6;margin-top:8px">Con el aval del Prof. Carlos Alberto Zorrilla<br>Centro Zen Pilates (PMA / IIDCA)</div>
+  <div class="bottom-strip">
+    <span>@anto_biomove</span>
+    <span>8/10</span>
+  </div>
+</div>
+
+<!-- ══════════ SLIDE 10 — CTA FINAL ══════════ -->
+<div class="slide s-teal">
+  <img class="logo" src="logo.jpg" alt="AntoBioMove">
+  <div class="glow" style="background:#fff;top:-60px;left:50%;transform:translateX(-50%)"></div>
+  <div class="big" style="font-size:58px;margin-bottom:20px">Últimos cupos disponibles</div>
+  <div class="divider divider-white"></div>
+  <div class="sm" style="margin-top:12px;margin-bottom:24px">Escríbeme al DM o al WhatsApp para reservar tu lugar</div>
+  <div class="cta-btn">@anto_biomove</div>
+  <div class="bottom-strip">
+    <span style="opacity:1">Biomecánica × Pilates</span>
+    <span>10/10</span>
+  </div>
+</div>
+
+<!-- ══════════ CAPTION ══════════ -->
+<div style="max-width:420px;width:100%;background:#1a1a1a;color:#ccc;padding:20px;border-radius:12px;font-size:13px;line-height:1.7">
+  <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#4db6ac;margin-bottom:10px">Caption — Copia y pega en Instagram</div>
+  <div style="white-space:pre-line;user-select:all">¿Sabes cuántas articulaciones tiene tu cuerpo? ¿O qué tipo de contracción muscular usas más en Pilates?
+
+Si eres instructora o practicante, estos conceptos cambian completamente cómo enseñas y cómo ejecutas cada ejercicio.
+
+Este viernes 30 de octubre impartimos el seminario "Biomecánica y Anatomía en el Pilates" — una formación que va más allá de la certificación de Mat.
+
+Con el aval del Prof. Carlos Alberto Zorrilla y Centro Zen Pilates (PMA / IIDCA).
+
+Quedan pocos cupos. Escríbeme al DM o al WhatsApp en mi bio para reservar.
+
+¿Cuántos datos del carrusel ya sabías? Cuéntame en los comentarios 👇</div>
+  <div style="margin-top:12px;font-size:11px;color:#666;border-top:1px solid #333;padding-top:10px;user-select:all">#Pilates #BiomecanicaPilates #AnatomiaPilates #PilatesMat #InstructoraDePilates #FormaciónPilates #PilatesVenezuela #CentroZenPilates #AntoBioMove #SeminarioPilates #Contrología #PowerHouse #PilatesClásico #MovimientoConsciente #SabíasQue</div>
+  <div style="margin-top:8px;font-size:10px;color:#555">☝️ Los hashtags van en el PRIMER COMENTARIO, no en el caption</div>
+</div>
+
+</body>
+</html>
