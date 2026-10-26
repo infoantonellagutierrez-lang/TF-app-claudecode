@@ -94,9 +94,14 @@ body{
 
 /* Elements */
 .s-logo{
-  position:absolute;top:24px;left:50%;transform:translateX(-50%);
-  width:44px;height:44px;border-radius:50%;object-fit:cover;
+  position:absolute;top:55px;left:50%;transform:translateX(-50%);
+  width:56px;height:56px;border-radius:50%;object-fit:cover;
   opacity:0;z-index:5;
+  box-shadow:0 0 0 3px rgba(255,255,255,.5),0 0 18px rgba(77,182,172,.45),0 4px 12px rgba(0,0,0,.15);
+}
+@keyframes logoPulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(255,255,255,.5),0 0 18px rgba(77,182,172,.45),0 4px 12px rgba(0,0,0,.15)}
+  50%{box-shadow:0 0 0 4px rgba(255,255,255,.65),0 0 26px rgba(77,182,172,.6),0 4px 16px rgba(0,0,0,.2)}
 }
 .s-glow{
   position:absolute;width:180px;height:180px;border-radius:50%;
@@ -147,11 +152,11 @@ body{
 }
 
 /* Themes */
-.th-dark{background:linear-gradient(180deg,#e0f2f1,#b2dfdb 50%,#e0f2f1);color:#1a3330}
-.th-teal{background:linear-gradient(180deg,#4db6ac,#80cbc4 50%,#4db6ac);color:#fff}
-.th-warm{background:linear-gradient(180deg,#fff3e0,#ffe0b2 50%,#fff3e0);color:#3e2723}
-.th-gold{background:linear-gradient(180deg,#fff8e1,#ffecb3 50%,#fff8e1);color:#3e2723}
-.th-bright{background:linear-gradient(180deg,#80cbc4,#b2dfdb 30%,#e0f2f1 60%,#80cbc4);color:#1a3330}
+.th-dark{background:linear-gradient(170deg,#e0f2f1,#b2dfdb 35%,#fff3e0 70%,#ffe0b2);color:#1a3330}
+.th-teal{background:linear-gradient(170deg,#4db6ac,#80cbc4 40%,#ffcc80 85%,#ffb74d);color:#fff}
+.th-warm{background:linear-gradient(170deg,#fff8e1,#ffe0b2 35%,#ffcc80 65%,#ffb74d);color:#3e2723}
+.th-gold{background:linear-gradient(170deg,#fff8e1,#ffecb3 30%,#ffe0b2 60%,#ffcc80);color:#3e2723}
+.th-bright{background:linear-gradient(170deg,#80cbc4,#b2dfdb 25%,#fff3e0 55%,#ffe0b2 80%,#ffcc80);color:#1a3330}
 
 /* Animated gradient shift */
 @keyframes bgShift{
@@ -506,6 +511,7 @@ function animate(parts, totalDuration) {
   setTimeout(() => {
     logo.style.transition = 'opacity 1s ease';
     logo.style.opacity = '1';
+    logo.style.animation = 'logoPulse 3s ease-in-out infinite';
   }, 800);
 
   // Glows start pulsing
