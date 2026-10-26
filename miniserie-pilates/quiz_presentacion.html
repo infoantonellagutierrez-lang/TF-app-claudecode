@@ -1,0 +1,557 @@
+<title>Quiz — Biomecánica y Pilates</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap">
+<style>
+:root {
+  --bg: #0d1117;
+  --fg: #e8e4df;
+  --surface: #161b22;
+  --teal: #4db6ac;
+  --teal-dim: rgba(77,182,172,.12);
+  --green: #66bb6a;
+  --green-bg: rgba(102,187,106,.15);
+  --red: #ef5350;
+  --orange: #ffa726;
+  --blue: #42a5f5;
+  --muted: #7a7068;
+  --border: #2a2520;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f8f6f3;
+    --fg: #1a1612;
+    --surface: #ffffff;
+    --teal: #00897b;
+    --teal-dim: rgba(0,137,123,.08);
+    --green: #2e7d32;
+    --green-bg: rgba(46,125,50,.1);
+    --red: #c62828;
+    --orange: #ef6c00;
+    --blue: #1565c0;
+    --muted: #8a8078;
+    --border: #e0d8d0;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f8f6f3;
+  --fg: #1a1612;
+  --surface: #ffffff;
+  --teal: #00897b;
+  --teal-dim: rgba(0,137,123,.08);
+  --green: #2e7d32;
+  --green-bg: rgba(46,125,50,.1);
+  --red: #c62828;
+  --orange: #ef6c00;
+  --blue: #1565c0;
+  --muted: #8a8078;
+  --border: #e0d8d0;
+  color-scheme: light;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.app {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+}
+
+/* Cover slide */
+.cover {
+  text-align: center;
+  padding: 40px 20px;
+}
+.cover .brand {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 20px;
+}
+.cover h1 {
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+.cover h1 span { color: var(--teal); }
+.cover .sub {
+  font-size: clamp(14px, 3vw, 18px);
+  color: var(--muted);
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+.cover .start-btn {
+  display: inline-block;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 12px;
+  background: var(--teal);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s, opacity .15s;
+}
+.cover .start-btn:hover { transform: scale(1.03); opacity: .9; }
+.cover .count {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Slide */
+.slide { display: none; }
+.slide.active { display: block; }
+
+/* Progress */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.q-counter {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 1px;
+}
+.progress-dots {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background .3s;
+}
+.dot.current { background: var(--teal); transform: scale(1.3); }
+.dot.done-correct { background: var(--green); }
+.dot.done-wrong { background: var(--red); }
+
+/* Question */
+.question-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.question-box .q-num {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+.question-box .q-text {
+  font-size: clamp(18px, 4vw, 24px);
+  font-weight: 700;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+/* Options grid */
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media (max-width: 500px) { .options { grid-template-columns: 1fr; } }
+
+.opt-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 16px 16px 52px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--fg);
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(14px, 2.5vw, 16px);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: transform .1s, border-color .2s, background .2s;
+  min-width: 0;
+  line-height: 1.3;
+}
+.opt-btn:hover:not(:disabled):not(.revealed) { transform: translateY(-2px); border-color: var(--teal); }
+
+.opt-btn .letter {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+}
+.opt-btn:nth-child(1) .letter { background: var(--red); }
+.opt-btn:nth-child(2) .letter { background: var(--blue); }
+.opt-btn:nth-child(3) .letter { background: var(--orange); }
+.opt-btn:nth-child(4) .letter { background: var(--green); }
+
+.opt-btn.correct-reveal {
+  border-color: var(--green);
+  background: var(--green-bg);
+}
+.opt-btn.correct-reveal::after {
+  content: "✓";
+  position: absolute;
+  right: 14px;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--green);
+}
+.opt-btn.wrong-reveal {
+  opacity: .4;
+}
+
+/* Reveal button */
+.reveal-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: 2px dashed var(--teal);
+  border-radius: 12px;
+  background: var(--teal-dim);
+  color: var(--teal);
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s;
+  margin-bottom: 10px;
+}
+.reveal-btn:hover { background: var(--teal); color: #fff; }
+
+/* Explanation */
+.explanation {
+  background: var(--green-bg);
+  border-left: 4px solid var(--green);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fg);
+  margin-bottom: 14px;
+  display: none;
+}
+.explanation.show { display: block; }
+.explanation strong { color: var(--green); }
+
+/* Navigation */
+.nav-row {
+  display: flex;
+  gap: 10px;
+}
+.nav-btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.nav-btn:hover { opacity: .85; }
+.nav-btn.prev { background: var(--surface); color: var(--fg); border: 1px solid var(--border); }
+.nav-btn.next { background: var(--teal); color: #fff; }
+.nav-btn:disabled { opacity: .3; cursor: default; }
+
+/* Results */
+.results {
+  text-align: center;
+  padding: 40px 20px;
+}
+.results .emoji { font-size: 56px; margin-bottom: 10px; }
+.results .score-big {
+  font-size: 64px;
+  font-weight: 900;
+  color: var(--teal);
+  line-height: 1;
+}
+.results .score-label {
+  font-size: 16px;
+  color: var(--muted);
+  margin: 6px 0 20px;
+}
+.results .verdict {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.results .verdict-sub {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 480px;
+  margin: 0 auto 24px;
+}
+.stat-row {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 28px;
+}
+.stat-item .stat-num { font-size: 32px; font-weight: 900; }
+.stat-item .stat-lbl { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+.restart-btn {
+  padding: 14px 40px;
+  border: 2px solid var(--teal);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--teal);
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.restart-btn:hover { background: var(--teal); color: #fff; }
+
+.footer {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Presenter note */
+.presenter-note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 8px;
+  font-style: italic;
+}
+</style>
+
+<div class="app" id="app"></div>
+<div class="footer">AntoBioMove — Workshop Internacional Valencia 2026</div>
+
+<script>
+const QS = [
+  {
+    q: "¿Cuántas articulaciones tiene aproximadamente el cuerpo humano?",
+    opts: ["206", "360", "180", "420"],
+    ans: 1,
+    why: "El cuerpo humano posee aproximadamente 360 articulaciones, distribuidas entre cráneo, columna, tórax y extremidades."
+  },
+  {
+    q: "¿Cuáles son los tres tipos de articulaciones según su estructura?",
+    opts: ["Móviles, fijas y semifijas", "Fibrosas, cartilaginosas y sinoviales", "Esféricas, planas y en bisagra", "Primarias, secundarias y terciarias"],
+    ans: 1,
+    why: "Se clasifican en fibrosas (inmóviles), cartilaginosas (parcialmente móviles) y sinoviales (móviles con cápsula articular y líquido sinovial)."
+  },
+  {
+    q: "¿Qué tipo de contracción muscular ocurre cuando el músculo se acorta?",
+    opts: ["Isométrica", "Excéntrica", "Concéntrica", "Estática"],
+    ans: 2,
+    why: "La contracción concéntrica acorta el músculo al generar fuerza. La excéntrica lo alarga y la isométrica mantiene la longitud."
+  },
+  {
+    q: "¿Qué es el Power House en Pilates?",
+    opts: ["El conjunto de músculos de las piernas", "El centro de fuerza y estabilidad del cuerpo", "La técnica de respiración del método", "El equipo principal del studio"],
+    ans: 1,
+    why: "El Power House comprende transverso abdominal, oblicuos, multífidos, suelo pélvico y diafragma. Es el pilar de la estabilidad en Pilates."
+  },
+  {
+    q: "¿Cuál es el primer ejercicio de la Serie Clásica de Pilates Mat?",
+    opts: ["The Roll Up", "The Saw", "The Hundred", "Rolling Like a Ball"],
+    ans: 2,
+    why: "The Hundred es el primer ejercicio del bloque de calentamiento, diseñado para activar la circulación y el Power House."
+  },
+  {
+    q: "¿Qué movimientos permiten las articulaciones sinoviales?",
+    opts: ["Solo flexión y extensión", "Flexión, extensión, circunducción, abducción, aducción y rotación", "Ninguno, son articulaciones fijas", "Solo rotación lateral"],
+    ans: 1,
+    why: "Las articulaciones sinoviales son las más móviles del cuerpo y permiten seis tipos de movimiento en distintos planos."
+  },
+  {
+    q: "¿Cuáles son los cuatro músculos del cuádriceps?",
+    opts: ["Bíceps, tríceps, deltoides y trapecio", "Glúteo mayor, medio, menor y piriforme", "Recto femoral, vasto intermedio, vasto lateral y vasto medial", "Semitendinoso, semimembranoso, bíceps femoral y poplíteo"],
+    ans: 2,
+    why: "El cuádriceps femoral tiene cuatro músculos en la parte anterior del muslo. La última opción corresponde a los isquiotibiales."
+  },
+  {
+    q: "¿Qué función principal cumplen los huesos en el cuerpo?",
+    opts: ["Solo producir glóbulos rojos", "Almacenar grasa exclusivamente", "Dar sostén, proteger órganos y permitir el movimiento", "Regular la temperatura corporal"],
+    ans: 2,
+    why: "Los huesos proporcionan sostén, protegen órganos vitales y son punto de inserción muscular para el movimiento."
+  },
+  {
+    q: "En la articulación de la cadera, ¿qué estructura recibe la cabeza del fémur?",
+    opts: ["La rótula", "El acetábulo", "El menisco", "La bursa"],
+    ans: 1,
+    why: "El acetábulo es la cavidad en el hueso coxal donde encaja la cabeza del fémur, formando una articulación esférica de gran movilidad."
+  },
+  {
+    q: "¿Qué tipo de contracción ocurre al bajar lentamente el cuerpo en un Roll Down?",
+    opts: ["Concéntrica", "Isométrica", "Excéntrica", "Balística"],
+    ans: 2,
+    why: "Al descender controladamente, los abdominales se alargan mientras mantienen tensión — eso es contracción excéntrica, esencial en Pilates."
+  },
+  {
+    q: "¿Cuál de estos NO es un beneficio del Pilates?",
+    opts: ["Mejora la alineación postural", "Aumenta el volumen muscular rápidamente", "Previene lesiones músculo-esqueléticas", "Integra cuerpo y mente"],
+    ans: 1,
+    why: "El Pilates fortalece y tonifica sin aumentar volumen muscular. Su enfoque es calidad de movimiento y conexión cuerpo-mente."
+  },
+  {
+    q: "¿Qué protege la columna vertebral?",
+    opts: ["Los pulmones", "El corazón", "La médula espinal", "El estómago"],
+    ans: 2,
+    why: "La columna vertebral protege la médula espinal, el canal de comunicación entre el cerebro y el resto del cuerpo."
+  }
+];
+
+const letters = ['A', 'B', 'C', 'D'];
+let cur = 0;
+let revealed = new Array(QS.length).fill(false);
+const app = document.getElementById('app');
+
+function renderCover() {
+  app.innerHTML = `
+    <div class="cover">
+      <div class="brand">AntoBioMove</div>
+      <h1>Quiz: <span>Biomecánica y Anatomía</span> en el Pilates</h1>
+      <div class="sub">Prof. Carlos Alberto Zorrilla — Centro Zen Pilates</div>
+      <button class="start-btn" id="start">Comenzar</button>
+      <span class="count">12 preguntas</span>
+    </div>
+  `;
+  document.getElementById('start').addEventListener('click', () => { cur = 0; renderSlide(); });
+}
+
+function renderSlide() {
+  const q = QS[cur];
+  const isRevealed = revealed[cur];
+
+  let dotsHTML = QS.map((_, i) => {
+    let cls = 'dot';
+    if (i === cur) cls += ' current';
+    else if (revealed[i]) cls += ' done-correct';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+
+  let optsHTML = q.opts.map((o, i) => {
+    let cls = 'opt-btn';
+    if (isRevealed) {
+      cls += i === q.ans ? ' correct-reveal' : ' wrong-reveal';
+      cls += ' revealed';
+    }
+    return `<button class="${cls}" ${isRevealed ? 'disabled' : ''}><span class="letter">${letters[i]}</span>${o}</button>`;
+  }).join('');
+
+  app.innerHTML = `
+    <div class="top-bar">
+      <div class="q-counter">PREGUNTA ${cur + 1} / ${QS.length}</div>
+      <div class="progress-dots">${dotsHTML}</div>
+    </div>
+    <div class="question-box">
+      <div class="q-num">Pregunta ${cur + 1}</div>
+      <div class="q-text">${q.q}</div>
+    </div>
+    <div class="options" id="opts">${optsHTML}</div>
+    ${!isRevealed ? `<button class="reveal-btn" id="reveal">Revelar respuesta correcta</button>` : ''}
+    <div class="explanation ${isRevealed ? 'show' : ''}" id="expl">
+      <strong>Respuesta correcta: ${letters[q.ans]}</strong> — ${q.why}
+    </div>
+    ${isRevealed ? `<div class="presenter-note">Respuesta correcta: opción ${letters[q.ans]}</div>` : ''}
+    <div class="nav-row">
+      <button class="nav-btn prev" id="prev" ${cur === 0 ? 'disabled' : ''}>← Anterior</button>
+      <button class="nav-btn next" id="next">${cur < QS.length - 1 ? 'Siguiente →' : 'Ver resumen'}</button>
+    </div>
+  `;
+
+  if (!isRevealed) {
+    document.getElementById('reveal').addEventListener('click', () => {
+      revealed[cur] = true;
+      renderSlide();
+    });
+  }
+
+  document.getElementById('prev').addEventListener('click', () => {
+    if (cur > 0) { cur--; renderSlide(); }
+  });
+  document.getElementById('next').addEventListener('click', () => {
+    if (cur < QS.length - 1) { cur++; renderSlide(); }
+    else renderEnd();
+  });
+}
+
+function renderEnd() {
+  app.innerHTML = `
+    <div class="results">
+      <div class="emoji">🎉</div>
+      <div class="score-big">12/12</div>
+      <div class="score-label">Preguntas completadas</div>
+      <div class="verdict">¡Quiz finalizado!</div>
+      <div class="verdict-sub">Excelente repaso de los conceptos de biomecánica y anatomía aplicada al Pilates. ¡Felicidades a todos los participantes!</div>
+      <button class="restart-btn" id="restart">Volver al inicio</button>
+    </div>
+  `;
+  document.getElementById('restart').addEventListener('click', () => {
+    cur = 0;
+    revealed = new Array(QS.length).fill(false);
+    renderCover();
+  });
+}
+
+renderCover();
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    const next = document.getElementById('next');
+    const reveal = document.getElementById('reveal');
+    const start = document.getElementById('start');
+    if (start) start.click();
+    else if (reveal && !revealed[cur]) reveal.click();
+    else if (next) next.click();
+  }
+  if (e.key === 'ArrowLeft') {
+    const prev = document.getElementById('prev');
+    if (prev) prev.click();
+  }
+});
+</script>
