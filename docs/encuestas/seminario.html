@@ -236,14 +236,19 @@ textarea::placeholder { color: var(--fg-muted); }
       </div>
     </div>
 
-    <!-- Step 7: Sugerencias -->
+    <!-- Step 7: Recomendación Centro Zen -->
     <div class="step" data-step="7">
       <div class="question-card">
         <div class="q-label">
-          <span class="emoji">💡</span>
-          ¿Qué temas o actividades te gustaría ver en futuros seminarios?
+          <span class="emoji">🏠</span>
+          ¿Recomendarías la Escuela Centro Zen como sede para futuros eventos?
         </div>
-        <textarea name="q7" placeholder="Escribe tus sugerencias aquí... 📝"></textarea>
+        <div class="btn-options" data-name="q7">
+          <label class="btn-opt"><input type="radio" name="q7" value="Sí, totalmente"><span class="ico">🙌</span>¡Sí, totalmente!<span class="dot"></span></label>
+          <label class="btn-opt"><input type="radio" name="q7" value="Probablemente sí"><span class="ico">👍</span>Probablemente sí<span class="dot"></span></label>
+          <label class="btn-opt"><input type="radio" name="q7" value="No estoy seguro/a"><span class="ico">🤔</span>No estoy seguro/a<span class="dot"></span></label>
+          <label class="btn-opt"><input type="radio" name="q7" value="No la recomendaría"><span class="ico">👋</span>No la recomendaría<span class="dot"></span></label>
+        </div>
       </div>
       <div class="nav-btns">
         <button type="button" class="btn-prev" onclick="prevStep()">←</button>
@@ -251,14 +256,29 @@ textarea::placeholder { color: var(--fg-muted); }
       </div>
     </div>
 
-    <!-- Step 8: Testimonio -->
+    <!-- Step 8: Sugerencias -->
     <div class="step" data-step="8">
       <div class="question-card">
         <div class="q-label">
-          <span class="emoji">💬</span>
-          ¿Quieres compartir un testimonio sobre tu experiencia?<br><span style="font-size:13px;color:var(--fg-muted);font-weight:400;">(Opcional — lo podemos compartir en redes)</span>
+          <span class="emoji">💡</span>
+          ¿Qué temas o actividades te gustaría ver en futuros seminarios?
         </div>
-        <textarea name="q8" placeholder="Tu experiencia en el seminario... ✨"></textarea>
+        <textarea name="q8" placeholder="Escribe tus sugerencias aquí... 📝"></textarea>
+      </div>
+      <div class="nav-btns">
+        <button type="button" class="btn-prev" onclick="prevStep()">←</button>
+        <button type="button" class="btn-next" onclick="nextStep()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Step 9: Apreciación general -->
+    <div class="step" data-step="9">
+      <div class="question-card">
+        <div class="q-label">
+          <span class="emoji">✨</span>
+          Cuéntanos tu apreciación general del seminario<br><span style="font-size:13px;color:var(--fg-muted);font-weight:400;">Espacio, contenido, profesores, organización — todo cuenta. Si deseas, podemos compartirlo en redes.</span>
+        </div>
+        <textarea name="q9" placeholder="Tu apreciación general del seminario... 💬"></textarea>
       </div>
       <div class="nav-btns">
         <button type="button" class="btn-prev" onclick="prevStep()">←</button>
@@ -283,7 +303,7 @@ textarea::placeholder { color: var(--fg-muted); }
 
 <script>
 var currentStep = 1;
-var totalSteps = 8;
+var totalSteps = 9;
 
 function updateProgress() {
   var pct = (currentStep / totalSteps) * 100;
@@ -345,8 +365,9 @@ function sendSurvey() {
 
   var q5 = [];
   document.querySelectorAll('input[name="q5"]:checked').forEach(function(cb) { q5.push(cb.value); });
-  var q7 = document.querySelector('textarea[name="q7"]').value.trim();
+  var q7 = document.querySelector('input[name="q7"]:checked');
   var q8 = document.querySelector('textarea[name="q8"]').value.trim();
+  var q9 = document.querySelector('textarea[name="q9"]').value.trim();
 
   var msg = '📋 *ENCUESTA SEMINARIO INTERNACIONAL*\n'
     + 'iDENTiDAD pilates · Pilates 2026 · Valencia\n'
@@ -356,10 +377,11 @@ function sendSurvey() {
     + '☕ Refrigerios: ' + (q3 ? q3.value : 'No respondió') + '\n\n'
     + '📋 Organización: ' + (q4 ? q4.value : 'No respondió') + '\n\n'
     + '🎓 Contenido y profesores: ' + (q5.length > 0 ? q5.join(' | ') : 'No seleccionó') + '\n\n'
-    + '🔁 ¿Asistiría de nuevo?: ' + (q6 ? q6.value : 'No respondió') + '\n\n';
+    + '🔁 ¿Asistiría de nuevo?: ' + (q6 ? q6.value : 'No respondió') + '\n\n'
+    + '🏠 Recomienda Centro Zen: ' + (q7 ? q7.value : 'No respondió') + '\n\n';
 
-  if (q7) msg += '💡 Sugerencias: ' + q7 + '\n\n';
-  if (q8) msg += '💬 Testimonio: ' + q8 + '\n\n';
+  if (q8) msg += '💡 Sugerencias: ' + q8 + '\n\n';
+  if (q9) msg += '✨ Apreciación general: ' + q9 + '\n\n';
 
   msg += '━━━━━━━━━━━━━━━━━\nGracias por tu feedback 🙏';
 
