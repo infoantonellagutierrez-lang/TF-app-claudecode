@@ -158,7 +158,7 @@ textarea::placeholder { color: var(--fg-muted); }
       <div class="question-card">
         <div class="q-label">
           <span class="emoji">☕</span>
-          ¿Cómo calificarías los refrigerios?
+          ¿Cómo calificarías las pausas y el coffee break?
         </div>
         <div class="emoji-rate" data-name="q3">
           <label><input type="radio" name="q3" value="Excelente"><span class="emoji-wrap">🤩</span><span class="emoji-text">Excelente</span></label>
@@ -374,7 +374,7 @@ function sendSurvey() {
     + '━━━━━━━━━━━━━━━━━\n\n'
     + '🎯 Experiencia general: ' + q1.value + '\n\n'
     + '🏢 Espacios e instalaciones: ' + (q2 ? q2.value : 'No respondió') + '\n\n'
-    + '☕ Refrigerios: ' + (q3 ? q3.value : 'No respondió') + '\n\n'
+    + '☕ Pausas y coffee break: ' + (q3 ? q3.value : 'No respondió') + '\n\n'
     + '📋 Organización: ' + (q4 ? q4.value : 'No respondió') + '\n\n'
     + '🎓 Contenido y profesores: ' + (q5.length > 0 ? q5.join(' | ') : 'No seleccionó') + '\n\n'
     + '🔁 ¿Asistiría de nuevo?: ' + (q6 ? q6.value : 'No respondió') + '\n\n'
