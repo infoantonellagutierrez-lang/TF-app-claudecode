@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta — Seminario Internacional de Pilates 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #1a1a1f;
+  --fg: rgba(255,255,255,0.92);
+  --fg-muted: rgba(255,255,255,0.55);
+  --cyan: #00C0F0;
+  --turquesa: #18C0D8;
+  --verde: #60C078;
+  --marron: #A87848;
+  --card-bg: rgba(255,255,255,0.06);
+  --card-border: rgba(255,255,255,0.1);
+  color-scheme: dark;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  padding: 0 16px;
+}
+
+.page {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 32px 0 60px;
+}
+
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--cyan), var(--turquesa), var(--verde));
+  z-index: 10;
+}
+
+/* Progress bar */
+.progress-wrap {
+  position: sticky;
+  top: 4px;
+  z-index: 9;
+  background: var(--bg);
+  padding: 12px 0 8px;
+}
+.progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--verde));
+  border-radius: 3px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0%;
+}
+.progress-text {
+  text-align: center;
+  font-size: 12px;
+  color: var(--fg-muted);
+  margin-top: 6px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.header img { height: 56px; margin-bottom: 14px; }
+.header h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--cyan);
+  text-transform: uppercase;
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+.header p {
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+/* Steps */
+.step {
+  display: none;
+  animation: fadeUp 0.4s ease;
+}
+.step.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.question-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 28px 22px;
+  margin-bottom: 16px;
+}
+.q-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 20px;
+  line-height: 1.4;
+  text-align: center;
+}
+.q-label .emoji {
+  display: block;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+/* Emoji rating */
+.emoji-rate {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.emoji-rate label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  min-width: 70px;
+}
+.emoji-rate label:hover {
+  background: rgba(255,255,255,0.06);
+}
+.emoji-rate input { display: none; }
+.emoji-rate input:checked + .emoji-wrap {
+  transform: scale(1.15);
+}
+.emoji-rate label.selected {
+  border-color: var(--cyan);
+  background: rgba(0,192,240,0.08);
+}
+.emoji-wrap {
+  font-size: 36px;
+  transition: transform 0.2s;
+}
+.emoji-text {
+  font-size: 11px;
+  color: var(--fg-muted);
+  text-align: center;
+}
+
+/* Big buttons for options */
+.btn-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.btn-opt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: rgba(255,255,255,0.04);
+  border: 2px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--fg-muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+.btn-opt:hover {
+  border-color: rgba(0,192,240,0.3);
+  background: rgba(0,192,240,0.06);
+}
+.btn-opt input { display: none; }
+.btn-opt.selected {
+  border-color: var(--cyan);
+  background: rgba(0,192,240,0.1);
+  color: var(--fg);
+}
+.btn-opt .ico {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.btn-opt .dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+  flex-shrink: 0;
+  margin-left: auto;
+  position: relative;
+  transition: all 0.2s;
+}
+.btn-opt.selected .dot {
+  border-color: var(--cyan);
+  background: var(--cyan);
+}
+.btn-opt.selected .dot::after {
+  content: '✓';
+  position: absolute;
+  top: -1px; left: 3px;
+  font-size: 13px;
+  color: #1a1a1f;
+  font-weight: 700;
+}
+
+/* Checkbox grid */
+.check-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.check-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 2px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.check-btn:hover {
+  border-color: rgba(0,192,240,0.3);
+}
+.check-btn input { display: none; }
+.check-btn.selected {
+  border-color: var(--verde);
+  background: rgba(96,192,120,0.1);
+}
+.check-btn .cb-ico { font-size: 28px; }
+.check-btn span:last-child {
+  font-size: 13px;
+  color: var(--fg-muted);
+  line-height: 1.3;
+}
+.check-btn.selected span:last-child { color: var(--fg); }
+
+/* Textarea */
+textarea {
+  width: 100%;
+  min-height: 100px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 16px;
+  color: var(--fg);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+textarea:focus { border-color: var(--cyan); }
+textarea::placeholder { color: var(--fg-muted); }
+
+/* Navigation */
+.nav-btns {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+.btn-next, .btn-prev, .btn-send {
+  flex: 1;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-next {
+  background: linear-gradient(135deg, var(--cyan), var(--turquesa));
+  color: #fff;
+}
+.btn-prev {
+  background: rgba(255,255,255,0.08);
+  color: var(--fg-muted);
+  flex: 0 0 auto;
+  padding: 16px 24px;
+}
+.btn-send {
+  background: linear-gradient(135deg, var(--verde), var(--turquesa));
+  color: #fff;
+}
+.btn-next:hover, .btn-send:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,192,240,0.25);
+}
+.btn-prev:hover { background: rgba(255,255,255,0.12); }
+
+/* Thank you */
+.thank-you {
+  display: none;
+  text-align: center;
+  padding: 60px 20px;
+  animation: fadeUp 0.5s ease;
+}
+.ty-circle {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--verde), var(--turquesa));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 44px;
+}
+.thank-you h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.thank-you p {
+  font-size: 15px;
+  color: var(--fg-muted);
+  line-height: 1.6;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 12px;
+  color: var(--fg-muted);
+  opacity: 0.5;
+}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div class="page">
+  <div class="header">
+    <img src="../img/logo_antobiomove.jpg" alt="AntoBioMove">
+    <h1>Tu Opinión Nos Importa</h1>
+    <p>Seminario Internacional de Pilates 2026 · Valencia</p>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">Pregunta 1 de 6</div>
+  </div>
+
+  <form id="surveyForm">
+    <!-- Step 1: Experiencia general -->
+    <div class="step active" data-step="1">
+      <div class="question-card">
+        <div class="q-label">
+          <span class="emoji">🎯</span>
+          ¿Cómo fue tu experiencia general en el seminario?
+        </div>
+        <div class="emoji-rate" data-name="q1">
+          <label><input type="radio" name="q1" value="Excelente"><span class="emoji-wrap">🤩</span><span class="emoji-text">Excelente</span></label>
+          <label><input type="radio" name="q1" value="Muy buena"><span class="emoji-wrap">😊</span><span class="emoji-text">Muy buena</span></label>
+          <label><input type="radio" name="q1" value="Buena"><span class="emoji-wrap">🙂</span><span class="emoji-text">Buena</span></label>
+          <label><input type="radio" name="q1" value="Regular"><span class="emoji-wrap">😐</span><span class="emoji-text">Regular</span></label>
+          <label><input type="radio" name="q1" value="Mala"><span class="emoji-wrap">😕</span><span class="emoji-text">Mala</span></label>
+        </div>
+      </div>
+      <div class="nav-btns">
+        <button type="button" class="btn-next" onclick="nextStep()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Organización -->
+    <div class="step" data-step="2">
+      <div class="question-card">
+        <div class="q-label">
+          <span class="emoji">📋</span>
+          ¿Cómo calificarías la organización del evento?
+        </div>
+        <div class="btn-options" data-name="q2">
+          <label class="btn-opt"><input type="radio" name="q2" value="Excelente organización"><span class="ico">✨</span>Excelente organización<span class="dot"></span></label>
+          <label class="btn-opt"><input type="radio" name="q2" value="Buena, con detalles menores"><span class="ico">👍</span>Buena, con detalles menores<span class="dot"></span></label>
+          <label class="btn-opt"><input type="radio" name="q2" value="Regular, puede mejorar"><span class="ico">🔄</span>Regular, puede mejorar<span class="dot"></span></label>
+          <label class="btn-opt"><input type="radio" name="q2" value="Necesita mejorar mucho"><span class="ico">⚠️</span>Necesita mejorar mucho<span class="dot"></span></label>
+        </div>
+      </div>
+      <div class="nav-btns">
+        <button type="button" class="btn-prev" onclick="prevStep()">←</button>
+        <button type="button" class="btn-next" onclick="nextStep()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Talleres favoritos -->
+    <div class="step" data-step="3">
+      <div class="question-card">
+        <div class="q-label">
+          <span class="emoji">⭐</span>
+          ¿Qué talleres disfrutaste más?<br><span style="font-size:13px;color:var(--fg-muted);font-weight:400;">(Puedes seleccionar varios)</span>
+        </div>
+        <div class="check-grid" data-name="q3">
+          <label class="check-btn"><input type="checkbox" name="q3" value="Biomecánica y Anatomía"><span class="cb-ico">🧬</span><span>Biomecánica y Anatomía</span></label>
+          <label class="check-btn"><input type="checkbox" name="q3" value="Pilates Mat"><span class="cb-ico">🧘</span><span>Pilates Mat</span></label>
+          <label class="check-btn"><input type="checkbox" name="q3" value="Pilates Reformer"><span class="cb-ico">💪</span><span>Pilates Reformer</span></label>
+          <label class="check-btn"><input type="checkbox" name="q3" value="Suspensión"><span class="cb-ico">🤸</span><span>Suspensión</span></label>
+          <label class="check-btn"><input type="checkbox" name="q3" value="Formación de instructores"><span class="cb-ico">🎓</span><span>Formación</span></label>
+          <label class="check-btn"><input type="checkbox" name="q3" value="Otro taller"><span class="cb-ico">➕</span><span>Otro</span></label>
+        </div>
+      </div>
+      <div class="nav-btns">
+        <button type="button" class="btn-prev" onclick="prevStep()">←</button>
+        <button type="button" class="btn-next" onclick="nextStep()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Volverías -->
+    <div class="step" data-step="4">
+      <div class="question-card">
+        <div class="q-label">
+          <span class="emoji">🔁</span>
+          ¿Asistirías a una próxima edición del seminario?
+        </div>
+        <div class="btn-options" data-name="q4">
+          <label class="btn-opt"><input type="radio" name="q4" value="Sí, definitivamente"><span class="ico">🙌</span>¡Sí, definitivamente!<span class="dot"></span></label>
+          <label class="btn-opt"><input type="radio" name="q4" value="Probablemente sí"><span class="ico">👀</span>Probablemente sí<span class="dot"></span></label>
+          <label class="btn-opt"><input type="radio" name="q4" value="No estoy seguro/a"><span class="ico">🤔</span>No estoy seguro/a<span class="dot"></span></label>
+          <label class="btn-opt"><input type="radio" name="q4" value="No asistiría"><span class="ico">👋</span>No creo que asistiría<span class="dot"></span></label>
+        </div>
+      </div>
+      <div class="nav-btns">
+        <button type="button" class="btn-prev" onclick="prevStep()">←</button>
+        <button type="button" class="btn-next" onclick="nextStep()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Qué mejorar -->
+    <div class="step" data-step="5">
+      <div class="question-card">
+        <div class="q-label">
+          <span class="emoji">💡</span>
+          ¿Qué temas o actividades te gustaría ver en futuros seminarios?
+        </div>
+        <textarea name="q5" placeholder="Escribe tus sugerencias aquí... 📝"></textarea>
+      </div>
+      <div class="nav-btns">
+        <button type="button" class="btn-prev" onclick="prevStep()">←</button>
+        <button type="button" class="btn-next" onclick="nextStep()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Step 6: Testimonio -->
+    <div class="step" data-step="6">
+      <div class="question-card">
+        <div class="q-label">
+          <span class="emoji">💬</span>
+          ¿Quieres compartir un testimonio sobre tu experiencia?<br><span style="font-size:13px;color:var(--fg-muted);font-weight:400;">(Opcional — lo podemos compartir en redes)</span>
+        </div>
+        <textarea name="q6" placeholder="Tu experiencia en el seminario... ✨"></textarea>
+      </div>
+      <div class="nav-btns">
+        <button type="button" class="btn-prev" onclick="prevStep()">←</button>
+        <button type="button" class="btn-send" onclick="sendSurvey()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Enviar por WhatsApp
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Thank you -->
+  <div class="thank-you" id="thankYou">
+    <div class="ty-circle">🎉</div>
+    <h2>¡Muchas Gracias!</h2>
+    <p>Tu opinión nos ayuda a hacer cada seminario mejor que el anterior. ¡Nos vemos en la próxima edición! 🧬✨</p>
+  </div>
+
+  <div class="footer">
+    Seminario Internacional de Pilates 2026 · Valencia, Venezuela
+  </div>
+</div>
+
+<script>
+var currentStep = 1;
+var totalSteps = 6;
+
+function updateProgress() {
+  var pct = ((currentStep) / totalSteps) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = 'Pregunta ' + currentStep + ' de ' + totalSteps;
+}
+
+function nextStep() {
+  if (currentStep < totalSteps) {
+    document.querySelector('.step[data-step="' + currentStep + '"]').classList.remove('active');
+    currentStep++;
+    document.querySelector('.step[data-step="' + currentStep + '"]').classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    document.querySelector('.step[data-step="' + currentStep + '"]').classList.remove('active');
+    currentStep--;
+    document.querySelector('.step[data-step="' + currentStep + '"]').classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+// Emoji rating selection
+document.querySelectorAll('.emoji-rate label').forEach(function(lbl) {
+  lbl.addEventListener('click', function() {
+    this.parentElement.querySelectorAll('label').forEach(function(l) { l.classList.remove('selected'); });
+    this.classList.add('selected');
+  });
+});
+
+// Button option selection (radio)
+document.querySelectorAll('.btn-options .btn-opt').forEach(function(opt) {
+  opt.addEventListener('click', function() {
+    this.parentElement.querySelectorAll('.btn-opt').forEach(function(o) { o.classList.remove('selected'); });
+    this.classList.add('selected');
+    this.querySelector('input').checked = true;
+  });
+});
+
+// Checkbox grid selection
+document.querySelectorAll('.check-grid .check-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var inp = this.querySelector('input');
+    inp.checked = !inp.checked;
+    this.classList.toggle('selected', inp.checked);
+  });
+});
+
+function sendSurvey() {
+  var q1 = document.querySelector('input[name="q1"]:checked');
+  var q2 = document.querySelector('input[name="q2"]:checked');
+  var q4 = document.querySelector('input[name="q4"]:checked');
+
+  if (!q1) { alert('Por favor responde la primera pregunta'); currentStep = 1; document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active')}); document.querySelector('.step[data-step="1"]').classList.add('active'); updateProgress(); return; }
+
+  var q3 = [];
+  document.querySelectorAll('input[name="q3"]:checked').forEach(function(cb) { q3.push(cb.value); });
+  var q5 = document.querySelector('textarea[name="q5"]').value.trim();
+  var q6 = document.querySelector('textarea[name="q6"]').value.trim();
+
+  var msg = '📋 *ENCUESTA SEMINARIO INTERNACIONAL*\n'
+    + 'Pilates 2026 · Valencia\n'
+    + '━━━━━━━━━━━━━━━━━\n\n'
+    + '🎯 Experiencia general: ' + q1.value + '\n\n'
+    + '📋 Organización: ' + (q2 ? q2.value : 'No respondió') + '\n\n'
+    + '⭐ Talleres favoritos: ' + (q3.length > 0 ? q3.join(', ') : 'No seleccionó') + '\n\n'
+    + '🔁 ¿Asistiría de nuevo?: ' + (q4 ? q4.value : 'No respondió') + '\n\n';
+
+  if (q5) msg += '💡 Sugerencias: ' + q5 + '\n\n';
+  if (q6) msg += '💬 Testimonio: ' + q6 + '\n\n';
+
+  msg += '━━━━━━━━━━━━━━━━━\nGracias por tu feedback 🙏';
+
+  var url = 'https://wa.me/584244456882?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
+
+  document.getElementById('surveyForm').style.display = 'none';
+  document.getElementById('thankYou').style.display = 'block';
+}
+
+updateProgress();
+</script>
+</body>
+</html>
