@@ -194,17 +194,20 @@ textarea::placeholder { color: var(--fg-muted); }
       </div>
     </div>
 
-    <!-- Step 5: Talleres favoritos -->
+    <!-- Step 5: Contenido y profesores -->
     <div class="step" data-step="5">
       <div class="question-card">
         <div class="q-label">
-          <span class="emoji">⭐</span>
-          ¿Qué talleres disfrutaste más?<br><span style="font-size:13px;color:var(--fg-muted);font-weight:400;">(Puedes seleccionar varios)</span>
+          <span class="emoji">🎓</span>
+          Sobre el contenido y los profesores<br><span style="font-size:13px;color:var(--fg-muted);font-weight:400;">(Selecciona todo lo que aplique)</span>
         </div>
         <div class="check-grid single-col" data-name="q5">
-          <label class="check-btn"><input type="checkbox" name="q5" value="Anatomía y Biomecánica aplicada al Pilates"><span class="cb-ico">🧬</span><span>Anatomía y Biomecánica aplicada al Pilates</span></label>
-          <label class="check-btn"><input type="checkbox" name="q5" value="Mat Sequence"><span class="cb-ico">🧘</span><span>Mat Sequence</span></label>
-          <label class="check-btn"><input type="checkbox" name="q5" value="Acondicionamiento Atlético sobre el Reformer"><span class="cb-ico">💪</span><span>Acondicionamiento Atlético sobre el Reformer</span></label>
+          <label class="check-btn"><input type="checkbox" name="q5" value="El contenido cumplió mis expectativas"><span class="cb-ico">✅</span><span>El contenido cumplió mis expectativas</span></label>
+          <label class="check-btn"><input type="checkbox" name="q5" value="Las explicaciones fueron claras y se entendieron"><span class="cb-ico">💡</span><span>Las explicaciones fueron claras y se entendieron</span></label>
+          <label class="check-btn"><input type="checkbox" name="q5" value="Los profesores mantuvieron un buen tono y comunicación"><span class="cb-ico">🗣️</span><span>Los profesores mantuvieron un buen tono y comunicación</span></label>
+          <label class="check-btn"><input type="checkbox" name="q5" value="El material visual fue adecuado y útil"><span class="cb-ico">📊</span><span>El material visual fue adecuado y útil</span></label>
+          <label class="check-btn"><input type="checkbox" name="q5" value="El contenido estuvo acorde al nivel esperado"><span class="cb-ico">🎯</span><span>El contenido estuvo acorde al nivel esperado</span></label>
+          <label class="check-btn"><input type="checkbox" name="q5" value="Esperaba más profundidad en algún tema"><span class="cb-ico">📚</span><span>Esperaba más profundidad en algún tema</span></label>
         </div>
       </div>
       <div class="nav-btns">
@@ -352,7 +355,7 @@ function sendSurvey() {
     + '🏢 Espacios e instalaciones: ' + (q2 ? q2.value : 'No respondió') + '\n\n'
     + '☕ Refrigerios: ' + (q3 ? q3.value : 'No respondió') + '\n\n'
     + '📋 Organización: ' + (q4 ? q4.value : 'No respondió') + '\n\n'
-    + '⭐ Talleres favoritos: ' + (q5.length > 0 ? q5.join(', ') : 'No seleccionó') + '\n\n'
+    + '🎓 Contenido y profesores: ' + (q5.length > 0 ? q5.join(' | ') : 'No seleccionó') + '\n\n'
     + '🔁 ¿Asistiría de nuevo?: ' + (q6 ? q6.value : 'No respondió') + '\n\n';
 
   if (q7) msg += '💡 Sugerencias: ' + q7 + '\n\n';
