@@ -1,0 +1,629 @@
+<title>Identidad Pilates</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Montserrat:wght@300;600&display=swap">
+<style>
+:root { color-scheme: dark; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;background:#0a0810;overflow:hidden}
+body{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding-left:max(0px,env(safe-area-inset-left,0px));
+  padding-right:max(0px,env(safe-area-inset-right,0px));
+}
+canvas{display:block;width:100%;max-width:960px;aspect-ratio:16/9;border-radius:10px}
+.ui{
+  position:fixed;bottom:max(14px,env(safe-area-inset-bottom,0px));
+  left:50%;transform:translateX(-50%);
+  display:flex;gap:10px;align-items:center;z-index:10
+}
+.lbl{font-family:'Montserrat',sans-serif;font-size:.6rem;letter-spacing:.2em;color:rgba(242,226,236,.5);white-space:nowrap;min-width:100px;text-align:center}
+.bar{width:min(200px,44vw);height:2px;background:rgba(242,226,236,.12);border-radius:2px;overflow:hidden}
+.fill{height:100%;background:#F2E2EC;border-radius:2px;width:0%}
+.btn{background:rgba(242,226,236,.1);border:1px solid rgba(242,226,236,.2);color:#F2E2EC;
+  font-family:'Montserrat',sans-serif;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:5px 13px;border-radius:20px;cursor:pointer;transition:background .2s}
+.btn:hover{background:rgba(242,226,236,.2)}
+</style>
+
+<canvas id="c"></canvas>
+<div class="ui">
+  <div class="lbl" id="lbl">Amanecer 🌅</div>
+  <div class="bar"><div class="fill" id="fill"></div></div>
+  <button class="btn" id="btn">Pausar</button>
+  <button class="btn" id="musicBtn" title="Música">🎵</button>
+</div>
+
+<script>
+const cv=document.getElementById('c'), cx=cv.getContext('2d');
+const lbl=document.getElementById('lbl'), fill=document.getElementById('fill'), btn=document.getElementById('btn');
+const CYCLE=40; let t=0,bgO=0,lt=null,paused=false;
+
+function resize(){const r=cv.getBoundingClientRect();cv.width=Math.round(r.width*devicePixelRatio);cv.height=Math.round(r.height*devicePixelRatio)}
+window.addEventListener('resize',resize);resize();
+
+const lerp=(a,b,f)=>a+(b-a)*f;
+function lc(a,b,f){return[Math.round(lerp(a[0],b[0],f)),Math.round(lerp(a[1],b[1],f)),Math.round(lerp(a[2],b[2],f))]}
+const rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+const rgba=(c,a)=>`rgba(${c[0]},${c[1]},${c[2]},${a})`;
+
+// Sky phases
+const SKY=[
+  {t:0,   top:[12,8,35],   bot:[220,100,40]},
+  {t:.1,  top:[60,100,180],bot:[255,180,90]},
+  {t:.25, top:[35,110,220],bot:[120,190,255]},
+  {t:.45, top:[30,95,200], bot:[100,170,240]},
+  {t:.58, top:[15,20,70],  bot:[230,70,30]},
+  {t:.68, top:[8,10,45],   bot:[80,25,60]},
+  {t:.78, top:[5,4,22],    bot:[25,12,45]},
+  {t:1,   top:[3,2,14],    bot:[10,6,28]},
+];
+function getSky(t){
+  let lo=SKY[0],hi=SKY[SKY.length-1];
+  for(let i=0;i<SKY.length-1;i++)if(t>=SKY[i].t&&t<=SKY[i+1].t){lo=SKY[i];hi=SKY[i+1];break}
+  const f=hi.t===lo.t?0:(t-lo.t)/(hi.t-lo.t);
+  return{top:lc(lo.top,hi.top,f),bot:lc(lo.bot,hi.bot,f)}
+}
+const starsA=t=>t<.08?1-t/.08*.9:t<.15?0.1-(t-.08)/.07*.1:t<.5?0:t<.65?(t-.5)/.15:1;
+const stars=Array.from({length:65},()=>({x:Math.random(),y:Math.random()*.52,r:.6+Math.random()*1.3,tw:.7+Math.random()*.6}));
+const mts=[0,.09,.18,.27,.35,.44,.52,.61,.7,.79,.88,.96,1];
+const mhs=[.11,.07,.14,.05,.12,.08,.13,.06,.1,.12,.07,.11,.1];
+const trees=Array.from({length:22},(_,i)=>({x:i/22+Math.random()*.02,h:.07+Math.random()*.1,w:.013+Math.random()*.018,tri:Math.random()>.45}));
+
+const phases=[{t:0,n:'Amanecer 🌅'},{t:.12,n:'Mañana ☀️'},{t:.28,n:'Mediodía 🌤'},{t:.5,n:'Tarde 🌇'},{t:.62,n:'Atardecer 🌆'},{t:.73,n:'Anochecer 🌃'},{t:.85,n:'Noche 🌙'}];
+function phaseName(t){let n=phases[0].n;for(const p of phases)if(t>=p.t)n=p.n;return n}
+
+function drawFrame(ts){
+  if(!lt)lt=ts;
+  const dt=(ts-lt)/1e3;lt=ts;
+  if(!paused){t=(t+dt/CYCLE)%1;bgO=(bgO+.1*dt)%1}
+  const W=cv.width,H=cv.height;
+  cx.clearRect(0,0,W,H);
+
+  // Sky
+  const sky=getSky(t);
+  const sg=cx.createLinearGradient(0,0,0,H*.65);
+  sg.addColorStop(0,rgb(sky.top));sg.addColorStop(1,rgb(sky.bot));
+  cx.fillStyle=sg;cx.fillRect(0,0,W,H);
+
+  // Stars
+  const sa=starsA(t);
+  if(sa>0){
+    for(const s of stars){
+      const tw=Math.sin(Date.now()/700*s.tw)*.25+.75;
+      cx.globalAlpha=sa*tw;cx.fillStyle='#fff';
+      cx.beginPath();cx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);cx.fill();
+    }
+    cx.globalAlpha=1;
+  }
+
+  // Sun
+  const sunT=t<.58?t/.58:-1;
+  if(sunT>=0){
+    const sx=W*(.08+sunT*.84),sy=H*(.55-Math.sin(sunT*Math.PI)*.42);
+    const a=sunT<.08?sunT/.08:sunT>.92?(1-sunT)/.08:1;
+    const gr=cx.createRadialGradient(sx,sy,0,sx,sy,W*.09);
+    const warm=t<.18||t>.48;
+    gr.addColorStop(0,`rgba(255,${warm?180:240},${warm?60:180},${.55*a})`);
+    gr.addColorStop(1,'rgba(255,160,40,0)');
+    cx.fillStyle=gr;cx.fillRect(sx-W*.09,sy-W*.09,W*.18,W*.18);
+    cx.beginPath();cx.arc(sx,sy,W*.026,0,Math.PI*2);
+    cx.fillStyle=warm?`rgba(255,150,50,${a})`:`rgba(255,240,200,${a})`;cx.fill();
+  }
+
+  // Moon
+  const moonT=t>.66?(t-.66)/.34:t<.05?t/.05*.3:-1;
+  if(moonT>=0){
+    const mx=W*(.12+moonT*.72),my=H*(.42-Math.sin(moonT*Math.PI)*.3);
+    const mg=cx.createRadialGradient(mx,my,0,mx,my,W*.065);
+    mg.addColorStop(0,'rgba(210,205,250,.2)');mg.addColorStop(1,'rgba(210,205,250,0)');
+    cx.fillStyle=mg;cx.fillRect(mx-W*.065,my-W*.065,W*.13,W*.13);
+    cx.beginPath();cx.arc(mx,my,W*.021,0,Math.PI*2);cx.fillStyle='rgba(240,238,255,.9)';cx.fill();
+    cx.beginPath();cx.arc(mx+W*.008,my-W*.003,W*.016,0,Math.PI*2);cx.fillStyle=rgb(sky.top);cx.fill();
+  }
+
+  // Mountains
+  const mOff=(bgO*.07)%1;
+  cx.fillStyle=`rgba(${t<.35?'70,55,100':'18,10,38'},.65)`;
+  cx.beginPath();cx.moveTo(0,H*.52);
+  for(let i=0;i<mts.length;i++){
+    const mx=((mts[i]-mOff+2)%1)*W;
+    cx.lineTo(mx,H*(0.52-mhs[i]));
+    if(i<mts.length-1)cx.lineTo((mx+(((mts[i+1]-mOff+2)%1)*W))/2,H*.52);
+  }
+  cx.lineTo(W,H*.52);cx.lineTo(W,H);cx.lineTo(0,H);cx.closePath();cx.fill();
+
+  // Ground
+  const gY=H*.63;
+  const gc=t<.12?[28,18,12]:t<.4?[38,60,22]:t<.58?[55,35,10]:[8,5,16];
+  cx.fillStyle=rgb(gc);cx.fillRect(0,gY,W,H-gY);
+
+  // Trees
+  const tc=t<.35?(t<.12?'#221428':'#22501e'):(t<.58?'#3a1a08':'#080614');
+  for(const tr of trees){
+    const tx=((tr.x-bgO*.3+2)%1)*W,ty=gY,tw=tr.w*W,th=tr.h*H;
+    cx.fillStyle=tc;
+    if(tr.tri){cx.beginPath();cx.moveTo(tx,ty);cx.lineTo(tx+tw/2,ty-th);cx.lineTo(tx+tw,ty);cx.closePath();cx.fill();
+      cx.fillRect(tx+tw*.38,ty,tw*.24,th*.22);}
+    else{cx.fillRect(tx+tw*.42,ty-th,tw*.16,th);
+      cx.beginPath();cx.ellipse(tx+tw/2,ty-th*0.7,tw*.5,th*.42,0,0,Math.PI*2);cx.fill();}
+  }
+
+  // Road
+  const rY=H*.695;
+  cx.fillStyle=t<.4?'#3a3545':t<.6?'#2d2838':'#0e0c16';
+  cx.fillRect(0,rY,W,H-rY);
+  cx.fillStyle='rgba(255,255,255,.05)';cx.fillRect(0,rY,W,H*.006);
+  // Road dashes
+  const dW=W*.068,dOff=(bgO*W*2.4)%(dW+W*.11);
+  cx.fillStyle='rgba(255,255,255,.16)';
+  for(let dx=-dOff;dx<W+dW;dx+=dW+W*.11)cx.fillRect(dx,rY+H*.045,dW,H*.011);
+
+  // Van
+  drawVan(W,H,rY,t,bgO);
+
+  // Headlight cone at night
+  if(t>.62){
+    const na=Math.min(1,(t-.62)/.18)*.22;
+    const vX=W*.17,vR=vX+W*.52;
+    const fY=rY+H*.04;
+    const hg=cx.createRadialGradient(vR,fY,0,vR+W*.06,fY,W*.38);
+    hg.addColorStop(0,`rgba(255,248,190,${na*2.5})`);
+    hg.addColorStop(.25,`rgba(255,240,150,${na})`);
+    hg.addColorStop(1,'rgba(255,230,120,0)');
+    cx.fillStyle=hg;
+    cx.beginPath();cx.moveTo(vR,fY-H*.045);cx.lineTo(vR+W*.38,fY-H*.1);cx.lineTo(vR+W*.38,fY+H*.07);cx.lineTo(vR,fY+H*.04);cx.closePath();cx.fill();
+  }
+
+  fill.style.width=(t*100).toFixed(1)+'%';
+  lbl.textContent=phaseName(t);
+  requestAnimationFrame(drawFrame);
+}
+
+// ========= VW T1 BULLI (forma redondeada icónica) =========
+function drawVan(W,H,rY,t,bgO){
+  const vW=W*.54, vH=H*.44;
+  const vX=W*.17, vY=rY-vH*.97;
+  const wr=vH*.215;
+  const wa=bgO*Math.PI*14;
+
+  function rr(x,y,w,h,rad){
+    cx.beginPath();
+    cx.moveTo(x+rad,y);cx.lineTo(x+w-rad,y);cx.quadraticCurveTo(x+w,y,x+w,y+rad);
+    cx.lineTo(x+w,y+h-rad);cx.quadraticCurveTo(x+w,y+h,x+w-rad,y+h);
+    cx.lineTo(x+rad,y+h);cx.quadraticCurveTo(x,y+h,x,y+h-rad);
+    cx.lineTo(x,y+rad);cx.quadraticCurveTo(x,y,x+rad,y);cx.closePath();
+  }
+
+  // ==== FORMA T1 BULLI: cuerpo redondeado ====
+  // izquierda=trasera, derecha=frontal (van va hacia la derecha)
+  function t1Body(){
+    cx.beginPath();
+    cx.moveTo(vX+vW*.04, vY);
+    cx.lineTo(vX+vW*.72, vY);
+    // Curva frontal-superior (nariz redondeada característica del T1)
+    cx.bezierCurveTo(vX+vW*.87, vY, vX+vW, vY+vH*.14, vX+vW, vY+vH*.32);
+    cx.lineTo(vX+vW, vY+vH*.76);
+    // Curva frontal-inferior
+    cx.bezierCurveTo(vX+vW, vY+vH*.93, vX+vW*.9, vY+vH, vX+vW*.78, vY+vH);
+    cx.lineTo(vX+vW*.14, vY+vH);
+    // Curva trasera-inferior
+    cx.bezierCurveTo(vX+vW*.05, vY+vH, vX, vY+vH*.93, vX, vY+vH*.8);
+    cx.lineTo(vX, vY+vH*.16);
+    // Curva trasera-superior
+    cx.bezierCurveTo(vX, vY+vH*.04, vX+vW*.02, vY, vX+vW*.04, vY);
+    cx.closePath();
+  }
+
+  // Línea de división (banda de acento)
+  const splitY = vY + vH*0.47;
+
+  // 1. Cuerpo completo: charcoal con gradiente sutil
+  t1Body();
+  const bodyGrad = cx.createLinearGradient(vX,vY,vX,vY+vH);
+  bodyGrad.addColorStop(0,'#2c2f32');
+  bodyGrad.addColorStop(0.48,'#393C3F');
+  bodyGrad.addColorStop(1,'#2e3235');
+  cx.fillStyle=bodyGrad; cx.fill();
+  cx.strokeStyle='#18191a'; cx.lineWidth=2.5; cx.stroke();
+
+  // 2. Banda rosa suave (acento de marca, clippeada al cuerpo)
+  cx.save();
+  t1Body(); cx.clip();
+  cx.fillStyle='#F2E2EC';
+  cx.fillRect(vX-2, splitY-4, vW+4, 8);
+  // Sombra interna encima y debajo de la banda para profundidad
+  cx.fillStyle='rgba(0,0,0,.18)';
+  cx.fillRect(vX-2, splitY+4, vW+4, 4);
+  cx.fillStyle='rgba(0,0,0,.10)';
+  cx.fillRect(vX-2, splitY-8, vW+4, 4);
+  cx.restore();
+
+  // 3. Contorno exterior del cuerpo
+  t1Body();
+  cx.strokeStyle='#111'; cx.lineWidth=2.5; cx.stroke();
+
+  // ==== LOGO en sección inferior charcoal ====
+  const logoY = splitY + 8;
+  const logoH = vY + vH*0.88 - logoY;
+  const logoCY = logoY + logoH*0.5;
+  const bodyW = vW*0.76;
+  const logoBlockW = bodyW*0.72;
+  const logoStartX = vX + (bodyW - logoBlockW)*0.38;
+
+  // Isotipo (rosa suave sobre charcoal)
+  const figH = logoH*0.9;
+  const figScale = figH/110;
+  const figCX = logoStartX + logoBlockW*0.17;
+  const figCY = logoCY + figH*0.04;
+  cx.save();
+  cx.translate(figCX,figCY); cx.scale(figScale,figScale);
+  cx.strokeStyle='#F2E2EC'; cx.lineWidth=5; cx.lineCap='round'; cx.lineJoin='round';
+  cx.beginPath(); cx.arc(0,-50,9,0,Math.PI*2); cx.stroke();
+  cx.beginPath(); cx.moveTo(0,-41); cx.lineTo(0,-30); cx.stroke();
+  cx.beginPath();
+  cx.moveTo(0,-30); cx.bezierCurveTo(-5,-38,-22,-46,-40,-38);
+  cx.bezierCurveTo(-55,-30,-58,-12,-52,8); cx.stroke();
+  cx.beginPath(); cx.moveTo(0,-30); cx.lineTo(0,18); cx.stroke();
+  cx.beginPath(); cx.moveTo(0,18); cx.lineTo(7,58); cx.stroke();
+  cx.beginPath(); cx.moveTo(7,58); cx.lineTo(16,63); cx.stroke();
+  cx.restore();
+
+  // Texto logo sobre charcoal
+  const txtX = logoStartX + logoBlockW*0.33;
+  const fs1 = logoH*0.34;
+  cx.save(); cx.textAlign='left';
+  cx.font=`700 ${fs1}px 'Montserrat',Arial,sans-serif`;
+  cx.fillStyle='#f5f0f3'; // blanco cálido sobre charcoal
+  cx.fillText('iDENTiDAD', txtX, logoCY - logoH*0.09);
+  const fs2 = logoH*0.31;
+  cx.font=`italic ${fs2}px 'Cormorant Garamond',Georgia,serif`;
+  cx.fillStyle='#F2E2EC'; // rosa suave sobre charcoal — elegante
+  cx.fillText('pilates', txtX+vW*.018, logoCY + logoH*0.27);
+  cx.restore();
+
+  // ==== 5 VENTANAS: clipeadas al cuerpo + bien posicionadas ====
+  const wY = vY + vH*0.07;
+  const wH = (splitY - wY)*0.8;
+  const wGlass = t>.55 ? 'rgba(6,10,40,.84)' : 'rgba(115,182,232,.46)';
+  // Ventanas dentro del área charcoal; terminan antes del parabrisas (0.58)
+  const winDefs=[
+    {x:vX+vW*.055, w:vW*.093},
+    {x:vX+vW*.16,  w:vW*.093},
+    {x:vX+vW*.265, w:vW*.093},
+    {x:vX+vW*.37,  w:vW*.093},
+    {x:vX+vW*.475, w:vW*.088},
+  ];
+  const people=[
+    {hair:'bob',        hc:'#2a1206',skin:'#c89060',smile:true,glasses:false},
+    {hair:'cap',        hc:'#0a0a0a',skin:'#c47850',smile:true,glasses:true },
+    {hair:'wavy-honey', hc:'#905828',skin:'#d4a080',smile:true,glasses:false},
+    {hair:'long-black', hc:'#06060e',skin:'#c47050',smile:true,glasses:false},
+    {hair:'wavy-dark',  hc:'#1a0a06',skin:'#c88a60',smile:true,glasses:false},
+  ];
+  // Clipear todo al cuerpo para que las esquinas redondeadas corten bien
+  cx.save();
+  t1Body(); cx.clip();
+  for(let wi=0;wi<winDefs.length;wi++){
+    const wd=winDefs[wi];
+    rr(wd.x,wY,wd.w,wH,vW*.008);
+    cx.fillStyle=wGlass;cx.fill();
+    cx.save();
+    rr(wd.x+1,wY+1,wd.w-2,wH-2,vW*.008);cx.clip();
+    drawCartoonPerson(wd.x+wd.w*.5, wY+wH*.76, wH*.3, people[wi], t);
+    cx.restore();
+    rr(wd.x,wY,wd.w,wH,vW*.008);
+    cx.strokeStyle='rgba(242,226,236,.22)';cx.lineWidth=1.5;cx.stroke();
+    cx.strokeStyle='rgba(0,0,0,.5)';cx.lineWidth=1;cx.stroke();
+    cx.strokeStyle='rgba(255,255,255,.2)';cx.lineWidth=vW*.004;
+    cx.beginPath();cx.moveTo(wd.x+wd.w*.15,wY+wH*.09);cx.lineTo(wd.x+wd.w*.08,wY+wH*.86);cx.stroke();
+  }
+  cx.restore();
+
+  // ==== PARABRISAS T1: separado claramente de las ventanas laterales ====
+  // El parabrisas empieza donde termina la zona de ventanas (0.585)
+  const wsL = vX+vW*0.585;
+  const wsW = vW*0.34;
+  const wsY = vY+vH*0.07;
+  const wsH = splitY - wsY - vH*0.03;
+  const wsMid = wsL + wsW*0.5;
+  const pGlass = t>.55 ? 'rgba(6,10,40,.9)' : 'rgba(100,170,220,.5)';
+  // Clipear parabrisas al cuerpo también
+  cx.save();
+  t1Body(); cx.clip();
+  // Vidrio izquierdo
+  rr(wsL, wsY, wsW*0.44, wsH, vW*.007);
+  cx.fillStyle=pGlass;cx.fill();cx.strokeStyle='rgba(0,0,0,.6)';cx.lineWidth=1.5;cx.stroke();
+  // Vidrio derecho
+  rr(wsMid+wsW*0.06, wsY, wsW*0.44, wsH, vW*.007);
+  cx.fillStyle=pGlass;cx.fill();cx.strokeStyle='rgba(0,0,0,.6)';cx.lineWidth=1.5;cx.stroke();
+  // Parante central (característico del T1 Bulli)
+  cx.fillStyle='#1e1e1e';
+  cx.fillRect(wsMid-wsW*0.03, wsY, wsW*0.06, wsH);
+  // Marco del parabrisas
+  cx.strokeStyle='rgba(242,226,236,.15)';cx.lineWidth=2;
+  cx.beginPath();cx.moveTo(wsL+wsW*.08,wsY+wsH*.1);cx.lineTo(wsL+wsW*.04,wsY+wsH*.84);cx.stroke();
+  cx.restore();
+
+  // ==== INSIGNIA VW en la cara frontal (sección rosa) ====
+  const vwX = vX+vW*0.95;
+  const vwY2 = splitY + (vY+vH-splitY)*0.38;
+  const vwR = vH*0.076;
+  cx.beginPath();cx.arc(vwX,vwY2,vwR,0,Math.PI*2);
+  cx.fillStyle='#F2E2EC';cx.fill();
+  cx.strokeStyle='#393C3F';cx.lineWidth=vwR*0.28;cx.stroke();
+  cx.beginPath();cx.arc(vwX,vwY2,vwR*.72,0,Math.PI*2);
+  cx.strokeStyle='#393C3F';cx.lineWidth=1.2;cx.stroke();
+  cx.save();cx.translate(vwX,vwY2);
+  cx.strokeStyle='#393C3F';cx.lineWidth=vwR*0.17;cx.lineCap='round';
+  // División horizontal
+  cx.beginPath();cx.moveTo(-vwR*.56,0);cx.lineTo(vwR*.56,0);cx.stroke();
+  // V (superior)
+  cx.beginPath();cx.moveTo(-vwR*.36,-vwR*.1);cx.lineTo(0,-vwR*.52);cx.lineTo(vwR*.36,-vwR*.1);cx.stroke();
+  // W (inferior simplificado)
+  cx.beginPath();
+  cx.moveTo(-vwR*.42,vwR*.1);cx.lineTo(-vwR*.22,vwR*.5);
+  cx.lineTo(0,vwR*.28);cx.lineTo(vwR*.22,vwR*.5);cx.lineTo(vwR*.42,vwR*.1);
+  cx.stroke();
+  cx.restore();
+
+  // Faro delantero (circular, en la cara delantera)
+  const hlX = vX+vW*0.97, hlY = vY+vH*0.22;
+  const nightOn = t>.62 ? Math.min(1,(t-.62)/.18) : 0;
+  cx.beginPath();cx.arc(hlX,hlY,vH*.055,0,Math.PI*2);
+  cx.fillStyle=nightOn>.3?`rgba(255,252,200,${.7+nightOn*.3})`:'#F2E2EC';
+  cx.fill();cx.strokeStyle='#393C3F';cx.lineWidth=2;cx.stroke();
+  if(nightOn>.1){
+    const hg=cx.createRadialGradient(hlX,hlY,0,hlX,hlY,vH*.12);
+    hg.addColorStop(0,`rgba(255,248,180,${nightOn*.35})`);
+    hg.addColorStop(1,'rgba(255,248,180,0)');
+    cx.fillStyle=hg;cx.beginPath();cx.arc(hlX,hlY,vH*.12,0,Math.PI*2);cx.fill();
+  }
+
+  // Espejo retrovisor (rosa sobre charcoal)
+  cx.fillStyle='#393C3F';
+  cx.beginPath();cx.ellipse(vX+vW*.62,vY+vH*.26,vW*.026,vH*.042,0.25,0,Math.PI*2);cx.fill();
+  cx.fillStyle='rgba(100,175,225,.5)';
+  cx.beginPath();cx.ellipse(vX+vW*.62,vY+vH*.26,vW*.018,vH*.029,0.25,0,Math.PI*2);cx.fill();
+  cx.strokeStyle='#F2E2EC';cx.lineWidth=1;cx.stroke();
+
+  // Luz trasera (acento rosa brillante)
+  const rlY2=vY+vH*.38;
+  cx.fillStyle=t>.5?'rgba(255,60,60,.9)':'#F2E2EC';
+  rr(vX-1,rlY2,vW*.024,vH*.13,vW*.004);cx.fill();
+  cx.strokeStyle='#393C3F';cx.lineWidth=1.5;cx.stroke();
+
+  // Parachoques cromados (rosa perlado para que combine)
+  cx.lineCap='round';
+  cx.strokeStyle='rgba(242,226,236,.85)';cx.lineWidth=vH*.038;
+  cx.beginPath();cx.moveTo(vX+vW*1.0,vY+vH*.78);cx.lineTo(vX+vW*.8,vY+vH*.82);cx.stroke();
+  cx.strokeStyle='rgba(242,226,236,.7)';
+  cx.beginPath();cx.moveTo(vX+vW*.01,vY+vH*.8);cx.lineTo(vX+vW*.11,vY+vH*.82);cx.stroke();
+
+  // ==== RUEDAS: neumáticos negros + rines ROSAS (máximo rosa!) ====
+  const wheels=[{x:vX+vW*.155},{x:vX+vW*.73}];
+  for(const wh of wheels){
+    const wcx=wh.x, wcy=rY+wr*.07;
+    // Neumático negro
+    cx.beginPath();cx.arc(wcx,wcy,wr,0,Math.PI*2);
+    cx.fillStyle='#0c0c0c';cx.fill();
+    // Rin rosa (protagonista!)
+    cx.beginPath();cx.arc(wcx,wcy,wr*.73,0,Math.PI*2);
+    cx.fillStyle='#F2E2EC';cx.fill();
+    cx.strokeStyle='#d8aec8';cx.lineWidth=2.5;cx.stroke();
+    // 5 radios charcoal
+    cx.save();cx.translate(wcx,wcy);cx.rotate(wa);
+    for(let i=0;i<5;i++){
+      cx.save();cx.rotate(i*Math.PI*2/5);
+      cx.strokeStyle='#393C3F';cx.lineWidth=wr*.09;cx.lineCap='round';
+      cx.beginPath();cx.moveTo(0,wr*.2);cx.lineTo(0,wr*.63);cx.stroke();
+      cx.restore();
+    }
+    cx.restore();
+    // Centro charcoal con punto rosa
+    cx.beginPath();cx.arc(wcx,wcy,wr*.21,0,Math.PI*2);cx.fillStyle='#393C3F';cx.fill();
+    cx.beginPath();cx.arc(wcx,wcy,wr*.1,0,Math.PI*2);cx.fillStyle='#F2E2EC';cx.fill();
+    // Aro de rueda
+    cx.beginPath();cx.arc(wcx,wcy,wr*1.05,Math.PI*1.06,Math.PI*1.94);
+    cx.strokeStyle='#393C3F';cx.lineWidth=wr*.13;cx.stroke();
+  }
+}
+
+function drawCartoonPerson(x,y,r,p,t){
+  cx.save();
+  // Cuerpo/hombros
+  cx.fillStyle='#111';
+  cx.beginPath();cx.ellipse(x,y+r*1.4,r*.78,r*.5,0,Math.PI,0);cx.fill();
+  cx.fillStyle=p.skin;
+  cx.beginPath();cx.ellipse(x,y+r*1.05,r*.55,r*.38,0,Math.PI,0);cx.fill();
+  // Cuello
+  cx.fillRect(x-r*.18,y+r*.72,r*.36,r*.38);
+  // Cabeza
+  cx.beginPath();cx.ellipse(x,y,r*.8,r,0,0,Math.PI*2);
+  cx.fillStyle=p.skin;cx.fill();
+  // Pelo (fondo primero)
+  drawCartoonHair(x,y,r,p);
+  // Ojos blancos
+  cx.fillStyle='#fff';
+  cx.beginPath();cx.ellipse(x-r*.28,y-r*.08,r*.14,r*.18,0,0,Math.PI*2);cx.fill();
+  cx.beginPath();cx.ellipse(x+r*.28,y-r*.08,r*.14,r*.18,0,0,Math.PI*2);cx.fill();
+  // Iris
+  cx.fillStyle='#2a1a0a';
+  cx.beginPath();cx.arc(x-r*.28,y-r*.06,r*.09,0,Math.PI*2);cx.fill();
+  cx.beginPath();cx.arc(x+r*.28,y-r*.06,r*.09,0,Math.PI*2);cx.fill();
+  // Brillo
+  cx.fillStyle='rgba(255,255,255,.85)';
+  cx.beginPath();cx.arc(x-r*.23,y-r*.1,r*.035,0,Math.PI*2);cx.fill();
+  cx.beginPath();cx.arc(x+r*.33,y-r*.1,r*.035,0,Math.PI*2);cx.fill();
+  // Cejas
+  cx.strokeStyle=p.hc;cx.lineWidth=r*.075;cx.lineCap='round';
+  cx.beginPath();cx.moveTo(x-r*.44,y-r*.3);cx.lineTo(x-r*.14,y-r*.33);cx.stroke();
+  cx.beginPath();cx.moveTo(x+r*.14,y-r*.33);cx.lineTo(x+r*.44,y-r*.3);cx.stroke();
+  // Nariz
+  cx.strokeStyle='rgba(0,0,0,.15)';cx.lineWidth=r*.045;
+  cx.beginPath();cx.moveTo(x,y+r*.06);cx.quadraticCurveTo(x+r*.1,y+r*.22,x,y+r*.24);cx.stroke();
+  // Sonrisa
+  cx.strokeStyle='#442';cx.lineWidth=r*.075;
+  cx.beginPath();cx.arc(x,y+r*.34,r*.22,0.15*Math.PI,0.85*Math.PI);cx.stroke();
+  cx.fillStyle='rgba(255,255,255,.92)';
+  cx.beginPath();cx.arc(x,y+r*.34,r*.2,0.17*Math.PI,0.83*Math.PI);cx.fill();
+  cx.strokeStyle='rgba(200,80,80,.4)';cx.lineWidth=r*.05;
+  cx.beginPath();cx.arc(x,y+r*.34,r*.22,0.15*Math.PI,0.85*Math.PI);cx.stroke();
+  // Gafas
+  if(p.glasses){
+    cx.strokeStyle='#222';cx.lineWidth=r*.06;cx.lineJoin='round';
+    cx.beginPath();cx.roundRect(x-r*.48,y-r*.27,r*.38,r*.32,r*.05);cx.stroke();
+    cx.beginPath();cx.roundRect(x+r*.1,y-r*.27,r*.38,r*.32,r*.05);cx.stroke();
+    cx.beginPath();cx.moveTo(x-r*.1,y-r*.13);cx.lineTo(x+r*.1,y-r*.13);cx.stroke();
+    cx.strokeStyle='rgba(0,0,0,.3)';
+    cx.beginPath();cx.moveTo(x-r*.48,y-r*.13);cx.lineTo(x-r*.62,y-r*.08);cx.stroke();
+    cx.beginPath();cx.moveTo(x+r*.48,y-r*.13);cx.lineTo(x+r*.62,y-r*.08);cx.stroke();
+  }
+  cx.restore();
+}
+
+function drawCartoonHair(x,y,r,p){
+  cx.save();cx.fillStyle=p.hc;cx.strokeStyle=p.hc;cx.lineCap='round';
+  switch(p.hair){
+    case 'bob':
+      cx.beginPath();
+      cx.moveTo(x-r*.82,y+r*.4);
+      cx.lineTo(x-r*.82,y-r*.28);
+      cx.bezierCurveTo(x-r*.8,y-r*.95,x+r*.8,y-r*.95,x+r*.82,y-r*.28);
+      cx.lineTo(x+r*.82,y+r*.4);
+      cx.fill();
+      break;
+    case 'cap':
+      cx.fillStyle='#0d0d0d';
+      cx.beginPath();cx.ellipse(x,y-r*.52,r*.9,r*.6,0,Math.PI,0);cx.fill();
+      cx.fillRect(x-r*.92,y-r*.5,r*1.84,r*.22);
+      cx.beginPath();cx.ellipse(x+r*.28,y-r*.28,r*.78,r*.18,-.15,0,Math.PI);cx.fill();
+      cx.fillStyle='#111';
+      cx.beginPath();cx.ellipse(x-r*.84,y-r*.08,r*.12,r*.28,0,0,Math.PI*2);cx.fill();
+      cx.beginPath();cx.ellipse(x+r*.84,y-r*.08,r*.12,r*.28,0,0,Math.PI*2);cx.fill();
+      break;
+    case 'wavy-honey':
+      cx.fillStyle='#a06828';
+      cx.beginPath();cx.ellipse(x,y-r*.52,r*.88,r*.64,0,Math.PI,0);cx.fill();
+      cx.strokeStyle='#a06828';cx.lineWidth=r*.26;
+      cx.beginPath();cx.moveTo(x-r*.86,y-r*.28);
+      cx.bezierCurveTo(x-r*1.1,y+r*.15,x-r*.88,y+r*.5,x-r*1.04,y+r*.9);cx.stroke();
+      cx.beginPath();cx.moveTo(x+r*.86,y-r*.28);
+      cx.bezierCurveTo(x+r*1.1,y+r*.15,x+r*.88,y+r*.5,x+r*1.04,y+r*.9);cx.stroke();
+      cx.fillStyle='#a06828';cx.lineWidth=r*.12;
+      cx.beginPath();cx.moveTo(x-r*.2,y-r*.96);
+      cx.bezierCurveTo(x-r*.3,y-r*.6,x-r*.08,y-r*.3,x-r*.12,y-r*.08);cx.stroke();
+      break;
+    case 'long-black':
+      cx.fillStyle='#060610';
+      cx.beginPath();cx.ellipse(x,y-r*.52,r*.88,r*.64,0,Math.PI,0);cx.fill();
+      cx.fillRect(x-r*1.0,y-r*.32,r*.22,r*1.15);
+      cx.fillRect(x+r*.78,y-r*.32,r*.22,r*1.15);
+      break;
+    case 'wavy-dark':
+      cx.fillStyle='#1a0a06';
+      cx.beginPath();cx.ellipse(x,y-r*.52,r*.88,r*.64,0,Math.PI,0);cx.fill();
+      cx.strokeStyle='#1a0a06';cx.lineWidth=r*.24;
+      cx.beginPath();cx.moveTo(x-r*.86,y-r*.28);
+      cx.bezierCurveTo(x-r*1.06,y+r*.12,x-r*.82,y+r*.42,x-r*.96,y+r*.68);cx.stroke();
+      cx.beginPath();cx.moveTo(x+r*.86,y-r*.28);
+      cx.bezierCurveTo(x+r*1.06,y+r*.12,x+r*.82,y+r*.42,x+r*.96,y+r*.68);cx.stroke();
+      break;
+  }
+  cx.restore();
+}
+
+btn.addEventListener('click',()=>{
+  paused=!paused;btn.textContent=paused?'Reproducir':'Pausar';
+  if(!paused){lt=null;requestAnimationFrame(drawFrame);}
+});
+
+// ======= MÚSICA DE FONDO (Web Audio API) =======
+let audioCtx=null, musicPlaying=false, musicTimer=null;
+const musicBtn=document.getElementById('musicBtn');
+
+// Bossa nova / latin suave — escala de Do mayor
+const NOTE={C3:130.81,D3:146.83,E3:164.81,F3:174.61,G3:196,A3:220,B3:246.94,
+            C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392,A4:440,B4:493.88,
+            C5:523.25,D5:587.33,E5:659.26,G5:784};
+
+// Melodía principal (frecuencia, duración en beats, volumen)
+const MELODY=[
+  [NOTE.E4,1,.09],[NOTE.G4,.5,.08],[NOTE.A4,.5,.1],
+  [NOTE.G4,1,.08],[NOTE.E4,.5,.08],[NOTE.D4,.5,.07],
+  [NOTE.C4,1,.09],[NOTE.E4,.5,.07],[NOTE.G4,.5,.08],
+  [NOTE.A4,1.5,.1],[NOTE.G4,.5,.07],
+  [NOTE.F4,1,.08],[NOTE.E4,.5,.08],[NOTE.D4,.5,.07],
+  [NOTE.C4,2,.09],[0,.5,0],
+  [NOTE.G4,.5,.08],[NOTE.A4,.5,.09],[NOTE.B4,.5,.1],[NOTE.A4,.5,.08],
+  [NOTE.G4,1,.09],[NOTE.E4,1,.08],
+  [NOTE.F4,.5,.07],[NOTE.G4,.5,.08],[NOTE.A4,1,.09],
+  [NOTE.G4,2,.08],[0,.5,0],
+  [NOTE.E4,1,.09],[NOTE.D4,.5,.07],[NOTE.C4,1.5,.1],
+];
+// Acompañamiento (acordes suaves)
+const CHORDS=[
+  [[NOTE.C3,NOTE.E3,NOTE.G3],4,.04],
+  [[NOTE.A3,NOTE.C4,NOTE.E4],4,.04],
+  [[NOTE.F3,NOTE.A3,NOTE.C4],4,.04],
+  [[NOTE.G3,NOTE.B3,NOTE.D4],4,.04],
+];
+const BPM=90, BEAT=60/BPM;
+
+function getCtx(){
+  if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  return audioCtx;
+}
+function playNote(freq,start,dur,vol,type='triangle'){
+  if(!freq) return;
+  const ac=getCtx();
+  const o=ac.createOscillator(), g=ac.createGain();
+  // Suavizado tipo piano con reverb simple
+  const rev=ac.createGain();
+  o.connect(g);g.connect(rev);rev.connect(ac.destination);
+  o.type=type; o.frequency.value=freq;
+  g.gain.setValueAtTime(0,start);
+  g.gain.linearRampToValueAtTime(vol,start+0.04);
+  g.gain.setValueAtTime(vol,start+dur*0.6);
+  g.gain.exponentialRampToValueAtTime(0.001,start+dur);
+  rev.gain.value=0.85;
+  o.start(start); o.stop(start+dur+0.05);
+}
+function scheduleLoop(startT){
+  const ac=getCtx();
+  let t=startT, totalBeats=0;
+  // Melodía
+  for(const [freq,beats,vol] of MELODY){
+    playNote(freq,t,beats*BEAT*0.88,vol);
+    // Nota una octava abajo para armonía suave
+    if(freq) playNote(freq/2,t,beats*BEAT*0.7,vol*0.35,'sine');
+    t+=beats*BEAT; totalBeats+=beats;
+  }
+  // Acordes de acompañamiento
+  let ct=startT;
+  for(const [notes,beats,vol] of CHORDS){
+    for(const n of notes) playNote(n,ct,beats*BEAT*0.92,vol,'sine');
+    ct+=beats*BEAT;
+  }
+  // Repetir desde el inicio
+  const loopDur=(totalBeats+2)*BEAT*1000;
+  if(musicPlaying) musicTimer=setTimeout(()=>scheduleLoop(getCtx().currentTime+0.1),loopDur-200);
+}
+function startMusic(){
+  if(musicPlaying) return;
+  getCtx().resume();
+  musicPlaying=true;
+  musicBtn.textContent='🔇';
+  scheduleLoop(getCtx().currentTime+0.3);
+}
+function stopMusic(){
+  musicPlaying=false;
+  clearTimeout(musicTimer);
+  musicBtn.textContent='🎵';
+}
+musicBtn.addEventListener('click',()=>{ musicPlaying?stopMusic():startMusic(); });
+// Auto-arrancar con el primer toque del usuario
+let autoStarted=false;
+document.addEventListener('click',()=>{if(!autoStarted){autoStarted=true;startMusic();}},{once:true});
+
+requestAnimationFrame(drawFrame);
+</script>
